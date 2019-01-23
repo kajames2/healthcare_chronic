@@ -1,8 +1,7 @@
-# bottom_up_hc_dp
+# healthcare_chronic
+Runs a dynamic program to determine optimal behavior in an upcoming experiment
+
 TODO:
-  * Add tests for remaining classes
-  * Add parameter file reader
-	* Add factories for the diffent healthcare functions
-  * Improve output capabilities
-	* Write a representative path generators.
+  * Add unit tests
+  * Add modified Gompertz-Makeham probability functions
   
