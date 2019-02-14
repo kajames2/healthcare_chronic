@@ -10,81 +10,32 @@ namespace dp {
 
 using namespace healthcare;
 
-DecisionCache::DecisionCache(Configuration config, DecisionEvaluator eval, int age)
-    : config_(config),
-      eval_(eval),
+DecisionCache::DecisionCache(Configuration config, DecisionEvaluator eval,
+                             int age)
+    : config_(std::move(config)),
+      eval_(std::move(eval)),
       age_(age),
-      counts_(BuildCounts()),
-      decisions_(BuildDecisions()) {}
+      counts_(config_.max_shocks + 1),
+      decisions_(config_.max_shocks + 1) {
+  BuildCache();
+}
 
-std::vector<std::vector<std::vector<int>>> DecisionCache::BuildCounts() const {
-  std::vector<std::vector<std::vector<int>>> counts;
-  counts.reserve(config_.max_shocks);
+void DecisionCache::BuildCache() {
   for (int shocks = 0; shocks <= config_.max_shocks; ++shocks) {
-    std::vector<std::vector<int>> sub_counts;
     for (int fit = 0; fit <= config_.max_fitness; ++fit) {
-      sub_counts.push_back(BuildShocksCounts(shocks, fit));
-    }
-    counts.push_back(sub_counts);
-  }
-  return counts;
-}
-
-std::vector<int> DecisionCache::BuildShocksCounts(int shocks, int fit) const {
-  int max_b = config_.max_budget;
-  std::vector<int> counts(max_b + 1, 1);
-  for (int budget = 0; budget <= max_b; ++budget) {
-    counts[budget] = NOptionsExactBudget(shocks, fit, budget);
-  }
-  std::partial_sum(counts.begin(), counts.end(), counts.begin());
-  return counts;
-}
-
-int DecisionCache::NOptionsExactBudget(int shocks, int fitness,
-                                       int budget) const {
-  int insurance_cost = config_.insurance->GetPrice(age_, shocks, fitness);
-  int min_fitness = config_.fitness->GetFitness(fitness, 0);
-  int max_fitness = config_.fitness->GetFitness(fitness, budget);
-  int max_fitness_ins =
-      insurance_cost <= budget
-          ? config_.fitness->GetFitness(fitness, budget - insurance_cost)
-          : -1;
-  int n_options = 0;
-
-  // Ensure these fitness levels are actually attainable
-  for (int f = min_fitness; f <= max_fitness_ins; ++f) {
-    if (config_.fitness->GetFitnessCost(fitness, f) <= budget) {
-      n_options += 2;
+      BuildShockFitnessCache(shocks, fit);
     }
   }
-  for (int f = max_fitness_ins + 1; f <= max_fitness; ++f) {
-    if (config_.fitness->GetFitnessCost(fitness, f) <= budget) {
-      n_options += 1;
-    }
-  }
-
-  return n_options;
 }
 
-std::vector<std::vector<std::vector<DecisionResults>>>
-DecisionCache::BuildDecisions() const {
-  std::vector<std::vector<std::vector<DecisionResults>>> decs;
-  for (int shocks = 0; shocks <= config_.max_shocks; ++shocks) {
-    std::vector<std::vector<DecisionResults>> sub_decs;
-    for (int fit = 0; fit <= config_.max_fitness; ++fit) {
-      sub_decs.push_back(BuildShocksDecisions(shocks, fit));
-    }
-    decs.push_back(sub_decs);
-  }
-  return decs;
-}
-
-std::vector<DecisionResults> DecisionCache::BuildShocksDecisions(
-    int shocks, int fitness) const {
+void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
   std::vector<Decision> decs;
   int insurance_cost = config_.insurance->GetPrice(age_, shocks, fitness);
   int min_fitness = config_.fitness->GetFitness(fitness, 0);
   int max_fitness = config_.fitness->GetFitness(fitness, config_.max_budget);
+
+  // You can always purchase insurance (and nothing else)
+  decs.push_back(Decision{0, 0, insurance_cost});
 
   for (int fit = min_fitness; fit <= max_fitness; ++fit) {
     int fit_cost = config_.fitness->GetFitnessCost(fitness, fit);
@@ -99,9 +50,19 @@ std::vector<DecisionResults> DecisionCache::BuildShocksDecisions(
     }
   }
 
-  std::stable_sort(decs.begin(), decs.end(), [](Decision dec, Decision dec2) {
-    return TotalSpending(dec) < TotalSpending(dec2);
-  });
+  // Sort all except the guaranteed insurance purchase
+  std::stable_sort(decs.begin() + 1, decs.end(),
+                   [](Decision dec, Decision dec2) {
+                     return TotalSpending(dec) < TotalSpending(dec2);
+                   });
+
+  std::vector<int> counts(config_.max_budget + 1, 0);
+  // Account for guaranteed insurance purchase option
+  counts[0] = 1;
+  for (auto dec = decs.begin() + 1; dec != decs.end(); ++dec) {
+    ++counts[TotalSpending(*dec)];
+  }
+  std::partial_sum(counts.begin(), counts.end(), counts.begin());
 
   std::vector<DecisionResults> res;
   std::transform(
@@ -109,7 +70,9 @@ std::vector<DecisionResults> DecisionCache::BuildShocksDecisions(
       [this, shocks, fitness](const Decision& dec) {
         return eval_.GetDecisionResults({age_, shocks, fitness, 0}, dec);
       });
-  return res;
+
+  decisions_[shocks].push_back(res);
+  counts_[shocks].push_back(counts);
 }
 
 }  // namespace dp

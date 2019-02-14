@@ -5,7 +5,8 @@
 namespace healthcare {
 
 bool operator==(const Person& lhs, const Person& rhs) {
-  return lhs.age == rhs.age && lhs.shocks == rhs.shocks && lhs.fitness == rhs.fitness && lhs.cash == rhs.cash;
+  return lhs.age == rhs.age && lhs.shocks == rhs.shocks &&
+         lhs.fitness == rhs.fitness && lhs.cash == rhs.cash;
 }
 
 std::ostream& operator<<(std::ostream& out, const Person& p) {

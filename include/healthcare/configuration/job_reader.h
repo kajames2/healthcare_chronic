@@ -16,6 +16,8 @@ std::unique_ptr<const healthcare::Job> ReadFlatJob(
     boost::property_tree::ptree job_config);
 std::unique_ptr<const healthcare::Job> ReadAgeLinearJob(
     boost::property_tree::ptree job_config);
+std::unique_ptr<const healthcare::Job> ReadDefinedJob(
+    boost::property_tree::ptree job_config);
 }  // namespace configuration
 }  // namespace healthcare
 

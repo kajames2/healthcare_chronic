@@ -1,4 +1,4 @@
-CC := g++
+CC := clang++
 SRCDIR := src
 BUILDDIR := build
 TESTDIR := test
@@ -10,7 +10,7 @@ TESTS := $(shell find $(TESTDIR) -type f -name "*.$(SRCEXT)")
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 TESTOBJECTS := $(patsubst $(TESTDIR)/%,$(BUILDDIR)/%,$(TESTS:.$(SRCEXT)=.o))
 CFLAGS := -Wall -g -std=c++17 -O3 -fopenmp
-LIB := -Wl,--start-group -lgtest -lgtest_main -lpthread -lboost_filesystem-mt -lboost_system-mt -lboost_program_options-mt -Llib/ -Wl,--end-group 
+LIB := -Wl,--start-group -lgtest -lgtest_main -lpthread -lboost_filesystem -lboost_system -lboost_program_options -Llib/ -Wl,--end-group 
 INC := -I include -I lib
 
 $(TARGET): $(OBJECTS)

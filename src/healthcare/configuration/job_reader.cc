@@ -8,6 +8,7 @@
 #include "healthcare/job.h"
 #include "healthcare/job/flat.h"
 #include "healthcare/job/age_linear.h"
+#include "healthcare/job/defined.h"
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -23,6 +24,8 @@ std::unique_ptr<const healthcare::Job> ReadJob(
     job = ReadFlatJob(job_config);
   } else if (type == "AgeLinear") {
     job = ReadAgeLinearJob(job_config);
+  } else if (type == "Defined") {
+    job = ReadDefinedJob(job_config);
   } else {
     assert(false && "Unsupported job type");
     job = std::unique_ptr<const healthcare::Job>();
@@ -41,6 +44,15 @@ std::unique_ptr<const healthcare::Job> ReadAgeLinearJob(
   float intercept = job_config.get<float>("intercept");
   float slope = job_config.get<float>("slope");
   return std::make_unique<healthcare::job::AgeLinear>(intercept, slope);
+}
+
+std::unique_ptr<const healthcare::Job> ReadDefinedJob(
+    boost::property_tree::ptree job_config) {
+  std::vector<int> incomes;
+  for (auto& cell : job_config.get_child("incomes")) {
+    incomes.emplace_back(cell.second.get_value<int>());
+  }
+  return std::make_unique<healthcare::job::Defined>(incomes);
 }
 
 

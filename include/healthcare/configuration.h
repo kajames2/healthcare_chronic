@@ -18,6 +18,7 @@ struct Configuration {
   int min_savings;
   int max_budget;
   float min_debt_payment;
+  float discount;
   std::shared_ptr<const healthcare::Job> job;
   std::shared_ptr<const healthcare::Fitness> fitness;
   std::shared_ptr<const healthcare::Enjoyment> joy;

@@ -44,17 +44,11 @@ class DecisionCache {
   const healthcare::Configuration config_;
   const healthcare::DecisionEvaluator eval_;
   int age_;
-  const std::vector<std::vector<std::vector<int>>> counts_;
-  const std::vector<std::vector<std::vector<healthcare::DecisionResults>>>
-      decisions_;
+  std::vector<std::vector<std::vector<int>>> counts_;
+  std::vector<std::vector<std::vector<healthcare::DecisionResults>>> decisions_;
 
-  std::vector<std::vector<std::vector<int>>> BuildCounts() const;
-  std::vector<int> BuildShocksCounts(int shocks, int fitness) const;
-  int NOptionsExactBudget(int conds, int fitness, int budget) const;
-  std::vector<std::vector<std::vector<healthcare::DecisionResults>>>
-  BuildDecisions() const;
-  std::vector<healthcare::DecisionResults> BuildShocksDecisions(
-      int shocks, int fitness) const;
+  void BuildCache();
+  void BuildShockFitnessCache(int shocks, int fitness);
 };
 
 }  // namespace dp

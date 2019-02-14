@@ -113,7 +113,7 @@ std::ostream& operator<<(std::ostream& out, const Storage& s) {
             << std::setw(shocks_size) << opt.result.person.shocks << ","
             << std::setw(fitness_size) << opt.result.person.fitness << ","
             << std::setw(savings_size) << opt.result.person.cash << ","
-            << std::setprecision(2) << std::setw(4) << std::fixed << opt.result.probability << ','
+            << std::setprecision(3) << std::setw(5) << std::fixed << opt.result.probability << ','
             << std::setprecision(2) << std::setw(6) << opt.result.joy << ","
             << std::setprecision(2) << std::setw(6) << opt.result.future_value << ","
             << std::setprecision(2) << std::setw(6) << opt.result.value << "\n";
@@ -129,7 +129,7 @@ std::ostream& operator<<(std::ostream& out, const Storage& s) {
             << std::setw(shocks_size) << opt.result_shock.person.shocks << ","
             << std::setw(fitness_size) << opt.result_shock.person.fitness << ","
             << std::setw(savings_size) << opt.result_shock.person.cash << ","
-            << std::setprecision(2) << std::setw(4) << std::fixed << opt.result_shock.probability << ','
+            << std::setprecision(3) << std::setw(5) << std::fixed << opt.result_shock.probability << ','
             << std::setprecision(2) << std::setw(6) << opt.result_shock.joy << ","
             << std::setprecision(2) << std::setw(6) << opt.result_shock.future_value << ","
             << std::setprecision(2) << std::setw(6) << opt.result_shock.value;

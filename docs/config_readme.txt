@@ -42,6 +42,12 @@ GompertzMakeham				probability follows a Gompertz-Makeham mortality hazard curve
   lambda		real
   alpha			real
   beta			real
+GompertzShocks				Probability follows a modified Gompertz to include shocks and fitness. P(shock) = (age_coeff * e^(age * age_rate) + shock_coeff * e^(shock * shock_rate)) * (max_fitness_modifier * fitness/max_fitness)
+  age_coeff		real
+  age_rate		real
+  shock_coeff		real
+  shock_rate		real
+  max_fitness_modifier	real
 
 insurance		object		the cost of insurance as a function of age, shocks, and fitness.  Insurance prevents the cash loss when shocked.
   type					allowable values: "Actuarial" and "Fixed"

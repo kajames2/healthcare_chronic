@@ -106,7 +106,7 @@ std::pair<boost::filesystem::path, boost::filesystem::path> GetPaths(
 
 void RunOptimization(const Configuration& config, std::string out_dir,
                      std::string basename) {
-  std::string max_filename = out_dir + '/' + basename + "_max.csv";
+  std::string max_filename = out_dir + '/' + basename + ".csv";
   std::ofstream max_stream(max_filename, std::ofstream::out);
   // std::string min_filename = out_dir + '/' + basename + "_min.csv";
   // std::ofstream min_stream(min_filename, std::ofstream::out);
@@ -186,15 +186,14 @@ void StoreAgeOptimals(Storage& storage, Storage& storage_min,
     std::for_each(
         dec_states.begin(), dec_states.end(),
         [&opt_lookup, &cur_state, &config](DecisionResults& pair) -> void {
-          pair.result.person.age += cur_state.age;
           pair.result.person.cash =
               cur_state.cash + cur_state.income - pair.result.spending;
           pair.result.person.cash = std::clamp(
               pair.result.person.cash, config.min_savings, config.max_savings);
           pair.result.future_value = opt_lookup(pair.result.person);
-          pair.result.value += pair.result.joy + pair.result.future_value;
+          pair.result.value +=
+              pair.result.joy + config.discount * pair.result.future_value;
 
-          pair.result_shock.person.age += cur_state.age;
           pair.result_shock.person.cash =
               cur_state.cash + cur_state.income - pair.result_shock.spending;
           pair.result_shock.person.cash =
@@ -202,7 +201,8 @@ void StoreAgeOptimals(Storage& storage, Storage& storage_min,
                          config.max_savings);
           pair.result_shock.future_value = opt_lookup(pair.result_shock.person);
           pair.result_shock.value +=
-              pair.result_shock.joy + pair.result_shock.future_value;
+              pair.result_shock.joy +
+              config.discount * pair.result_shock.future_value;
           pair.value = ExpectedUtility(pair);
         });
 

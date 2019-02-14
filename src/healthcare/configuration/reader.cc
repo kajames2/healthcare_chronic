@@ -43,10 +43,16 @@ Configuration ReadConfigurationFile(std::string filename) {
   config.fitness = ReadFitnesses(root.get_child("fitnesses"),
                                  config.max_fitness, config.max_budget);
   config.joy = ReadEnjoyment(root.get_child("enjoyment"), config.max_shocks);
-  config.shock_prob = ReadProb(root.get_child("probability"));
+  config.shock_prob = ReadProb(root.get_child("probability"), config.max_fitness);
   config.shock_income_size = root.get<int>("shock_income_size");
   config.shock_count_size = root.get<int>("shock_count_size");
   config.insurance = ReadInsurance(root.get_child("insurance"), config);
+  if (root.count("discount") == 0) {
+    config.discount = 1;
+  } else {
+    config.discount = root.get<float>("discount");
+  }
+  
   return config;
 }
 
