@@ -6,7 +6,7 @@ lib/*
 bin/*
 
 # Ignore any configuration files
-configs
+configs/*
 
 # Prerequisites
 *.d
