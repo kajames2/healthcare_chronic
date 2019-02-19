@@ -1,6 +1,7 @@
 #!/bin/bash
 
-DESTINATION="/home/kajames/Dropbox/Health Care Parameters/"
+mkdir -p output
+DESTINATION="output/"
 for file in configs/*.json
 do
     echo bin/healthdp --i $file --o "$DESTINATION"

@@ -5,6 +5,9 @@ lib/*
 # Ignore any executables
 bin/*
 
+# Ignore the output directory
+output
+
 # Prerequisites
 *.d
 
