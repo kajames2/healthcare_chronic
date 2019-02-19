@@ -29,7 +29,7 @@ void RunOptimization(const Configuration& config, std::string out_dir,
 std::vector<PersonIncome> CreateTemplateStates(int age,
                                                const Configuration& config);
 
-void StoreAgeOptimals(Storage& storage, Storage& min_storage,
+void StoreAgeOptimals(Storage& storage,
                       std::function<float(const Person&)> opt_lookup,
                       const DecisionCache& dec_cache,
                       const std::vector<PersonIncome>& init_states,
@@ -108,17 +108,16 @@ void RunOptimization(const Configuration& config, std::string out_dir,
                      std::string basename) {
   std::string max_filename = out_dir + '/' + basename + ".csv";
   std::ofstream max_stream(max_filename, std::ofstream::out);
-  // std::string min_filename = out_dir + '/' + basename + "_min.csv";
-  // std::ofstream min_stream(min_filename, std::ofstream::out);
+
   max_stream << "Age,Shocks,Fitness,Cash,"
                 "FitnessSpending,JoySpending,InsuranceSpending,"
                 "NextAge,NextShocks,NextFitness,NextCash,"
                 "Probability,Enjoyment,FutureValue,Value\n";
 
   Storage opt(config);
-  Storage min(config);
 
   for (int age = config.max_age; age >= 1; --age) {
+    std::cerr << std::string(80, ' ') << std::flush << '\r';
     std::cerr << age << "..." << std::flush;
     std::cerr << "making_cache..." << std::flush;
     DecisionEvaluator evaluator(config, age);
@@ -127,18 +126,17 @@ void RunOptimization(const Configuration& config, std::string out_dir,
     std::cerr << "calculating_optimals..." << std::flush;
     std::vector<PersonIncome> init_states = CreateTemplateStates(age, config);
     if (age == config.max_age) {
-      StoreAgeOptimals(opt, min, [](const Person&) { return 0; }, dec_cache,
+      StoreAgeOptimals(opt, [](const Person&) { return 0; }, dec_cache,
                        init_states, config);
     } else {
       Storage opt_cpy = opt;
       StoreAgeOptimals(
-          opt, min, [&opt_cpy](const Person& p) { return opt_cpy.GetValue(p); },
+          opt, [&opt_cpy](const Person& p) { return opt_cpy.GetValue(p); },
           dec_cache, init_states, config);
     }
     std::cerr << "writing_to_file..." << std::flush;
     max_stream << opt << std::endl;
-    std::cerr << "done!" << std::endl;
-    // min_stream << min << std::endl;
+    std::cerr << "done!" << std::flush << '\r';
   }
 
   max_stream.close();
@@ -166,7 +164,7 @@ std::vector<PersonIncome> CreateTemplateStates(int age,
   return init_states;
 }
 
-void StoreAgeOptimals(Storage& storage, Storage& storage_min,
+void StoreAgeOptimals(Storage& storage,
                       std::function<float(const Person&)> opt_lookup,
                       const DecisionCache& dec_cache,
                       const std::vector<PersonIncome>& init_states,
@@ -206,13 +204,12 @@ void StoreAgeOptimals(Storage& storage, Storage& storage_min,
           pair.value = ExpectedUtility(pair);
         });
 
-    auto opts = std::minmax_element(
+    auto opts = std::max_element(
         dec_states.begin(), dec_states.end(),
         [](const DecisionResults& p1, const DecisionResults& p2) -> bool {
           return p1.value < p2.value;
         });
 
-    storage.StoreResult(init_states[cur], *opts.second);
-    storage_min.StoreResult(init_states[cur], *opts.first);
+    storage.StoreResult(init_states[cur], *opts);
   }
 }
