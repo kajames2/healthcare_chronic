@@ -8,6 +8,6 @@ public:
 
 TEST_F(FixedTest, equaltest) {
     healthcare::insurance::Fixed f(10);
-    float total = f.GetPrice(10, 0.8);
+    float total = f.GetPrice(10, 5, 8);
     EXPECT_EQ(total, 10);
 }

@@ -56,16 +56,51 @@ CMAKE_BINARY_DIR = "/home/kajames/Dropbox/Health Care Insurance/Model2"
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
 
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
 
-.PHONY : rebuild_cache/fast
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -77,6 +112,17 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -111,6 +157,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named tests_main
+
+# Build rule for target.
+tests_main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tests_main
+.PHONY : tests_main
+
+# fast build rule for target.
+tests_main/fast:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/build
+.PHONY : tests_main/fast
+
+#=============================================================================
 # Target rules for targets named healthdp
 
 # Build rule for target.
@@ -122,6 +181,58 @@ healthdp: cmake_check_build_system
 healthdp/fast:
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/build
 .PHONY : healthdp/fast
+
+#=============================================================================
+# Target rules for targets named gmock_main
+
+# Build rule for target.
+gmock_main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gmock_main
+.PHONY : gmock_main
+
+# fast build rule for target.
+gmock_main/fast:
+	$(MAKE) -f bin/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build.make bin/googletest-build/googlemock/CMakeFiles/gmock_main.dir/build
+.PHONY : gmock_main/fast
+
+#=============================================================================
+# Target rules for targets named gmock
+
+# Build rule for target.
+gmock: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gmock
+.PHONY : gmock
+
+# fast build rule for target.
+gmock/fast:
+	$(MAKE) -f bin/googletest-build/googlemock/CMakeFiles/gmock.dir/build.make bin/googletest-build/googlemock/CMakeFiles/gmock.dir/build
+.PHONY : gmock/fast
+
+#=============================================================================
+# Target rules for targets named gtest_main
+
+# Build rule for target.
+gtest_main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gtest_main
+.PHONY : gtest_main
+
+# fast build rule for target.
+gtest_main/fast:
+	$(MAKE) -f bin/googletest-build/googlemock/gtest/CMakeFiles/gtest_main.dir/build.make bin/googletest-build/googlemock/gtest/CMakeFiles/gtest_main.dir/build
+.PHONY : gtest_main/fast
+
+#=============================================================================
+# Target rules for targets named gtest
+
+# Build rule for target.
+gtest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gtest
+.PHONY : gtest
+
+# fast build rule for target.
+gtest/fast:
+	$(MAKE) -f bin/googletest-build/googlemock/gtest/CMakeFiles/gtest.dir/build.make bin/googletest-build/googlemock/gtest/CMakeFiles/gtest.dir/build
+.PHONY : gtest/fast
 
 health_dp_main.o: health_dp_main.cc.o
 
@@ -156,6 +267,7 @@ src/dp/decision_cache.o: src/dp/decision_cache.cc.o
 
 # target to build an object file
 src/dp/decision_cache.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/dp/decision_cache.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/dp/decision_cache.cc.o
 .PHONY : src/dp/decision_cache.cc.o
 
@@ -165,6 +277,7 @@ src/dp/decision_cache.i: src/dp/decision_cache.cc.i
 
 # target to preprocess a source file
 src/dp/decision_cache.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/dp/decision_cache.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/dp/decision_cache.cc.i
 .PHONY : src/dp/decision_cache.cc.i
 
@@ -174,6 +287,7 @@ src/dp/decision_cache.s: src/dp/decision_cache.cc.s
 
 # target to generate assembly for a file
 src/dp/decision_cache.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/dp/decision_cache.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/dp/decision_cache.cc.s
 .PHONY : src/dp/decision_cache.cc.s
 
@@ -183,6 +297,7 @@ src/healthcare/configuration/fitness_reader.o: src/healthcare/configuration/fitn
 
 # target to build an object file
 src/healthcare/configuration/fitness_reader.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/fitness_reader.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/fitness_reader.cc.o
 .PHONY : src/healthcare/configuration/fitness_reader.cc.o
 
@@ -192,6 +307,7 @@ src/healthcare/configuration/fitness_reader.i: src/healthcare/configuration/fitn
 
 # target to preprocess a source file
 src/healthcare/configuration/fitness_reader.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/fitness_reader.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/fitness_reader.cc.i
 .PHONY : src/healthcare/configuration/fitness_reader.cc.i
 
@@ -201,6 +317,7 @@ src/healthcare/configuration/fitness_reader.s: src/healthcare/configuration/fitn
 
 # target to generate assembly for a file
 src/healthcare/configuration/fitness_reader.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/fitness_reader.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/fitness_reader.cc.s
 .PHONY : src/healthcare/configuration/fitness_reader.cc.s
 
@@ -210,6 +327,7 @@ src/healthcare/configuration/insurance_reader.o: src/healthcare/configuration/in
 
 # target to build an object file
 src/healthcare/configuration/insurance_reader.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/insurance_reader.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/insurance_reader.cc.o
 .PHONY : src/healthcare/configuration/insurance_reader.cc.o
 
@@ -219,6 +337,7 @@ src/healthcare/configuration/insurance_reader.i: src/healthcare/configuration/in
 
 # target to preprocess a source file
 src/healthcare/configuration/insurance_reader.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/insurance_reader.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/insurance_reader.cc.i
 .PHONY : src/healthcare/configuration/insurance_reader.cc.i
 
@@ -228,6 +347,7 @@ src/healthcare/configuration/insurance_reader.s: src/healthcare/configuration/in
 
 # target to generate assembly for a file
 src/healthcare/configuration/insurance_reader.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/insurance_reader.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/insurance_reader.cc.s
 .PHONY : src/healthcare/configuration/insurance_reader.cc.s
 
@@ -237,6 +357,7 @@ src/healthcare/configuration/job_reader.o: src/healthcare/configuration/job_read
 
 # target to build an object file
 src/healthcare/configuration/job_reader.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/job_reader.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/job_reader.cc.o
 .PHONY : src/healthcare/configuration/job_reader.cc.o
 
@@ -246,6 +367,7 @@ src/healthcare/configuration/job_reader.i: src/healthcare/configuration/job_read
 
 # target to preprocess a source file
 src/healthcare/configuration/job_reader.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/job_reader.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/job_reader.cc.i
 .PHONY : src/healthcare/configuration/job_reader.cc.i
 
@@ -255,6 +377,7 @@ src/healthcare/configuration/job_reader.s: src/healthcare/configuration/job_read
 
 # target to generate assembly for a file
 src/healthcare/configuration/job_reader.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/job_reader.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/job_reader.cc.s
 .PHONY : src/healthcare/configuration/job_reader.cc.s
 
@@ -264,6 +387,7 @@ src/healthcare/configuration/joy_reader.o: src/healthcare/configuration/joy_read
 
 # target to build an object file
 src/healthcare/configuration/joy_reader.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/joy_reader.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/joy_reader.cc.o
 .PHONY : src/healthcare/configuration/joy_reader.cc.o
 
@@ -273,6 +397,7 @@ src/healthcare/configuration/joy_reader.i: src/healthcare/configuration/joy_read
 
 # target to preprocess a source file
 src/healthcare/configuration/joy_reader.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/joy_reader.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/joy_reader.cc.i
 .PHONY : src/healthcare/configuration/joy_reader.cc.i
 
@@ -282,6 +407,7 @@ src/healthcare/configuration/joy_reader.s: src/healthcare/configuration/joy_read
 
 # target to generate assembly for a file
 src/healthcare/configuration/joy_reader.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/joy_reader.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/joy_reader.cc.s
 .PHONY : src/healthcare/configuration/joy_reader.cc.s
 
@@ -291,6 +417,7 @@ src/healthcare/configuration/prob_reader.o: src/healthcare/configuration/prob_re
 
 # target to build an object file
 src/healthcare/configuration/prob_reader.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/prob_reader.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/prob_reader.cc.o
 .PHONY : src/healthcare/configuration/prob_reader.cc.o
 
@@ -300,6 +427,7 @@ src/healthcare/configuration/prob_reader.i: src/healthcare/configuration/prob_re
 
 # target to preprocess a source file
 src/healthcare/configuration/prob_reader.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/prob_reader.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/prob_reader.cc.i
 .PHONY : src/healthcare/configuration/prob_reader.cc.i
 
@@ -309,6 +437,7 @@ src/healthcare/configuration/prob_reader.s: src/healthcare/configuration/prob_re
 
 # target to generate assembly for a file
 src/healthcare/configuration/prob_reader.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/prob_reader.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/prob_reader.cc.s
 .PHONY : src/healthcare/configuration/prob_reader.cc.s
 
@@ -318,6 +447,7 @@ src/healthcare/configuration/reader.o: src/healthcare/configuration/reader.cc.o
 
 # target to build an object file
 src/healthcare/configuration/reader.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/reader.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/reader.cc.o
 .PHONY : src/healthcare/configuration/reader.cc.o
 
@@ -327,6 +457,7 @@ src/healthcare/configuration/reader.i: src/healthcare/configuration/reader.cc.i
 
 # target to preprocess a source file
 src/healthcare/configuration/reader.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/reader.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/reader.cc.i
 .PHONY : src/healthcare/configuration/reader.cc.i
 
@@ -336,6 +467,7 @@ src/healthcare/configuration/reader.s: src/healthcare/configuration/reader.cc.s
 
 # target to generate assembly for a file
 src/healthcare/configuration/reader.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/reader.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/reader.cc.s
 .PHONY : src/healthcare/configuration/reader.cc.s
 
@@ -345,6 +477,7 @@ src/healthcare/decision.o: src/healthcare/decision.cc.o
 
 # target to build an object file
 src/healthcare/decision.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/decision.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/decision.cc.o
 .PHONY : src/healthcare/decision.cc.o
 
@@ -354,6 +487,7 @@ src/healthcare/decision.i: src/healthcare/decision.cc.i
 
 # target to preprocess a source file
 src/healthcare/decision.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/decision.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/decision.cc.i
 .PHONY : src/healthcare/decision.cc.i
 
@@ -363,6 +497,7 @@ src/healthcare/decision.s: src/healthcare/decision.cc.s
 
 # target to generate assembly for a file
 src/healthcare/decision.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/decision.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/decision.cc.s
 .PHONY : src/healthcare/decision.cc.s
 
@@ -372,6 +507,7 @@ src/healthcare/decision_evaluator.o: src/healthcare/decision_evaluator.cc.o
 
 # target to build an object file
 src/healthcare/decision_evaluator.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/decision_evaluator.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/decision_evaluator.cc.o
 .PHONY : src/healthcare/decision_evaluator.cc.o
 
@@ -381,6 +517,7 @@ src/healthcare/decision_evaluator.i: src/healthcare/decision_evaluator.cc.i
 
 # target to preprocess a source file
 src/healthcare/decision_evaluator.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/decision_evaluator.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/decision_evaluator.cc.i
 .PHONY : src/healthcare/decision_evaluator.cc.i
 
@@ -390,6 +527,7 @@ src/healthcare/decision_evaluator.s: src/healthcare/decision_evaluator.cc.s
 
 # target to generate assembly for a file
 src/healthcare/decision_evaluator.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/decision_evaluator.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/decision_evaluator.cc.s
 .PHONY : src/healthcare/decision_evaluator.cc.s
 
@@ -399,6 +537,7 @@ src/healthcare/enjoyment/fractional.o: src/healthcare/enjoyment/fractional.cc.o
 
 # target to build an object file
 src/healthcare/enjoyment/fractional.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/enjoyment/fractional.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/enjoyment/fractional.cc.o
 .PHONY : src/healthcare/enjoyment/fractional.cc.o
 
@@ -408,6 +547,7 @@ src/healthcare/enjoyment/fractional.i: src/healthcare/enjoyment/fractional.cc.i
 
 # target to preprocess a source file
 src/healthcare/enjoyment/fractional.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/enjoyment/fractional.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/enjoyment/fractional.cc.i
 .PHONY : src/healthcare/enjoyment/fractional.cc.i
 
@@ -417,6 +557,7 @@ src/healthcare/enjoyment/fractional.s: src/healthcare/enjoyment/fractional.cc.s
 
 # target to generate assembly for a file
 src/healthcare/enjoyment/fractional.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/enjoyment/fractional.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/enjoyment/fractional.cc.s
 .PHONY : src/healthcare/enjoyment/fractional.cc.s
 
@@ -426,6 +567,7 @@ src/healthcare/fitness/composite.o: src/healthcare/fitness/composite.cc.o
 
 # target to build an object file
 src/healthcare/fitness/composite.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/fitness/composite.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness/composite.cc.o
 .PHONY : src/healthcare/fitness/composite.cc.o
 
@@ -435,6 +577,7 @@ src/healthcare/fitness/composite.i: src/healthcare/fitness/composite.cc.i
 
 # target to preprocess a source file
 src/healthcare/fitness/composite.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/fitness/composite.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness/composite.cc.i
 .PHONY : src/healthcare/fitness/composite.cc.i
 
@@ -444,6 +587,7 @@ src/healthcare/fitness/composite.s: src/healthcare/fitness/composite.cc.s
 
 # target to generate assembly for a file
 src/healthcare/fitness/composite.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/fitness/composite.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness/composite.cc.s
 .PHONY : src/healthcare/fitness/composite.cc.s
 
@@ -453,6 +597,7 @@ src/healthcare/fitness/fixed_price.o: src/healthcare/fitness/fixed_price.cc.o
 
 # target to build an object file
 src/healthcare/fitness/fixed_price.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/fitness/fixed_price.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness/fixed_price.cc.o
 .PHONY : src/healthcare/fitness/fixed_price.cc.o
 
@@ -462,6 +607,7 @@ src/healthcare/fitness/fixed_price.i: src/healthcare/fitness/fixed_price.cc.i
 
 # target to preprocess a source file
 src/healthcare/fitness/fixed_price.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/fitness/fixed_price.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness/fixed_price.cc.i
 .PHONY : src/healthcare/fitness/fixed_price.cc.i
 
@@ -471,6 +617,7 @@ src/healthcare/fitness/fixed_price.s: src/healthcare/fitness/fixed_price.cc.s
 
 # target to generate assembly for a file
 src/healthcare/fitness/fixed_price.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/fitness/fixed_price.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness/fixed_price.cc.s
 .PHONY : src/healthcare/fitness/fixed_price.cc.s
 
@@ -480,6 +627,7 @@ src/healthcare/period_result.o: src/healthcare/period_result.cc.o
 
 # target to build an object file
 src/healthcare/period_result.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/period_result.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/period_result.cc.o
 .PHONY : src/healthcare/period_result.cc.o
 
@@ -489,6 +637,7 @@ src/healthcare/period_result.i: src/healthcare/period_result.cc.i
 
 # target to preprocess a source file
 src/healthcare/period_result.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/period_result.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/period_result.cc.i
 .PHONY : src/healthcare/period_result.cc.i
 
@@ -498,6 +647,7 @@ src/healthcare/period_result.s: src/healthcare/period_result.cc.s
 
 # target to generate assembly for a file
 src/healthcare/period_result.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/period_result.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/period_result.cc.s
 .PHONY : src/healthcare/period_result.cc.s
 
@@ -507,6 +657,7 @@ src/healthcare/person.o: src/healthcare/person.cc.o
 
 # target to build an object file
 src/healthcare/person.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/person.cc.o
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/person.cc.o
 .PHONY : src/healthcare/person.cc.o
 
@@ -516,6 +667,7 @@ src/healthcare/person.i: src/healthcare/person.cc.i
 
 # target to preprocess a source file
 src/healthcare/person.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/person.cc.i
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/person.cc.i
 .PHONY : src/healthcare/person.cc.i
 
@@ -525,8 +677,333 @@ src/healthcare/person.s: src/healthcare/person.cc.s
 
 # target to generate assembly for a file
 src/healthcare/person.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/person.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/person.cc.s
 .PHONY : src/healthcare/person.cc.s
+
+test/healthcare/decision_test.o: test/healthcare/decision_test.cc.o
+
+.PHONY : test/healthcare/decision_test.o
+
+# target to build an object file
+test/healthcare/decision_test.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/decision_test.cc.o
+.PHONY : test/healthcare/decision_test.cc.o
+
+test/healthcare/decision_test.i: test/healthcare/decision_test.cc.i
+
+.PHONY : test/healthcare/decision_test.i
+
+# target to preprocess a source file
+test/healthcare/decision_test.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/decision_test.cc.i
+.PHONY : test/healthcare/decision_test.cc.i
+
+test/healthcare/decision_test.s: test/healthcare/decision_test.cc.s
+
+.PHONY : test/healthcare/decision_test.s
+
+# target to generate assembly for a file
+test/healthcare/decision_test.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/decision_test.cc.s
+.PHONY : test/healthcare/decision_test.cc.s
+
+test/healthcare/enjoyment/frational.o: test/healthcare/enjoyment/frational.cc.o
+
+.PHONY : test/healthcare/enjoyment/frational.o
+
+# target to build an object file
+test/healthcare/enjoyment/frational.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/enjoyment/frational.cc.o
+.PHONY : test/healthcare/enjoyment/frational.cc.o
+
+test/healthcare/enjoyment/frational.i: test/healthcare/enjoyment/frational.cc.i
+
+.PHONY : test/healthcare/enjoyment/frational.i
+
+# target to preprocess a source file
+test/healthcare/enjoyment/frational.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/enjoyment/frational.cc.i
+.PHONY : test/healthcare/enjoyment/frational.cc.i
+
+test/healthcare/enjoyment/frational.s: test/healthcare/enjoyment/frational.cc.s
+
+.PHONY : test/healthcare/enjoyment/frational.s
+
+# target to generate assembly for a file
+test/healthcare/enjoyment/frational.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/enjoyment/frational.cc.s
+.PHONY : test/healthcare/enjoyment/frational.cc.s
+
+test/healthcare/fitness/composite_tests.o: test/healthcare/fitness/composite_tests.cc.o
+
+.PHONY : test/healthcare/fitness/composite_tests.o
+
+# target to build an object file
+test/healthcare/fitness/composite_tests.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/fitness/composite_tests.cc.o
+.PHONY : test/healthcare/fitness/composite_tests.cc.o
+
+test/healthcare/fitness/composite_tests.i: test/healthcare/fitness/composite_tests.cc.i
+
+.PHONY : test/healthcare/fitness/composite_tests.i
+
+# target to preprocess a source file
+test/healthcare/fitness/composite_tests.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/fitness/composite_tests.cc.i
+.PHONY : test/healthcare/fitness/composite_tests.cc.i
+
+test/healthcare/fitness/composite_tests.s: test/healthcare/fitness/composite_tests.cc.s
+
+.PHONY : test/healthcare/fitness/composite_tests.s
+
+# target to generate assembly for a file
+test/healthcare/fitness/composite_tests.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/fitness/composite_tests.cc.s
+.PHONY : test/healthcare/fitness/composite_tests.cc.s
+
+test/healthcare/fitness/fixed_price_tests.o: test/healthcare/fitness/fixed_price_tests.cc.o
+
+.PHONY : test/healthcare/fitness/fixed_price_tests.o
+
+# target to build an object file
+test/healthcare/fitness/fixed_price_tests.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/fitness/fixed_price_tests.cc.o
+.PHONY : test/healthcare/fitness/fixed_price_tests.cc.o
+
+test/healthcare/fitness/fixed_price_tests.i: test/healthcare/fitness/fixed_price_tests.cc.i
+
+.PHONY : test/healthcare/fitness/fixed_price_tests.i
+
+# target to preprocess a source file
+test/healthcare/fitness/fixed_price_tests.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/fitness/fixed_price_tests.cc.i
+.PHONY : test/healthcare/fitness/fixed_price_tests.cc.i
+
+test/healthcare/fitness/fixed_price_tests.s: test/healthcare/fitness/fixed_price_tests.cc.s
+
+.PHONY : test/healthcare/fitness/fixed_price_tests.s
+
+# target to generate assembly for a file
+test/healthcare/fitness/fixed_price_tests.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/fitness/fixed_price_tests.cc.s
+.PHONY : test/healthcare/fitness/fixed_price_tests.cc.s
+
+test/healthcare/fitness/flat_loss_tests.o: test/healthcare/fitness/flat_loss_tests.cc.o
+
+.PHONY : test/healthcare/fitness/flat_loss_tests.o
+
+# target to build an object file
+test/healthcare/fitness/flat_loss_tests.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/fitness/flat_loss_tests.cc.o
+.PHONY : test/healthcare/fitness/flat_loss_tests.cc.o
+
+test/healthcare/fitness/flat_loss_tests.i: test/healthcare/fitness/flat_loss_tests.cc.i
+
+.PHONY : test/healthcare/fitness/flat_loss_tests.i
+
+# target to preprocess a source file
+test/healthcare/fitness/flat_loss_tests.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/fitness/flat_loss_tests.cc.i
+.PHONY : test/healthcare/fitness/flat_loss_tests.cc.i
+
+test/healthcare/fitness/flat_loss_tests.s: test/healthcare/fitness/flat_loss_tests.cc.s
+
+.PHONY : test/healthcare/fitness/flat_loss_tests.s
+
+# target to generate assembly for a file
+test/healthcare/fitness/flat_loss_tests.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/fitness/flat_loss_tests.cc.s
+.PHONY : test/healthcare/fitness/flat_loss_tests.cc.s
+
+test/healthcare/fitness/proportional_loss.o: test/healthcare/fitness/proportional_loss.cc.o
+
+.PHONY : test/healthcare/fitness/proportional_loss.o
+
+# target to build an object file
+test/healthcare/fitness/proportional_loss.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/fitness/proportional_loss.cc.o
+.PHONY : test/healthcare/fitness/proportional_loss.cc.o
+
+test/healthcare/fitness/proportional_loss.i: test/healthcare/fitness/proportional_loss.cc.i
+
+.PHONY : test/healthcare/fitness/proportional_loss.i
+
+# target to preprocess a source file
+test/healthcare/fitness/proportional_loss.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/fitness/proportional_loss.cc.i
+.PHONY : test/healthcare/fitness/proportional_loss.cc.i
+
+test/healthcare/fitness/proportional_loss.s: test/healthcare/fitness/proportional_loss.cc.s
+
+.PHONY : test/healthcare/fitness/proportional_loss.s
+
+# target to generate assembly for a file
+test/healthcare/fitness/proportional_loss.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/fitness/proportional_loss.cc.s
+.PHONY : test/healthcare/fitness/proportional_loss.cc.s
+
+test/healthcare/insurance/actuarial_tests.o: test/healthcare/insurance/actuarial_tests.cc.o
+
+.PHONY : test/healthcare/insurance/actuarial_tests.o
+
+# target to build an object file
+test/healthcare/insurance/actuarial_tests.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/insurance/actuarial_tests.cc.o
+.PHONY : test/healthcare/insurance/actuarial_tests.cc.o
+
+test/healthcare/insurance/actuarial_tests.i: test/healthcare/insurance/actuarial_tests.cc.i
+
+.PHONY : test/healthcare/insurance/actuarial_tests.i
+
+# target to preprocess a source file
+test/healthcare/insurance/actuarial_tests.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/insurance/actuarial_tests.cc.i
+.PHONY : test/healthcare/insurance/actuarial_tests.cc.i
+
+test/healthcare/insurance/actuarial_tests.s: test/healthcare/insurance/actuarial_tests.cc.s
+
+.PHONY : test/healthcare/insurance/actuarial_tests.s
+
+# target to generate assembly for a file
+test/healthcare/insurance/actuarial_tests.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/insurance/actuarial_tests.cc.s
+.PHONY : test/healthcare/insurance/actuarial_tests.cc.s
+
+test/healthcare/insurance/fixed_tests.o: test/healthcare/insurance/fixed_tests.cc.o
+
+.PHONY : test/healthcare/insurance/fixed_tests.o
+
+# target to build an object file
+test/healthcare/insurance/fixed_tests.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/insurance/fixed_tests.cc.o
+.PHONY : test/healthcare/insurance/fixed_tests.cc.o
+
+test/healthcare/insurance/fixed_tests.i: test/healthcare/insurance/fixed_tests.cc.i
+
+.PHONY : test/healthcare/insurance/fixed_tests.i
+
+# target to preprocess a source file
+test/healthcare/insurance/fixed_tests.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/insurance/fixed_tests.cc.i
+.PHONY : test/healthcare/insurance/fixed_tests.cc.i
+
+test/healthcare/insurance/fixed_tests.s: test/healthcare/insurance/fixed_tests.cc.s
+
+.PHONY : test/healthcare/insurance/fixed_tests.s
+
+# target to generate assembly for a file
+test/healthcare/insurance/fixed_tests.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/insurance/fixed_tests.cc.s
+.PHONY : test/healthcare/insurance/fixed_tests.cc.s
+
+test/healthcare/job/age_linear_tests.o: test/healthcare/job/age_linear_tests.cc.o
+
+.PHONY : test/healthcare/job/age_linear_tests.o
+
+# target to build an object file
+test/healthcare/job/age_linear_tests.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/job/age_linear_tests.cc.o
+.PHONY : test/healthcare/job/age_linear_tests.cc.o
+
+test/healthcare/job/age_linear_tests.i: test/healthcare/job/age_linear_tests.cc.i
+
+.PHONY : test/healthcare/job/age_linear_tests.i
+
+# target to preprocess a source file
+test/healthcare/job/age_linear_tests.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/job/age_linear_tests.cc.i
+.PHONY : test/healthcare/job/age_linear_tests.cc.i
+
+test/healthcare/job/age_linear_tests.s: test/healthcare/job/age_linear_tests.cc.s
+
+.PHONY : test/healthcare/job/age_linear_tests.s
+
+# target to generate assembly for a file
+test/healthcare/job/age_linear_tests.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/job/age_linear_tests.cc.s
+.PHONY : test/healthcare/job/age_linear_tests.cc.s
+
+test/healthcare/job/flat_tests.o: test/healthcare/job/flat_tests.cc.o
+
+.PHONY : test/healthcare/job/flat_tests.o
+
+# target to build an object file
+test/healthcare/job/flat_tests.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/job/flat_tests.cc.o
+.PHONY : test/healthcare/job/flat_tests.cc.o
+
+test/healthcare/job/flat_tests.i: test/healthcare/job/flat_tests.cc.i
+
+.PHONY : test/healthcare/job/flat_tests.i
+
+# target to preprocess a source file
+test/healthcare/job/flat_tests.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/job/flat_tests.cc.i
+.PHONY : test/healthcare/job/flat_tests.cc.i
+
+test/healthcare/job/flat_tests.s: test/healthcare/job/flat_tests.cc.s
+
+.PHONY : test/healthcare/job/flat_tests.s
+
+# target to generate assembly for a file
+test/healthcare/job/flat_tests.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/job/flat_tests.cc.s
+.PHONY : test/healthcare/job/flat_tests.cc.s
+
+test/healthcare/person_tests.o: test/healthcare/person_tests.cc.o
+
+.PHONY : test/healthcare/person_tests.o
+
+# target to build an object file
+test/healthcare/person_tests.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/person_tests.cc.o
+.PHONY : test/healthcare/person_tests.cc.o
+
+test/healthcare/person_tests.i: test/healthcare/person_tests.cc.i
+
+.PHONY : test/healthcare/person_tests.i
+
+# target to preprocess a source file
+test/healthcare/person_tests.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/person_tests.cc.i
+.PHONY : test/healthcare/person_tests.cc.i
+
+test/healthcare/person_tests.s: test/healthcare/person_tests.cc.s
+
+.PHONY : test/healthcare/person_tests.s
+
+# target to generate assembly for a file
+test/healthcare/person_tests.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/person_tests.cc.s
+.PHONY : test/healthcare/person_tests.cc.s
+
+tests_main.o: tests_main.cc.o
+
+.PHONY : tests_main.o
+
+# target to build an object file
+tests_main.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/tests_main.cc.o
+.PHONY : tests_main.cc.o
+
+tests_main.i: tests_main.cc.i
+
+.PHONY : tests_main.i
+
+# target to preprocess a source file
+tests_main.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/tests_main.cc.i
+.PHONY : tests_main.cc.i
+
+tests_main.s: tests_main.cc.s
+
+.PHONY : tests_main.s
+
+# target to generate assembly for a file
+tests_main.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/tests_main.cc.s
+.PHONY : tests_main.cc.s
 
 # Help Target
 help:
@@ -534,9 +1011,18 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
+	@echo "... install/strip"
+	@echo "... install/local"
+	@echo "... tests_main"
+	@echo "... install"
 	@echo "... healthdp"
+	@echo "... list_install_components"
 	@echo "... edit_cache"
+	@echo "... rebuild_cache"
+	@echo "... gmock_main"
+	@echo "... gmock"
+	@echo "... gtest_main"
+	@echo "... gtest"
 	@echo "... health_dp_main.o"
 	@echo "... health_dp_main.i"
 	@echo "... health_dp_main.s"
@@ -582,6 +1068,42 @@ help:
 	@echo "... src/healthcare/person.o"
 	@echo "... src/healthcare/person.i"
 	@echo "... src/healthcare/person.s"
+	@echo "... test/healthcare/decision_test.o"
+	@echo "... test/healthcare/decision_test.i"
+	@echo "... test/healthcare/decision_test.s"
+	@echo "... test/healthcare/enjoyment/frational.o"
+	@echo "... test/healthcare/enjoyment/frational.i"
+	@echo "... test/healthcare/enjoyment/frational.s"
+	@echo "... test/healthcare/fitness/composite_tests.o"
+	@echo "... test/healthcare/fitness/composite_tests.i"
+	@echo "... test/healthcare/fitness/composite_tests.s"
+	@echo "... test/healthcare/fitness/fixed_price_tests.o"
+	@echo "... test/healthcare/fitness/fixed_price_tests.i"
+	@echo "... test/healthcare/fitness/fixed_price_tests.s"
+	@echo "... test/healthcare/fitness/flat_loss_tests.o"
+	@echo "... test/healthcare/fitness/flat_loss_tests.i"
+	@echo "... test/healthcare/fitness/flat_loss_tests.s"
+	@echo "... test/healthcare/fitness/proportional_loss.o"
+	@echo "... test/healthcare/fitness/proportional_loss.i"
+	@echo "... test/healthcare/fitness/proportional_loss.s"
+	@echo "... test/healthcare/insurance/actuarial_tests.o"
+	@echo "... test/healthcare/insurance/actuarial_tests.i"
+	@echo "... test/healthcare/insurance/actuarial_tests.s"
+	@echo "... test/healthcare/insurance/fixed_tests.o"
+	@echo "... test/healthcare/insurance/fixed_tests.i"
+	@echo "... test/healthcare/insurance/fixed_tests.s"
+	@echo "... test/healthcare/job/age_linear_tests.o"
+	@echo "... test/healthcare/job/age_linear_tests.i"
+	@echo "... test/healthcare/job/age_linear_tests.s"
+	@echo "... test/healthcare/job/flat_tests.o"
+	@echo "... test/healthcare/job/flat_tests.i"
+	@echo "... test/healthcare/job/flat_tests.s"
+	@echo "... test/healthcare/person_tests.o"
+	@echo "... test/healthcare/person_tests.i"
+	@echo "... test/healthcare/person_tests.s"
+	@echo "... tests_main.o"
+	@echo "... tests_main.i"
+	@echo "... tests_main.s"
 .PHONY : help
 
 
@@ -595,3 +1117,4 @@ help:
 cmake_check_build_system:
 	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
+
