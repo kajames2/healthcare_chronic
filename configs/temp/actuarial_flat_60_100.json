@@ -1,6 +1,6 @@
 {
     "max_age" : 60,
-    "max_fitness" : 50,
+    "max_fitness" : 40,
     "max_shocks" : 10,
     "max_savings" : 100,
     "min_savings" : -400,
@@ -8,18 +8,18 @@
     "shock_income_size" : 200,
     "shock_count_size" : 1,
     "discount" : 1,
-
+    
     "job" :
     {
 	"type" : "AgeLinear",
-	"intercept" : 45,
+	"intercept" : 60,
 	"slope" : 0
     },
     
     "enjoyment" :
     {
 	"type" : "Fractional",
-	"j" : 120,
+	"j" : 80,
 	"shock_emphasis" : 1
     },
 

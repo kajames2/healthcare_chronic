@@ -5,8 +5,8 @@ lib/*
 # Ignore any executables
 bin/*
 
-# Ignore the output directory
-output
+# Ignore output files
+output/*.csv
 
 # Prerequisites
 *.d

@@ -1,13 +1,13 @@
 {
     "max_age" : 60,
-    "max_fitness" : 25,
+    "max_fitness" : 40,
     "max_shocks" : 10,
     "max_savings" : 100,
     "min_savings" : -400,
     "min_debt_payment" : 1,
     "shock_income_size" : 200,
     "shock_count_size" : 1,
-    "discount" : 1,
+    "discount" : 0.90,
     
     "job" :
     {
@@ -19,7 +19,7 @@
     "enjoyment" :
     {
 	"type" : "Fractional",
-	"j" : 60,
+	"j" : 80,
 	"shock_emphasis" : 1
     },
 
@@ -31,7 +31,7 @@
 	},
 	{
 	    "type" : "FixedPrice",
-	    "price" : 5
+	    "price" : 3
 	}
     ],
     
