@@ -1,3 +1,6 @@
+# Ignore configuration files
+config/*
+
 # Ignore the build and lib dirs
 build
 lib/*
