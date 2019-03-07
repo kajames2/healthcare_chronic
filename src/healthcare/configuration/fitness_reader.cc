@@ -9,6 +9,7 @@
 #include "healthcare/fitness/fixed_price.h"
 #include "healthcare/fitness/flat_loss.h"
 #include "healthcare/fitness/proportional_loss.h"
+#include "healthcare/fitness/quadratic_cost.h"
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -38,6 +39,8 @@ std::unique_ptr<const healthcare::Fitness> ReadFitness(
     fit = ReadFlatLossFitness(fit_config);
   } else if (type == "ProportionalLoss") {
     fit = ReadProportionalLossFitness(fit_config);
+  } else if (type == "QuadraticCost") {
+    fit = ReadQuadraticCostFitness(fit_config);
   } else {
     assert(false && "Unsupported Fitness type");
     fit = std::unique_ptr<const healthcare::Fitness>();
@@ -45,10 +48,17 @@ std::unique_ptr<const healthcare::Fitness> ReadFitness(
   return fit;
 }
 
+
 std::unique_ptr<const healthcare::Fitness> ReadFixedPriceFitness(
     boost::property_tree::ptree fit_config) {
   int price = fit_config.get<int>("price");
   return std::make_unique<healthcare::fitness::FixedPrice>(price);
+}
+
+std::unique_ptr<const healthcare::Fitness> ReadQuadraticCostFitness(
+    boost::property_tree::ptree fit_config) {
+  int coeff = fit_config.get<int>("coeff");
+  return std::make_unique<healthcare::fitness::QuadraticCost>(coeff);
 }
 
 std::unique_ptr<const healthcare::Fitness> ReadFlatLossFitness(

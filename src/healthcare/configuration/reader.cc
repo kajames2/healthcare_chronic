@@ -9,7 +9,9 @@
 #include "healthcare/configuration/insurance_reader.h"
 #include "healthcare/configuration/job_reader.h"
 #include "healthcare/configuration/joy_reader.h"
+#include "healthcare/configuration/modulator_reader.h"
 #include "healthcare/configuration/prob_reader.h"
+#include "healthcare/modulator/constant.h"
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -42,17 +44,35 @@ Configuration ReadConfigurationFile(std::string filename) {
   config.max_budget = CalculateMaxBudget(config);
   config.fitness = ReadFitnesses(root.get_child("fitnesses"),
                                  config.max_fitness, config.max_budget);
-  config.joy = ReadEnjoyment(root.get_child("enjoyment"), config.max_shocks);
-  config.shock_prob = ReadProb(root.get_child("probability"), config.max_fitness);
+  config.joy = ReadEnjoyment(root.get_child("enjoyment"));
+  config.shock_prob = ReadProb(root.get_child("probability"));
   config.shock_income_size = root.get<int>("shock_income_size");
   config.shock_count_size = root.get<int>("shock_count_size");
   config.insurance = ReadInsurance(root.get_child("insurance"), config);
+
+  if (root.count("probability_modulation")) {
+    config.shock_prob_mod =
+        ReadModulator(root.get_child("probability_modulation"),
+                      config.max_shocks, config.max_fitness);
+  } else {
+    config.shock_prob_mod = std::make_unique<modulator::Constant>(
+        modulator::Constant::NoModulation());
+  }
+
+  if (root.count("enjoyment_modulation")) {
+    config.joy_mod = ReadModulator(root.get_child("enjoyment_modulation"),
+                                   config.max_shocks, config.max_fitness);
+  } else {
+    config.joy_mod = std::make_unique<modulator::Constant>(
+        modulator::Constant::NoModulation());
+  }
+
   if (root.count("discount") == 0) {
     config.discount = 1;
   } else {
     config.discount = root.get<float>("discount");
   }
-  
+
   return config;
 }
 

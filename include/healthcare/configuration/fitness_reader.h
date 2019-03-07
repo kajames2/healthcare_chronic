@@ -16,6 +16,8 @@ std::unique_ptr<const healthcare::Fitness> ReadFitness(
     boost::property_tree::ptree fitness_config);
 std::unique_ptr<const healthcare::Fitness> ReadFixedPriceFitness(
     boost::property_tree::ptree fitness_config);
+std::unique_ptr<const healthcare::Fitness> ReadQuadraticCostFitness(
+    boost::property_tree::ptree fit_config);
 std::unique_ptr<const healthcare::Fitness> ReadFlatLossFitness(
     boost::property_tree::ptree fitness_config);
 std::unique_ptr<const healthcare::Fitness> ReadProportionalLossFitness(

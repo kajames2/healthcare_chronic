@@ -31,7 +31,8 @@ PeriodResult DecisionEvaluator::ApplyNoShock(PeriodResult res) const {
   return res;
 }
 
-PeriodResult DecisionEvaluator::ApplyShock(PeriodResult res, const Decision& dec) const {
+PeriodResult DecisionEvaluator::ApplyShock(PeriodResult res,
+                                           const Decision& dec) const {
   res.probability = shock_prob_[res.person.shocks][res.person.fitness];
   res.person.shocks += config_.shock_count_size;
   res.person.shocks = std::min(config_.max_shocks, res.person.shocks);
@@ -46,14 +47,16 @@ void DecisionEvaluator::Precalculate() {
   for (int shocks = 0; shocks <= config_.max_shocks; ++shocks) {
     std::vector<std::vector<float>> sub_joy;
     std::vector<float> sub_prob;
-    std::vector<float> sub_health;
     for (int fitness = 0; fitness <= config_.max_fitness; ++fitness) {
       std::vector<float> sub_sub_joy;
       for (int joy_spend = 0; joy_spend <= config_.max_budget; ++joy_spend) {
-        sub_sub_joy.push_back(config_.joy->GetEnjoyment(shocks, joy_spend));
+        sub_sub_joy.push_back(config_.joy->GetEnjoyment(shocks, joy_spend) *
+                              config_.joy_mod->GetModulation(shocks, fitness));
       }
       sub_joy.push_back(sub_sub_joy);
-      sub_prob.push_back(config_.shock_prob->GetProbability(age_, shocks, fitness));
+      sub_prob.push_back(
+          config_.shock_prob->GetProbability(age_, shocks, fitness) *
+          config_.shock_prob_mod->GetModulation(shocks, fitness));
     }
     joy_.push_back(sub_joy);
     shock_prob_.push_back(sub_prob);

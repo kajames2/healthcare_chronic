@@ -11,9 +11,9 @@ namespace healthcare {
 namespace configuration {
 
 std::unique_ptr<const healthcare::Enjoyment> ReadEnjoyment(
-    boost::property_tree::ptree joy_config, int max_shocks);
+    boost::property_tree::ptree joy_config);
 std::unique_ptr<const healthcare::Enjoyment> ReadFractionalJoy(
-    boost::property_tree::ptree joy_config, int max_shocks);
+    boost::property_tree::ptree joy_config);
 
 }  // namespace configuration
 }  // namespace healthcare

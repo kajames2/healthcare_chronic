@@ -13,7 +13,7 @@ class ProportionalLoss : public Fitness {
  public:
   ProportionalLoss(double rate) : rate_(rate) {}
   int GetFitness(int fitness, int fitness_investment) const override {
-    return std::max(0, static_cast<int>(std::round((1 - rate_) * fitness)));
+    return std::max(0, static_cast<int>((1 - rate_) * fitness));
   }
   int GetFitnessCost(int fitness, int end_fitness) const override {
     return end_fitness == GetFitness(fitness, 0) ? 0 : 10000;

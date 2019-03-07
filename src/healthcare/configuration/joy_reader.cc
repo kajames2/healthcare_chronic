@@ -14,11 +14,11 @@ namespace healthcare {
 namespace configuration {
 
 std::unique_ptr<const healthcare::Enjoyment> ReadEnjoyment(
-    boost::property_tree::ptree joy_config, int max_shocks) {
+    boost::property_tree::ptree joy_config) {
   std::string type = joy_config.get<std::string>("type");
   std::unique_ptr<const healthcare::Enjoyment> joy;
   if (type == "Fractional") {
-    joy = ReadFractionalJoy(joy_config, max_shocks);
+    joy = ReadFractionalJoy(joy_config);
   } else {
     assert(false && "Unsupported Enjoyment type");
     joy = std::unique_ptr<const healthcare::Enjoyment>();
@@ -27,11 +27,9 @@ std::unique_ptr<const healthcare::Enjoyment> ReadEnjoyment(
 }
 
 std::unique_ptr<const healthcare::Enjoyment> ReadFractionalJoy(
-    boost::property_tree::ptree joy_config, int max_shocks) {
+    boost::property_tree::ptree joy_config) {
   float j = joy_config.get<float>("j");
-  float shock_emph = joy_config.get<float>("shock_emphasis");
-  return std::make_unique<healthcare::enjoyment::Fractional>(j, max_shocks,
-                                                             shock_emph);
+  return std::make_unique<healthcare::enjoyment::Fractional>(j);
 }
 
 }  // namespace configuration

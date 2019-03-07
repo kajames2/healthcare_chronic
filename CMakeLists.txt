@@ -18,12 +18,14 @@ set(SOURCES
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/job_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/fitness_reader.cc
+  ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/modulator_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/prob_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/insurance_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/enjoyment/fractional.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/decision.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/fitness/composite.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/fitness/fixed_price.cc
+  ${PROJECT_SOURCE_DIR}/src/healthcare/fitness/quadratic_cost.cc
   ${PROJECT_SOURCE_DIR}/src/dp/decision_cache.cc
   )
 

@@ -1,30 +1,17 @@
 import numpy as np
 import pandas as pd
 
-filenames = ["actuarial_flat_45_100",
-             "actuarial_flat_45_95",
-             "actuarial_flat_45_90",
-             "actuarial_flat_60_100",
-             "actuarial_flat_60_95",
-             "actuarial_flat_60_90",
-             "actuarial_flat_75_100",
-             "actuarial_flat_75_95",
-             "actuarial_flat_75_90",
-             "actuarial_increasing_30_90_100",
-             "actuarial_increasing_30_90_95",
-             "actuarial_increasing_30_90_90"
-]
+filenames = ["employer_flat_60",
+             "employer_flat_60_2",
+             "actuarial_flat_60",
+             "actuarial_flat_60_2"]
 dfs = {filebase : pd.read_csv(filebase + "_rand_lives.csv") for filebase in filenames}
-ages = [1] + list(range(5,61,5))
+ages = range(1,31)
 
-for col in ['Age', 'Cash', 'Shocks', 'ShockProb', 'Fitness', 'InsurancePayout', 'BuyIns', 'Enjoyment', 'TotalJoy', 'JoySpending', 'FitnessSpending', 'InsuranceSpending', 'NextCash']:
-    print()
-    print(col)
+for col in ['Age', 'Cash', 'Shocks', 'ShockProb', 'NextFitness', 'InsurancePayout', 'BuyIns', 'Enjoyment', 'TotalJoy', 'JoySpending', 'FitnessSpending', 'InsuranceSpending', 'NextCash']:
     for filebase in filenames:
         means = [(dfs[filebase].loc[dfs[filebase]['Age'] == age])[col].mean() for age in ages]
-        print("{0:35}".format(filebase) + "  " + ' '.join(["{0:7.2f}".format(mean) for mean in means]) + " --- " + "{0:7.2f}".format(np.mean(means)))
-
-        
+        print("{0:35}".format(filebase) + "," + "{0:20}".format(col) + "," + ','.join(["{0:7.2f}".format(mean) for mean in means]))
 
 #def get_death_period(life):
 #    dead_pers = [int(row[0]) for row in life if float(row[header_indices["EndHealth"]]) <= 0]

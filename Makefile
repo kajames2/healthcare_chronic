@@ -411,6 +411,36 @@ src/healthcare/configuration/joy_reader.cc.s:
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/joy_reader.cc.s
 .PHONY : src/healthcare/configuration/joy_reader.cc.s
 
+src/healthcare/configuration/modulator_reader.o: src/healthcare/configuration/modulator_reader.cc.o
+
+.PHONY : src/healthcare/configuration/modulator_reader.o
+
+# target to build an object file
+src/healthcare/configuration/modulator_reader.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/modulator_reader.cc.o
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/modulator_reader.cc.o
+.PHONY : src/healthcare/configuration/modulator_reader.cc.o
+
+src/healthcare/configuration/modulator_reader.i: src/healthcare/configuration/modulator_reader.cc.i
+
+.PHONY : src/healthcare/configuration/modulator_reader.i
+
+# target to preprocess a source file
+src/healthcare/configuration/modulator_reader.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/modulator_reader.cc.i
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/modulator_reader.cc.i
+.PHONY : src/healthcare/configuration/modulator_reader.cc.i
+
+src/healthcare/configuration/modulator_reader.s: src/healthcare/configuration/modulator_reader.cc.s
+
+.PHONY : src/healthcare/configuration/modulator_reader.s
+
+# target to generate assembly for a file
+src/healthcare/configuration/modulator_reader.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/modulator_reader.cc.s
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/modulator_reader.cc.s
+.PHONY : src/healthcare/configuration/modulator_reader.cc.s
+
 src/healthcare/configuration/prob_reader.o: src/healthcare/configuration/prob_reader.cc.o
 
 .PHONY : src/healthcare/configuration/prob_reader.o
@@ -620,6 +650,36 @@ src/healthcare/fitness/fixed_price.cc.s:
 	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/fitness/fixed_price.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness/fixed_price.cc.s
 .PHONY : src/healthcare/fitness/fixed_price.cc.s
+
+src/healthcare/fitness/quadratic_cost.o: src/healthcare/fitness/quadratic_cost.cc.o
+
+.PHONY : src/healthcare/fitness/quadratic_cost.o
+
+# target to build an object file
+src/healthcare/fitness/quadratic_cost.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/fitness/quadratic_cost.cc.o
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness/quadratic_cost.cc.o
+.PHONY : src/healthcare/fitness/quadratic_cost.cc.o
+
+src/healthcare/fitness/quadratic_cost.i: src/healthcare/fitness/quadratic_cost.cc.i
+
+.PHONY : src/healthcare/fitness/quadratic_cost.i
+
+# target to preprocess a source file
+src/healthcare/fitness/quadratic_cost.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/fitness/quadratic_cost.cc.i
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness/quadratic_cost.cc.i
+.PHONY : src/healthcare/fitness/quadratic_cost.cc.i
+
+src/healthcare/fitness/quadratic_cost.s: src/healthcare/fitness/quadratic_cost.cc.s
+
+.PHONY : src/healthcare/fitness/quadratic_cost.s
+
+# target to generate assembly for a file
+src/healthcare/fitness/quadratic_cost.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/fitness/quadratic_cost.cc.s
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness/quadratic_cost.cc.s
+.PHONY : src/healthcare/fitness/quadratic_cost.cc.s
 
 src/healthcare/period_result.o: src/healthcare/period_result.cc.o
 
@@ -1041,6 +1101,9 @@ help:
 	@echo "... src/healthcare/configuration/joy_reader.o"
 	@echo "... src/healthcare/configuration/joy_reader.i"
 	@echo "... src/healthcare/configuration/joy_reader.s"
+	@echo "... src/healthcare/configuration/modulator_reader.o"
+	@echo "... src/healthcare/configuration/modulator_reader.i"
+	@echo "... src/healthcare/configuration/modulator_reader.s"
 	@echo "... src/healthcare/configuration/prob_reader.o"
 	@echo "... src/healthcare/configuration/prob_reader.i"
 	@echo "... src/healthcare/configuration/prob_reader.s"
@@ -1062,6 +1125,9 @@ help:
 	@echo "... src/healthcare/fitness/fixed_price.o"
 	@echo "... src/healthcare/fitness/fixed_price.i"
 	@echo "... src/healthcare/fitness/fixed_price.s"
+	@echo "... src/healthcare/fitness/quadratic_cost.o"
+	@echo "... src/healthcare/fitness/quadratic_cost.i"
+	@echo "... src/healthcare/fitness/quadratic_cost.s"
 	@echo "... src/healthcare/period_result.o"
 	@echo "... src/healthcare/period_result.i"
 	@echo "... src/healthcare/period_result.s"

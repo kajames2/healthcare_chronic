@@ -80,19 +80,8 @@ def get_life_random(fstream, start_state):
         state = next_state(row)
     return life
 
-filenames = ["actuarial_flat_45_100",
-             "actuarial_flat_45_95",
-             "actuarial_flat_45_90",
-             "actuarial_flat_60_100",
-             "actuarial_flat_60_95",
-             "actuarial_flat_60_90",
-             "actuarial_flat_75_100",
-             "actuarial_flat_75_95",
-             "actuarial_flat_75_90",
-             "actuarial_increasing_30_90_100",
-             "actuarial_increasing_30_90_95",
-             "actuarial_increasing_30_90_90"
-]
+filenames = ["employer_flat_60_2",
+             "actuarial_flat_60_2"]
 for filename_base in filenames:
     random.seed(12345678)
     filename = filename_base + ".csv"

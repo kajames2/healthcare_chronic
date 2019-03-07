@@ -11,17 +11,14 @@ namespace probability {
 class GompertzShocks : public Probability {
  public:
   GompertzShocks(float age_coeff, float age_rate, float shock_coeff,
-                 float shock_rate, float max_fitness_mod, int max_fitness)
+                 float shock_rate)
       : age_coeff_(age_coeff),
         age_rate_(age_rate),
         shock_coeff_(shock_coeff),
-        shock_rate_(shock_rate),
-        max_fitness_mod_(max_fitness_mod),
-        max_fitness_(max_fitness) {}
+        shock_rate_(shock_rate) {}
   float GetProbability(int age, int shocks, int fitness) const override {
     return (age_coeff_ * std::exp(age_rate_ * age) +
-            shock_coeff_ * std::exp(shock_rate_ * shocks)) *
-           (1 - max_fitness_mod_ * fitness / static_cast<float>(max_fitness_));
+            shock_coeff_ * std::exp(shock_rate_ * shocks));
   }
 
  private:
