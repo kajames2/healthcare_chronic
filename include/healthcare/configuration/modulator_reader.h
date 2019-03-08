@@ -1,17 +1,18 @@
-#ifndef _HEALTHCARE_CONFIGURATION_MODULATOR_READER_H_
-#define _HEALTHCARE_CONFIGURATION_MODULATOR_READER_H_
+#ifndef HEALTHCARE_CONFIGURATION_MODULATOR_READER_H_
+#define HEALTHCARE_CONFIGURATION_MODULATOR_READER_H_
 
+#include <memory>
 #include <string>
 
-#include "healthcare/modulator.h"
-
 #include <boost/property_tree/ptree.hpp>
+#include "healthcare/modulator.h"
 
 namespace healthcare {
 namespace configuration {
 
 std::unique_ptr<const healthcare::Modulator> ReadModulator(
-    boost::property_tree::ptree modulator_config, int max_shocks, int max_fitness);
+    boost::property_tree::ptree modulator_config, int max_shocks,
+    int max_fitness);
 std::unique_ptr<const healthcare::Modulator> ReadFitnessCosineModulator(
     boost::property_tree::ptree modulator_config, int max_fitness);
 std::unique_ptr<const healthcare::Modulator> ReadFitnessLinearModulator(
@@ -28,4 +29,4 @@ std::unique_ptr<const healthcare::Modulator> ReadShockFractionalModulator(
 }  // namespace configuration
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_CONFIGURATION_MODULATOR_READER_H_
+#endif  // HEALTHCARE_CONFIGURATION_MODULATOR_READER_H_

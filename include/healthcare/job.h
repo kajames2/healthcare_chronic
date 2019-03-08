@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_JOB_H_
-#define _HEALTHCARE_JOB_H_
+#ifndef HEALTHCARE_JOB_H_
+#define HEALTHCARE_JOB_H_
 
 namespace healthcare {
 
@@ -10,4 +10,4 @@ class Job {
 };
 
 }  // namespace healthcare
-#endif  // _HEALTHCARE_JOB_H_
+#endif  // HEALTHCARE_JOB_H_

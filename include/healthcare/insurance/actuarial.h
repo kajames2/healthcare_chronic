@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_INSURANCE_ACTUARIAL_H_
-#define _HEALTHCARE_INSURANCE_ACTUARIAL_H_
+#ifndef HEALTHCARE_INSURANCE_ACTUARIAL_H_
+#define HEALTHCARE_INSURANCE_ACTUARIAL_H_
 
 #include <cmath>
 #include <memory>
@@ -28,4 +28,4 @@ class Actuarial : public Insurance {
 
 }  // namespace insurance
 }  // namespace healthcare
-#endif  // _HEALTHCARE_INSURANCE_ACTUARIAL_H_
+#endif  // HEALTHCARE_INSURANCE_ACTUARIAL_H_

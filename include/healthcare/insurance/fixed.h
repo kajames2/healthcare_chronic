@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_INSURANCE_FIXED_H_
-#define _HEALTHCARE_INSURANCE_FIXED_H_
+#ifndef HEALTHCARE_INSURANCE_FIXED_H_
+#define HEALTHCARE_INSURANCE_FIXED_H_
 
 #include "healthcare/insurance.h"
 
@@ -8,8 +8,10 @@ namespace insurance {
 
 class Fixed : public Insurance {
  public:
-  Fixed(int cost) : cost_(cost) {}
-  float GetPrice(int age, int shocks, int fitness) const override { return cost_; }
+  explicit Fixed(int cost) : cost_(cost) {}
+  float GetPrice(int age, int shocks, int fitness) const override {
+    return cost_;
+  }
 
  private:
   int cost_;
@@ -17,4 +19,4 @@ class Fixed : public Insurance {
 
 }  // namespace insurance
 }  // namespace healthcare
-#endif  // _HEALTHCARE_INSURANCE_FIXED_H_
+#endif  // HEALTHCARE_INSURANCE_FIXED_H_

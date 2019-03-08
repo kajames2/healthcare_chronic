@@ -1,5 +1,8 @@
-#ifndef _HEALTHCARE_DECISION_EVALUATOR_H_
-#define _HEALTHCARE_DECISION_EVALUATOR_H_
+#ifndef HEALTHCARE_DECISION_EVALUATOR_H_
+#define HEALTHCARE_DECISION_EVALUATOR_H_
+
+#include <algorithm>
+#include <vector>
 
 #include "healthcare/configuration.h"
 #include "healthcare/decision.h"
@@ -7,14 +10,12 @@
 #include "healthcare/period_result.h"
 #include "healthcare/person.h"
 
-#include <algorithm>
-#include <vector>
-
 namespace healthcare {
 
 class DecisionEvaluator {
  public:
-  DecisionEvaluator(Configuration config, int age) : config_(config), age_(age) {
+  DecisionEvaluator(Configuration config, int age)
+      : config_(config), age_(age) {
     Precalculate();
   }
   DecisionResults GetDecisionResults(Person state, const Decision& dec) const;
@@ -33,4 +34,4 @@ class DecisionEvaluator {
 
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_DECISION_EVALUATOR_H_
+#endif  // HEALTHCARE_DECISION_EVALUATOR_H_

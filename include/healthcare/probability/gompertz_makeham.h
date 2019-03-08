@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_PROBABILITY_GOMPERTZ_MAKEHAM_
-#define _HEALTHCARE_PROBABILITY_GOMPERTZ_MAKEHAM_
+#ifndef HEALTHCARE_PROBABILITY_GOMPERTZ_MAKEHAM_H_
+#define HEALTHCARE_PROBABILITY_GOMPERTZ_MAKEHAM_H_
 
 #include <cmath>
 
@@ -25,4 +25,4 @@ class GompertzMakeham : public Probability {
 }  // namespace probability
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_PROBABILITY_GOMPERTZ_MAKEHAM_
+#endif  // HEALTHCARE_PROBABILITY_GOMPERTZ_MAKEHAM_H_

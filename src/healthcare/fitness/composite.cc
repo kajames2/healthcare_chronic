@@ -1,4 +1,3 @@
-#include "healthcare/fitness.h"
 #include "healthcare/fitness/composite.h"
 
 #include <algorithm>

@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_PROBABILITY_H_
-#define _HEALTHCARE_PROBABILITY_H_
+#ifndef HEALTHCARE_PROBABILITY_H_
+#define HEALTHCARE_PROBABILITY_H_
 
 namespace healthcare {
 
@@ -11,4 +11,4 @@ class Probability {
 
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_PROBABILITY_H_
+#endif  // HEALTHCARE_PROBABILITY_H_

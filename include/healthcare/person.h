@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_PERSON_H_
-#define _HEALTHCARE_PERSON_H_
+#ifndef HEALTHCARE_PERSON_H_
+#define HEALTHCARE_PERSON_H_
 
 #include <ostream>
 
@@ -15,4 +15,4 @@ bool operator==(const Person& lhs, const Person& rhs);
 std::ostream& operator<<(std::ostream& out, const Person& p);
 
 }  // namespace healthcare
-#endif  // _HEALTHCARE_PERSON_H_
+#endif  // HEALTHCARE_PERSON_H_

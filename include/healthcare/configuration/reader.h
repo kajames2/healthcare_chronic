@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_CONFIGURATION_READER_H_
-#define _HEALTHCARE_CONFIGURATION_READER_H_
+#ifndef HEALTHCARE_CONFIGURATION_READER_H_
+#define HEALTHCARE_CONFIGURATION_READER_H_
 
 #include <string>
 
@@ -13,4 +13,4 @@ Configuration ReadConfigurationFile(std::string filename);
 }  // namespace configuration
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_CONFIGURATION_READER_H_
+#endif  // HEALTHCARE_CONFIGURATION_READER_H_

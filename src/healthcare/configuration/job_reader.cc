@@ -5,13 +5,12 @@
 #include <memory>
 #include <string>
 
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include "healthcare/job.h"
 #include "healthcare/job/flat.h"
 #include "healthcare/job/age_linear.h"
 #include "healthcare/job/defined.h"
-
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
 
 namespace healthcare {
 namespace configuration {

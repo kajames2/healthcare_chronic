@@ -1,17 +1,18 @@
-#ifndef _HEALTHCARE_FITNESS_COMPOSITE_H_
-#define _HEALTHCARE_FITNESS_COMPOSITE_H_
-
-#include "healthcare/fitness.h"
+#ifndef HEALTHCARE_FITNESS_COMPOSITE_H_
+#define HEALTHCARE_FITNESS_COMPOSITE_H_
 
 #include <memory>
 #include <vector>
+
+#include "healthcare/fitness.h"
 
 namespace healthcare {
 namespace fitness {
 
 class Composite : public Fitness {
  public:
-  Composite(int max_fitness, int max_budget, std::vector<std::shared_ptr<const Fitness>>);
+  Composite(int max_fitness, int max_budget,
+            std::vector<std::shared_ptr<const Fitness>>);
   int GetFitness(int fitness, int fitness_investment) const override;
   int GetFitnessCost(int fitness, int end_fitness) const override;
 
@@ -23,4 +24,4 @@ class Composite : public Fitness {
 
 }  // namespace fitness
 }  // namespace healthcare
-#endif  // _HEALTHCARE_FITNESS_COMPOSITE_H_
+#endif  // HEALTHCARE_FITNESS_COMPOSITE_H_

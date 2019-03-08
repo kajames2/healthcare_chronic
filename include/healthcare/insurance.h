@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_INSURANCE_H_
-#define _HEALTHCARE_INSURANCE_H_
+#ifndef HEALTHCARE_INSURANCE_H_
+#define HEALTHCARE_INSURANCE_H_
 
 namespace healthcare {
 
@@ -10,4 +10,4 @@ class Insurance {
 };
 
 }  // namespace healthcare
-#endif  // _HEALTHCARE_INSURANCE_H_
+#endif  // HEALTHCARE_INSURANCE_H_

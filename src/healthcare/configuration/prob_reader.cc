@@ -4,12 +4,11 @@
 #include <memory>
 #include <string>
 
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include "healthcare/probability.h"
 #include "healthcare/probability/gompertz_makeham.h"
 #include "healthcare/probability/gompertz_shocks.h"
-
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
 
 namespace healthcare {
 namespace configuration {

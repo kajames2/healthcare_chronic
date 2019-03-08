@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_PERSON_INCOME_H_
-#define _HEALTHCARE_PERSON_INCOME_H_
+#ifndef HEALTHCARE_PERSON_INCOME_H_
+#define HEALTHCARE_PERSON_INCOME_H_
 
 #include "healthcare/person.h"
 
@@ -12,4 +12,4 @@ struct PersonIncome : public Person {
 
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_PERSON_INCOME_H_
+#endif  // HEALTHCARE_PERSON_INCOME_H_

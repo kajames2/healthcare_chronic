@@ -4,13 +4,12 @@
 #include <memory>
 #include <string>
 
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include "healthcare/insurance.h"
 #include "healthcare/insurance/actuarial.h"
 #include "healthcare/insurance/fixed.h"
 #include "healthcare/configuration.h"
-
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
 
 namespace healthcare {
 namespace configuration {

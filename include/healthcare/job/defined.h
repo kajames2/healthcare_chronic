@@ -1,9 +1,9 @@
-#ifndef _HEALTHCARE_JOB_DEFINED_H_
-#define _HEALTHCARE_JOB_DEFINED_H_
-
-#include "healthcare/job.h"
+#ifndef HEALTHCARE_JOB_DEFINED_H_
+#define HEALTHCARE_JOB_DEFINED_H_
 
 #include <vector>
+
+#include "healthcare/job.h"
 
 namespace healthcare {
 namespace job {
@@ -21,4 +21,4 @@ class Defined : public Job {
 
 }  // namespace job
 }  // namespace healthcare
-#endif  // _HEALTHCARE_JOB_DEFINED_H_
+#endif  // HEALTHCARE_JOB_DEFINED_H_

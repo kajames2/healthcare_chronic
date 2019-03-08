@@ -1,11 +1,11 @@
-#ifndef _HEALTHCARE_CONFIGURATION_PROB_READER_H_
-#define _HEALTHCARE_CONFIGURATION_PROB_READER_H_
+#ifndef HEALTHCARE_CONFIGURATION_PROB_READER_H_
+#define HEALTHCARE_CONFIGURATION_PROB_READER_H_
 
 #include <string>
-
-#include "healthcare/probability.h"
+#include <memory>
 
 #include <boost/property_tree/ptree.hpp>
+#include "healthcare/probability.h"
 
 namespace healthcare {
 namespace configuration {
@@ -19,4 +19,4 @@ std::unique_ptr<const healthcare::Probability> ReadGompertzShocksProb(
 }  // namespace configuration
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_CONFIGURATION_PROB_READER_H_
+#endif  // HEALTHCARE_CONFIGURATION_PROB_READER_H_

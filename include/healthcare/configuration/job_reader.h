@@ -1,11 +1,11 @@
-#ifndef _HEALTHCARE_CONFIGURATION_JOB_READER_H_
-#define _HEALTHCARE_CONFIGURATION_JOB_READER_H_
+#ifndef HEALTHCARE_CONFIGURATION_JOB_READER_H_
+#define HEALTHCARE_CONFIGURATION_JOB_READER_H_
 
+#include <memory>
 #include <string>
 
-#include "healthcare/job.h"
-
 #include <boost/property_tree/ptree.hpp>
+#include "healthcare/job.h"
 
 namespace healthcare {
 namespace configuration {
@@ -21,4 +21,4 @@ std::unique_ptr<const healthcare::Job> ReadDefinedJob(
 }  // namespace configuration
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_CONFIGURATION_JOB_READER_H_
+#endif  // HEALTHCARE_CONFIGURATION_JOB_READER_H_

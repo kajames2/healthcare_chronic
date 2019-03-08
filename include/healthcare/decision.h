@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_DECISION_H_
-#define _HEALTHCARE_DECISION_H_
+#ifndef HEALTHCARE_DECISION_H_
+#define HEALTHCARE_DECISION_H_
 
 #include <ostream>
 
@@ -15,4 +15,4 @@ int TotalSpending(Decision dec);
 
 std::ostream& operator<<(std::ostream& out, const Decision& d);
 }  // namespace healthcare
-#endif  // _HEALTHCARE_DECISION_H_
+#endif  // HEALTHCARE_DECISION_H_

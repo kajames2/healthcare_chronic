@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_MODULATOR_SHOCK_LINEAR_H_
-#define _HEALTHCARE_MODULATOR_SHOCK_LINEAR_H_
+#ifndef HEALTHCARE_MODULATOR_SHOCK_LINEAR_H_
+#define HEALTHCARE_MODULATOR_SHOCK_LINEAR_H_
 
 #include "healthcare/modulator.h"
 
@@ -21,4 +21,4 @@ class ShockLinear : public Modulator {
 }  // namespace modulator
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_MODULATOR_SHOCK_LINEAR_H_
+#endif  // HEALTHCARE_MODULATOR_SHOCK_LINEAR_H_

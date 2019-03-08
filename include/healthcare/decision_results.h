@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_DECISION_RESULTS_H_
-#define _HEALTHCARE_DECISION_RESULTS_H_
+#ifndef HEALTHCARE_DECISION_RESULTS_H_
+#define HEALTHCARE_DECISION_RESULTS_H_
 
 #include "healthcare/decision.h"
 #include "healthcare/person.h"
@@ -16,4 +16,4 @@ struct DecisionResults {
 
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_DECISION_RESULTS_H_
+#endif  // HEALTHCARE_DECISION_RESULTS_H_

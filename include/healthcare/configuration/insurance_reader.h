@@ -1,12 +1,12 @@
-#ifndef _HEALTHCARE_CONFIGURATION_INSURANCE_READER_H_
-#define _HEALTHCARE_CONFIGURATION_INSURANCE_READER_H_
+#ifndef HEALTHCARE_CONFIGURATION_INSURANCE_READER_H_
+#define HEALTHCARE_CONFIGURATION_INSURANCE_READER_H_
 
+#include <memory>
 #include <string>
 
+#include <boost/property_tree/ptree.hpp>
 #include "healthcare/configuration.h"
 #include "healthcare/insurance.h"
-
-#include <boost/property_tree/ptree.hpp>
 
 namespace healthcare {
 namespace configuration {
@@ -21,4 +21,4 @@ std::unique_ptr<const healthcare::Insurance> ReadFixedInsurance(
 }  // namespace configuration
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_CONFIGURATION_INSURANCE_READER_H_
+#endif  // HEALTHCARE_CONFIGURATION_INSURANCE_READER_H_

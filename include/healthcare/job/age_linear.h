@@ -1,9 +1,9 @@
-#ifndef _HEALTHCARE_JOB_AGE_LINEAR_H_
-#define _HEALTHCARE_JOB_AGE_LINEAR_H_
-
-#include "healthcare/job.h"
+#ifndef HEALTHCARE_JOB_AGE_LINEAR_H_
+#define HEALTHCARE_JOB_AGE_LINEAR_H_
 
 #include <cmath>
+
+#include "healthcare/job.h"
 
 namespace healthcare {
 namespace job {
@@ -20,4 +20,4 @@ class AgeLinear : public Job {
 
 }  // namespace job
 }  // namespace healthcare
-#endif  // _HEALTHCARE_JOB_AGE_LINEAR_H_
+#endif  // HEALTHCARE_JOB_AGE_LINEAR_H_

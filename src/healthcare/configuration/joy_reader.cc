@@ -4,11 +4,10 @@
 #include <memory>
 #include <string>
 
-#include "healthcare/enjoyment.h"
-#include "healthcare/enjoyment/fractional.h"
-
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include "healthcare/enjoyment.h"
+#include "healthcare/enjoyment/fractional.h"
 
 namespace healthcare {
 namespace configuration {

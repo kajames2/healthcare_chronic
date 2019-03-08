@@ -1,16 +1,16 @@
-#ifndef _HEALTHCARE_FITNESS_FLAT_LOSS_H_
-#define _HEALTHCARE_FITNESS_FLAT_LOSS_H_
-
-#include "healthcare/fitness.h"
+#ifndef HEALTHCARE_FITNESS_FLAT_LOSS_H_
+#define HEALTHCARE_FITNESS_FLAT_LOSS_H_
 
 #include <algorithm>
+
+#include "healthcare/fitness.h"
 
 namespace healthcare {
 namespace fitness {
 
 class FlatLoss : public Fitness {
  public:
-  FlatLoss(int degen) : degen_(degen) {}
+  explicit FlatLoss(int degen) : degen_(degen) {}
   int GetFitness(int fitness, int fitness_investment) const override {
     return std::max(0, fitness - degen_);
   }
@@ -24,4 +24,4 @@ class FlatLoss : public Fitness {
 
 }  // namespace fitness
 }  // namespace healthcare
-#endif  // _HEALTHCARE_FITNESS_FLAT_LOSS_H_
+#endif  // HEALTHCARE_FITNESS_FLAT_LOSS_H_

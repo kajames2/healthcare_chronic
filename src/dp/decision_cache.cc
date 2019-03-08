@@ -8,10 +8,10 @@
 
 namespace dp {
 
-using namespace healthcare;
+using ::healthcare::Decision;
 
-DecisionCache::DecisionCache(Configuration config, DecisionEvaluator eval,
-                             int age)
+DecisionCache::DecisionCache(healthcare::Configuration config,
+                             healthcare::DecisionEvaluator eval, int age)
     : config_(std::move(config)),
       eval_(std::move(eval)),
       age_(age),
@@ -63,18 +63,9 @@ void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
     ++counts[TotalSpending(*dec)];
   }
 
-  // std::stable_sort(decs.begin(), decs.end(),
-  //                  [](Decision dec, Decision dec2) {
-  //                    return TotalSpending(dec) < TotalSpending(dec2);
-  //                  });
-  // std::vector<int> counts(config_.max_budget + 1, 0);
-  // Account for guaranteed insurance purchase option
-  // for (auto dec = decs.begin(); dec != decs.end(); ++dec) {
-  //   ++counts[TotalSpending(*dec)];
-  // }
   std::partial_sum(counts.begin(), counts.end(), counts.begin());
 
-  std::vector<DecisionResults> res;
+  std::vector<healthcare::DecisionResults> res;
   std::transform(
       decs.begin(), decs.end(), std::back_inserter(res),
       [this, shocks, fitness](const Decision& dec) {

@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_ENJOYMENT_FRACTIONAL_H_
-#define _HEALTHCARE_ENJOYMENT_FRACTIONAL_H_
+#ifndef HEALTHCARE_ENJOYMENT_FRACTIONAL_H_
+#define HEALTHCARE_ENJOYMENT_FRACTIONAL_H_
 
 #include "healthcare/enjoyment.h"
 
@@ -8,7 +8,7 @@ namespace enjoyment {
 
 class Fractional : public Enjoyment {
  public:
-  Fractional(double j);
+  explicit Fractional(double j);
   double GetEnjoyment(int shocks, int life_investment) const override;
 
  private:
@@ -17,4 +17,4 @@ class Fractional : public Enjoyment {
 
 }  // namespace enjoyment
 }  // namespace healthcare
-#endif  // _HEALTHCARE_ENJOYMENT_FRACTIONAL_H_
+#endif  // HEALTHCARE_ENJOYMENT_FRACTIONAL_H_

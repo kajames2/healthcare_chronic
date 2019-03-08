@@ -1,6 +1,7 @@
-#ifndef _DP_STORAGE_H_
-#define _DP_STORAGE_H_
+#ifndef DP_STORAGE_H_
+#define DP_STORAGE_H_
 
+#include <algorithm>
 #include <iomanip>
 #include <ostream>
 #include <vector>
@@ -13,7 +14,7 @@
 namespace dp {
 class Storage {
  public:
-  Storage(const healthcare::Configuration& config);
+  explicit Storage(const healthcare::Configuration& config);
 
   void StoreResult(const healthcare::Person& state,
                    healthcare::DecisionResults res) {
@@ -102,37 +103,38 @@ std::ostream& operator<<(std::ostream& out, const Storage& s) {
         healthcare::Person state = healthcare::Person{0, shocks, fitness, cash};
         auto opt = s.GetResult(state);
         state.age = opt.result.person.age - 1;
-        out << std::setw(age_size) << state.age << ","
-            << std::setw(shocks_size) << state.shocks << ","
-            << std::setw(fitness_size) << state.fitness << ","
-            << std::setw(savings_size) << state.cash << ","
+        out << std::setw(age_size) << state.age << "," << std::setw(shocks_size)
+            << state.shocks << "," << std::setw(fitness_size) << state.fitness
+            << "," << std::setw(savings_size) << state.cash << ","
             << std::setw(spending_size) << opt.decision.fitness_spending << ","
             << std::setw(spending_size) << opt.decision.joy_spending << ","
-            << std::setw(spending_size) << opt.decision.insurance_spending << ","
-            << std::setw(age_size) << opt.result.person.age << ","
+            << std::setw(spending_size) << opt.decision.insurance_spending
+            << "," << std::setw(age_size) << opt.result.person.age << ","
             << std::setw(shocks_size) << opt.result.person.shocks << ","
             << std::setw(fitness_size) << opt.result.person.fitness << ","
             << std::setw(savings_size) << opt.result.person.cash << ","
-            << std::setprecision(3) << std::setw(5) << std::fixed << opt.result.probability << ','
-            << std::setprecision(2) << std::setw(6) << opt.result.joy << ","
-            << std::setprecision(2) << std::setw(6) << opt.result.future_value << ","
+            << std::setprecision(3) << std::setw(5) << std::fixed
+            << opt.result.probability << ',' << std::setprecision(2)
+            << std::setw(6) << opt.result.joy << "," << std::setprecision(2)
+            << std::setw(6) << opt.result.future_value << ","
             << std::setprecision(2) << std::setw(6) << opt.result.value << "\n";
 
-        out << std::setw(age_size) << state.age << ","
-            << std::setw(shocks_size) << state.shocks << ","
-            << std::setw(fitness_size) << state.fitness << ","
-            << std::setw(savings_size) << state.cash << ","
+        out << std::setw(age_size) << state.age << "," << std::setw(shocks_size)
+            << state.shocks << "," << std::setw(fitness_size) << state.fitness
+            << "," << std::setw(savings_size) << state.cash << ","
             << std::setw(spending_size) << opt.decision.fitness_spending << ","
             << std::setw(spending_size) << opt.decision.joy_spending << ","
-            << std::setw(spending_size) << opt.decision.insurance_spending << ","
-            << std::setw(age_size) << opt.result_shock.person.age << ","
+            << std::setw(spending_size) << opt.decision.insurance_spending
+            << "," << std::setw(age_size) << opt.result_shock.person.age << ","
             << std::setw(shocks_size) << opt.result_shock.person.shocks << ","
             << std::setw(fitness_size) << opt.result_shock.person.fitness << ","
             << std::setw(savings_size) << opt.result_shock.person.cash << ","
-            << std::setprecision(3) << std::setw(5) << std::fixed << opt.result_shock.probability << ','
-            << std::setprecision(2) << std::setw(6) << opt.result_shock.joy << ","
-            << std::setprecision(2) << std::setw(6) << opt.result_shock.future_value << ","
-            << std::setprecision(2) << std::setw(6) << opt.result_shock.value;
+            << std::setprecision(3) << std::setw(5) << std::fixed
+            << opt.result_shock.probability << ',' << std::setprecision(2)
+            << std::setw(6) << opt.result_shock.joy << ","
+            << std::setprecision(2) << std::setw(6)
+            << opt.result_shock.future_value << "," << std::setprecision(2)
+            << std::setw(6) << opt.result_shock.value;
 
         // out << state << "," << opt.decision << "," << opt.result << '\n';
         // out << state << ',' << opt.decision << ',' << opt.result_shock;
@@ -148,4 +150,4 @@ std::ostream& operator<<(std::ostream& out, const Storage& s) {
 }
 
 }  // namespace dp
-#endif  // _DP_STORAGE_H_
+#endif  // DP_STORAGE_H_

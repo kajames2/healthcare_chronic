@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_FITNESS_H_
-#define _HEALTHCARE_FITNESS_H_
+#ifndef HEALTHCARE_FITNESS_H_
+#define HEALTHCARE_FITNESS_H_
 
 namespace healthcare {
 
@@ -12,4 +12,4 @@ class Fitness {
 };
 
 }  // namespace healthcare
-#endif  // _HEALTHCARE_FITNESS_H_
+#endif  // HEALTHCARE_FITNESS_H_

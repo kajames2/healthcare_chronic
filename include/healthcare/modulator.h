@@ -1,5 +1,5 @@
-#ifndef HEALTHCARE_MODULATOR_
-#define HEALTHCARE_MODULATOR_
+#ifndef HEALTHCARE_MODULATOR_H_
+#define HEALTHCARE_MODULATOR_H_
 
 namespace healthcare {
 
@@ -11,4 +11,4 @@ class Modulator {
 
 }  // namespace healthcare
 
-#endif  // HEALTHCARE_MODULATOR_
+#endif  // HEALTHCARE_MODULATOR_H_

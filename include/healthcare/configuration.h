@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_CONFIGURATION_H_
-#define _HEALTHCARE_CONFIGURATION_H_
+#ifndef HEALTHCARE_CONFIGURATION_H_
+#define HEALTHCARE_CONFIGURATION_H_
 
 #include <memory>
 #include "healthcare/enjoyment.h"
@@ -33,4 +33,4 @@ struct Configuration {
 
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_CONFIGURATION_H_
+#endif  // HEALTHCARE_CONFIGURATION_H_

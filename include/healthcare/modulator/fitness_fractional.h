@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_MODULATOR_FITNESS_FRACTIONAL_H_
-#define _HEALTHCARE_MODULATOR_FITNESS_FRACTIONAL_H_
+#ifndef HEALTHCARE_MODULATOR_FITNESS_FRACTIONAL_H_
+#define HEALTHCARE_MODULATOR_FITNESS_FRACTIONAL_H_
 
 #include "healthcare/modulator.h"
 
@@ -21,4 +21,4 @@ class FitnessFractional : public Modulator {
 }  // namespace modulator
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_MODULATOR_FITNESS_FRACTIONAL_H_
+#endif  // HEALTHCARE_MODULATOR_FITNESS_FRACTIONAL_H_

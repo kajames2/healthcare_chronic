@@ -4,6 +4,8 @@
 #include <memory>
 #include <string>
 
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include "healthcare/configuration.h"
 #include "healthcare/configuration/fitness_reader.h"
 #include "healthcare/configuration/insurance_reader.h"
@@ -13,10 +15,7 @@
 #include "healthcare/configuration/prob_reader.h"
 #include "healthcare/modulator/constant.h"
 
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
-
-using namespace boost::property_tree;
+using ::boost::property_tree::ptree;
 
 namespace healthcare {
 namespace configuration {

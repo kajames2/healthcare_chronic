@@ -1,17 +1,17 @@
-#ifndef _HEALTHCARE_FITNESS_PROPORTIONAL_LOSS_H_
-#define _HEALTHCARE_FITNESS_PROPORTIONAL_LOSS_H_
-
-#include "healthcare/fitness.h"
+#ifndef HEALTHCARE_FITNESS_PROPORTIONAL_LOSS_H_
+#define HEALTHCARE_FITNESS_PROPORTIONAL_LOSS_H_
 
 #include <algorithm>
 #include <cmath>
+
+#include "healthcare/fitness.h"
 
 namespace healthcare {
 namespace fitness {
 
 class ProportionalLoss : public Fitness {
  public:
-  ProportionalLoss(double rate) : rate_(rate) {}
+  explicit ProportionalLoss(double rate) : rate_(rate) {}
   int GetFitness(int fitness, int fitness_investment) const override {
     return std::max(0, static_cast<int>((1 - rate_) * fitness));
   }
@@ -25,4 +25,4 @@ class ProportionalLoss : public Fitness {
 
 }  // namespace fitness
 }  // namespace healthcare
-#endif  // _HEALTHCARE_FITNESS_PROPORTIONAL_LOSS_H_
+#endif  // HEALTHCARE_FITNESS_PROPORTIONAL_LOSS_H_

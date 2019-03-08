@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_ENJOYMENT_H_
-#define _HEALTHCARE_ENJOYMENT_H_
+#ifndef HEALTHCARE_ENJOYMENT_H_
+#define HEALTHCARE_ENJOYMENT_H_
 
 namespace healthcare {
 
@@ -10,4 +10,4 @@ class Enjoyment {
 };
 
 }  // namespace healthcare
-#endif  // _HEALTHCARE_ENJOYMENT_H_
+#endif  // HEALTHCARE_ENJOYMENT_H_

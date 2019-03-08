@@ -1,5 +1,5 @@
-#ifndef _HEALTHCAREDP_DECISION_CACHE_H_
-#define _HEALTHCAREDP_DECISION_CACHE_H_
+#ifndef DP_DECISION_CACHE_H_
+#define DP_DECISION_CACHE_H_
 
 #include <iostream>
 #include <vector>
@@ -53,4 +53,4 @@ class DecisionCache {
 
 }  // namespace dp
 
-#endif  // _HEALTHCAREDP_DECISION_CACHE_H_
+#endif  // DP_DECISION_CACHE_H_

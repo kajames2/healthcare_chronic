@@ -4,15 +4,14 @@
 #include <memory>
 #include <string>
 
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
 #include "healthcare/fitness.h"
 #include "healthcare/fitness/composite.h"
 #include "healthcare/fitness/fixed_price.h"
 #include "healthcare/fitness/flat_loss.h"
 #include "healthcare/fitness/proportional_loss.h"
 #include "healthcare/fitness/quadratic_cost.h"
-
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
 
 namespace healthcare {
 namespace configuration {
@@ -21,12 +20,11 @@ std::unique_ptr<const healthcare::Fitness> ReadFitnesses(
     boost::property_tree::ptree fit_config, int max_fitness, int max_budget) {
   std::vector<std::shared_ptr<const healthcare::Fitness>> fits;
   for (auto& cell : fit_config) {
-    fits.push_back(
-        ReadFitness(cell.second));
+    fits.push_back(ReadFitness(cell.second));
   }
-  
-  return std::make_unique<healthcare::fitness::Composite>(
-      max_fitness, max_budget, fits);
+
+  return std::make_unique<healthcare::fitness::Composite>(max_fitness,
+                                                          max_budget, fits);
 }
 
 std::unique_ptr<const healthcare::Fitness> ReadFitness(
@@ -47,7 +45,6 @@ std::unique_ptr<const healthcare::Fitness> ReadFitness(
   }
   return fit;
 }
-
 
 std::unique_ptr<const healthcare::Fitness> ReadFixedPriceFitness(
     boost::property_tree::ptree fit_config) {

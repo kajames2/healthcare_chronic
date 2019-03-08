@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_PROBABILITY_GOMPERTZ_SHOCKS_
-#define _HEALTHCARE_PROBABILITY_GOMPERTZ_SHOCKS_
+#ifndef HEALTHCARE_PROBABILITY_GOMPERTZ_SHOCKS_H_
+#define HEALTHCARE_PROBABILITY_GOMPERTZ_SHOCKS_H_
 
 #include <cmath>
 
@@ -33,4 +33,4 @@ class GompertzShocks : public Probability {
 }  // namespace probability
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_PROBABILITY_GOMPERTZ_SHOCKS_
+#endif  // HEALTHCARE_PROBABILITY_GOMPERTZ_SHOCKS_H_

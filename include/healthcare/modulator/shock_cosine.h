@@ -1,10 +1,10 @@
-#ifndef _HEALTHCARE_MODULATOR_SHOCK_COSINE_H_
-#define _HEALTHCARE_MODULATOR_SHOCK_COSINE_H_
+#ifndef HEALTHCARE_MODULATOR_SHOCK_COSINE_H_
+#define HEALTHCARE_MODULATOR_SHOCK_COSINE_H_
 
-#include "healthcare/modulator.h"
+#include <cmath>
 
 #include <boost/math/constants/constants.hpp>
-#include <cmath>
+#include "healthcare/modulator.h"
 
 namespace healthcare {
 namespace modulator {
@@ -26,4 +26,4 @@ class ShockCosine : public Modulator {
 }  // namespace modulator
 }  // namespace healthcare
 
-#endif  // _HEALTHCARE_MODULATOR_SHOCK_COSINE_H_
+#endif  // HEALTHCARE_MODULATOR_SHOCK_COSINE_H_

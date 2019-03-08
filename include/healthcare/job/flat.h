@@ -1,5 +1,5 @@
-#ifndef _HEALTHCARE_JOB_FLAT_H_
-#define _HEALTHCARE_JOB_FLAT_H_
+#ifndef HEALTHCARE_JOB_FLAT_H_
+#define HEALTHCARE_JOB_FLAT_H_
 
 #include "healthcare/job.h"
 
@@ -17,4 +17,4 @@ class Flat : public Job {
 
 }  // namespace job
 }  // namespace healthcare
-#endif  // _HEALTHCARE_JOB_FLAT_H_
+#endif  // HEALTHCARE_JOB_FLAT_H_
