@@ -1,4 +1,4 @@
-#include "healthcare/configuration/fitness_reader.h"
+#include "fitness_reader.h"
 
 #include <cassert>
 #include <memory>
@@ -16,21 +16,28 @@
 namespace healthcare {
 namespace configuration {
 
-std::unique_ptr<const healthcare::Fitness> ReadFitnesses(
-    boost::property_tree::ptree fit_config, int max_fitness, int max_budget) {
-  std::vector<std::shared_ptr<const healthcare::Fitness>> fits;
+using ::boost::property_tree::ptree;
+
+std::unique_ptr<const Fitness> ReadFitness(ptree fitness_config);
+std::unique_ptr<const Fitness> ReadFixedPriceFitness(ptree fitness_config);
+std::unique_ptr<const Fitness> ReadQuadraticCostFitness(ptree fit_config);
+std::unique_ptr<const Fitness> ReadFlatLossFitness(ptree fitness_config);
+std::unique_ptr<const Fitness> ReadProportionalLossFitness(
+    ptree fitness_config);
+
+std::unique_ptr<const Fitness> ReadFitnesses(ptree fit_config, int max_fitness,
+                                             int max_budget) {
+  std::vector<std::shared_ptr<const Fitness>> fits;
   for (auto& cell : fit_config) {
     fits.push_back(ReadFitness(cell.second));
   }
 
-  return std::make_unique<healthcare::fitness::Composite>(max_fitness,
-                                                          max_budget, fits);
+  return std::make_unique<fitness::Composite>(max_fitness, max_budget, fits);
 }
 
-std::unique_ptr<const healthcare::Fitness> ReadFitness(
-    boost::property_tree::ptree fit_config) {
+std::unique_ptr<const Fitness> ReadFitness(ptree fit_config) {
   std::string type = fit_config.get<std::string>("type");
-  std::unique_ptr<const healthcare::Fitness> fit;
+  std::unique_ptr<const Fitness> fit;
   if (type == "FixedPrice") {
     fit = ReadFixedPriceFitness(fit_config);
   } else if (type == "FlatLoss") {
@@ -41,33 +48,29 @@ std::unique_ptr<const healthcare::Fitness> ReadFitness(
     fit = ReadQuadraticCostFitness(fit_config);
   } else {
     assert(false && "Unsupported Fitness type");
-    fit = std::unique_ptr<const healthcare::Fitness>();
+    fit = std::unique_ptr<const Fitness>();
   }
   return fit;
 }
 
-std::unique_ptr<const healthcare::Fitness> ReadFixedPriceFitness(
-    boost::property_tree::ptree fit_config) {
+std::unique_ptr<const Fitness> ReadFixedPriceFitness(ptree fit_config) {
   int price = fit_config.get<int>("price");
-  return std::make_unique<healthcare::fitness::FixedPrice>(price);
+  return std::make_unique<fitness::FixedPrice>(price);
 }
 
-std::unique_ptr<const healthcare::Fitness> ReadQuadraticCostFitness(
-    boost::property_tree::ptree fit_config) {
+std::unique_ptr<const Fitness> ReadQuadraticCostFitness(ptree fit_config) {
   int coeff = fit_config.get<int>("coeff");
-  return std::make_unique<healthcare::fitness::QuadraticCost>(coeff);
+  return std::make_unique<fitness::QuadraticCost>(coeff);
 }
 
-std::unique_ptr<const healthcare::Fitness> ReadFlatLossFitness(
-    boost::property_tree::ptree fit_config) {
+std::unique_ptr<const Fitness> ReadFlatLossFitness(ptree fit_config) {
   int degen = fit_config.get<int>("degen");
-  return std::make_unique<healthcare::fitness::FlatLoss>(degen);
+  return std::make_unique<fitness::FlatLoss>(degen);
 }
 
-std::unique_ptr<const healthcare::Fitness> ReadProportionalLossFitness(
-    boost::property_tree::ptree fit_config) {
+std::unique_ptr<const Fitness> ReadProportionalLossFitness(ptree fit_config) {
   float rate = fit_config.get<float>("rate");
-  return std::make_unique<healthcare::fitness::ProportionalLoss>(rate);
+  return std::make_unique<fitness::ProportionalLoss>(rate);
 }
 
 }  // namespace configuration

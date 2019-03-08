@@ -20,6 +20,28 @@ DecisionCache::DecisionCache(healthcare::Configuration config,
   BuildCache();
 }
 
+typename std::vector<healthcare::DecisionResults>::const_iterator
+DecisionCache::begin(int shocks, int fitness, int budget) const {
+  if (budget > config_.max_savings) {
+    return decisions_[shocks][fitness].begin() +
+           counts_[shocks][fitness][budget - config_.max_savings - 1];
+  }
+  return decisions_[shocks][fitness].begin();
+}
+
+typename std::vector<healthcare::DecisionResults>::const_iterator
+DecisionCache::end(int shocks, int fitness, int budget) const {
+  return decisions_[shocks][fitness].begin() + counts_[shocks][fitness][budget];
+}
+
+int DecisionCache::GetDecisionCount(int shocks, int fitness, int budget) const {
+  if (budget > config_.max_savings) {
+    return counts_[shocks][fitness][budget] -
+           counts_[shocks][fitness][budget - config_.max_savings - 1];
+  }
+  return counts_[shocks][fitness][budget];
+}
+
 void DecisionCache::BuildCache() {
   for (int shocks = 0; shocks <= config_.max_shocks; ++shocks) {
     for (int fit = 0; fit <= config_.max_fitness; ++fit) {

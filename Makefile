@@ -291,6 +291,66 @@ src/dp/decision_cache.cc.s:
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/dp/decision_cache.cc.s
 .PHONY : src/dp/decision_cache.cc.s
 
+src/dp/storage.o: src/dp/storage.cc.o
+
+.PHONY : src/dp/storage.o
+
+# target to build an object file
+src/dp/storage.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/dp/storage.cc.o
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/dp/storage.cc.o
+.PHONY : src/dp/storage.cc.o
+
+src/dp/storage.i: src/dp/storage.cc.i
+
+.PHONY : src/dp/storage.i
+
+# target to preprocess a source file
+src/dp/storage.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/dp/storage.cc.i
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/dp/storage.cc.i
+.PHONY : src/dp/storage.cc.i
+
+src/dp/storage.s: src/dp/storage.cc.s
+
+.PHONY : src/dp/storage.s
+
+# target to generate assembly for a file
+src/dp/storage.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/dp/storage.cc.s
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/dp/storage.cc.s
+.PHONY : src/dp/storage.cc.s
+
+src/healthcare/configuration.o: src/healthcare/configuration.cc.o
+
+.PHONY : src/healthcare/configuration.o
+
+# target to build an object file
+src/healthcare/configuration.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration.cc.o
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration.cc.o
+.PHONY : src/healthcare/configuration.cc.o
+
+src/healthcare/configuration.i: src/healthcare/configuration.cc.i
+
+.PHONY : src/healthcare/configuration.i
+
+# target to preprocess a source file
+src/healthcare/configuration.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration.cc.i
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration.cc.i
+.PHONY : src/healthcare/configuration.cc.i
+
+src/healthcare/configuration.s: src/healthcare/configuration.cc.s
+
+.PHONY : src/healthcare/configuration.s
+
+# target to generate assembly for a file
+src/healthcare/configuration.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration.cc.s
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration.cc.s
+.PHONY : src/healthcare/configuration.cc.s
+
 src/healthcare/configuration/fitness_reader.o: src/healthcare/configuration/fitness_reader.cc.o
 
 .PHONY : src/healthcare/configuration/fitness_reader.o
@@ -470,36 +530,6 @@ src/healthcare/configuration/prob_reader.cc.s:
 	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/prob_reader.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/prob_reader.cc.s
 .PHONY : src/healthcare/configuration/prob_reader.cc.s
-
-src/healthcare/configuration/reader.o: src/healthcare/configuration/reader.cc.o
-
-.PHONY : src/healthcare/configuration/reader.o
-
-# target to build an object file
-src/healthcare/configuration/reader.cc.o:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/reader.cc.o
-	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/reader.cc.o
-.PHONY : src/healthcare/configuration/reader.cc.o
-
-src/healthcare/configuration/reader.i: src/healthcare/configuration/reader.cc.i
-
-.PHONY : src/healthcare/configuration/reader.i
-
-# target to preprocess a source file
-src/healthcare/configuration/reader.cc.i:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/reader.cc.i
-	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/reader.cc.i
-.PHONY : src/healthcare/configuration/reader.cc.i
-
-src/healthcare/configuration/reader.s: src/healthcare/configuration/reader.cc.s
-
-.PHONY : src/healthcare/configuration/reader.s
-
-# target to generate assembly for a file
-src/healthcare/configuration/reader.cc.s:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/reader.cc.s
-	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/reader.cc.s
-.PHONY : src/healthcare/configuration/reader.cc.s
 
 src/healthcare/decision.o: src/healthcare/decision.cc.o
 
@@ -1089,6 +1119,12 @@ help:
 	@echo "... src/dp/decision_cache.o"
 	@echo "... src/dp/decision_cache.i"
 	@echo "... src/dp/decision_cache.s"
+	@echo "... src/dp/storage.o"
+	@echo "... src/dp/storage.i"
+	@echo "... src/dp/storage.s"
+	@echo "... src/healthcare/configuration.o"
+	@echo "... src/healthcare/configuration.i"
+	@echo "... src/healthcare/configuration.s"
 	@echo "... src/healthcare/configuration/fitness_reader.o"
 	@echo "... src/healthcare/configuration/fitness_reader.i"
 	@echo "... src/healthcare/configuration/fitness_reader.s"
@@ -1107,9 +1143,6 @@ help:
 	@echo "... src/healthcare/configuration/prob_reader.o"
 	@echo "... src/healthcare/configuration/prob_reader.i"
 	@echo "... src/healthcare/configuration/prob_reader.s"
-	@echo "... src/healthcare/configuration/reader.o"
-	@echo "... src/healthcare/configuration/reader.i"
-	@echo "... src/healthcare/configuration/reader.s"
 	@echo "... src/healthcare/decision.o"
 	@echo "... src/healthcare/decision.i"
 	@echo "... src/healthcare/decision.s"

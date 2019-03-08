@@ -1,7 +1,9 @@
 #ifndef HEALTHCARE_CONFIGURATION_H_
 #define HEALTHCARE_CONFIGURATION_H_
 
+#include <string>
 #include <memory>
+
 #include "healthcare/enjoyment.h"
 #include "healthcare/fitness.h"
 #include "healthcare/job.h"
@@ -30,6 +32,8 @@ struct Configuration {
   int shock_income_size;
   int shock_count_size;
 };
+
+Configuration ReadConfigurationFile(std::string filename);
 
 }  // namespace healthcare
 

@@ -9,11 +9,9 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
-
 #include "dp/decision_cache.h"
 #include "dp/storage.h"
 #include "healthcare/configuration.h"
-#include "healthcare/configuration/reader.h"
 #include "healthcare/decision.h"
 #include "healthcare/decision_results.h"
 #include "healthcare/person.h"
@@ -52,8 +50,7 @@ int main(int argc, char** argv) {
     std::pair<path, path> paths = GetPaths(argc, argv);
     path input = paths.first;
     path out_dir = paths.second;
-    const Configuration config =
-        configuration::ReadConfigurationFile(input.string());
+    const Configuration config = ReadConfigurationFile(input.string());
     RunOptimization(config, out_dir.string(), input.stem().string());
   } catch (const char* msg) {
     std::cerr << msg << std::endl;
@@ -181,28 +178,24 @@ void StoreAgeOptimals(Storage& storage,
     size_t n_decisions = std::distance(start_it, end_it);
     dec_states.resize(n_decisions);
     std::copy(start_it, end_it, dec_states.begin());
-    std::for_each(
-        dec_states.begin(), dec_states.end(),
-        [&opt_lookup, &cur_state, &config](DecisionResults& pair) -> void {
-          pair.result.person.cash =
-              cur_state.cash + cur_state.income - pair.result.spending;
-          pair.result.person.cash = std::clamp(
-              pair.result.person.cash, config.min_savings, config.max_savings);
-          pair.result.future_value = opt_lookup(pair.result.person);
-          pair.result.value +=
-              pair.result.joy + config.discount * pair.result.future_value;
+    for (auto& pair : dec_states) {
+      auto& res = pair.result;
+      auto& res_shock = pair.result_shock;
+      res.person.cash = cur_state.cash + cur_state.income - res.spending;
+      res.person.cash =
+          std::clamp(res.person.cash, config.min_savings, config.max_savings);
+      res.future_value = opt_lookup(res.person);
+      res.value += res.joy + config.discount * res.future_value;
 
-          pair.result_shock.person.cash =
-              cur_state.cash + cur_state.income - pair.result_shock.spending;
-          pair.result_shock.person.cash =
-              std::clamp(pair.result_shock.person.cash, config.min_savings,
-                         config.max_savings);
-          pair.result_shock.future_value = opt_lookup(pair.result_shock.person);
-          pair.result_shock.value +=
-              pair.result_shock.joy +
-              config.discount * pair.result_shock.future_value;
-          pair.value = ExpectedUtility(pair);
-        });
+      res_shock.person.cash =
+          cur_state.cash + cur_state.income - res_shock.spending;
+      res_shock.person.cash = std::clamp(
+          res_shock.person.cash, config.min_savings, config.max_savings);
+      res_shock.future_value = opt_lookup(res_shock.person);
+      res_shock.value +=
+          res_shock.joy + config.discount * res_shock.future_value;
+      pair.value = ExpectedUtility(pair);
+    };
 
     auto opts = std::max_element(
         dec_states.begin(), dec_states.end(),

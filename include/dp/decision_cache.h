@@ -16,29 +16,11 @@ class DecisionCache {
  public:
   DecisionCache(healthcare::Configuration config,
                 healthcare::DecisionEvaluator eval, int age);
-
   typename std::vector<healthcare::DecisionResults>::const_iterator begin(
-      int shocks, int fitness, int budget) const {
-    if (budget > config_.max_savings) {
-      return decisions_[shocks][fitness].begin() +
-             counts_[shocks][fitness][budget - config_.max_savings - 1];
-    }
-    return decisions_[shocks][fitness].begin();
-  }
-
+      int shocks, int fitness, int budget) const;
   typename std::vector<healthcare::DecisionResults>::const_iterator end(
-      int shocks, int fitness, int budget) const {
-    return decisions_[shocks][fitness].begin() +
-           counts_[shocks][fitness][budget];
-  }
-
-  int GetDecisionCount(int shocks, int fitness, int budget) const {
-    if (budget > config_.max_savings) {
-      return counts_[shocks][fitness][budget] -
-             counts_[shocks][fitness][budget - config_.max_savings - 1];
-    }
-    return counts_[shocks][fitness][budget];
-  }
+      int shocks, int fitness, int budget) const;
+  int GetDecisionCount(int shocks, int fitness, int budget) const;
 
  private:
   const healthcare::Configuration config_;

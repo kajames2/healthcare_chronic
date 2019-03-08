@@ -12,10 +12,7 @@ namespace configuration {
 
 std::unique_ptr<const healthcare::Probability> ReadProb(
     boost::property_tree::ptree prob_config);
-std::unique_ptr<const healthcare::Probability> ReadGompertzMakehamProb(
-    boost::property_tree::ptree prob_config);
-std::unique_ptr<const healthcare::Probability> ReadGompertzShocksProb(
-    boost::property_tree::ptree prob_config);
+
 }  // namespace configuration
 }  // namespace healthcare
 

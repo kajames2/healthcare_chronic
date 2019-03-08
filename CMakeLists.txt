@@ -14,8 +14,8 @@ set(SOURCES
   ${PROJECT_SOURCE_DIR}/src/healthcare/person.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/period_result.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/decision_evaluator.cc
+  ${PROJECT_SOURCE_DIR}/src/healthcare/configuration.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/joy_reader.cc
-  ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/job_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/fitness_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/modulator_reader.cc
@@ -27,6 +27,7 @@ set(SOURCES
   ${PROJECT_SOURCE_DIR}/src/healthcare/fitness/fixed_price.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/fitness/quadratic_cost.cc
   ${PROJECT_SOURCE_DIR}/src/dp/decision_cache.cc
+  ${PROJECT_SOURCE_DIR}/src/dp/storage.cc  
   )
 
 if (MSYS)
