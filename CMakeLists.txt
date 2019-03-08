@@ -21,7 +21,7 @@ set(SOURCES
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/modulator_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/prob_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/insurance_reader.cc
-  ${PROJECT_SOURCE_DIR}/src/healthcare/enjoyment/fractional.cc
+  ${PROJECT_SOURCE_DIR}/src/healthcare/joy/fractional.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/decision.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/fitness/composite.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/fitness/fixed_price.cc
@@ -92,7 +92,7 @@ endif()
 
 set(TEST_SOURCES
   ${PROJECT_SOURCE_DIR}/test/healthcare/decision_test.cc
-  ${PROJECT_SOURCE_DIR}/test/healthcare/enjoyment/frational.cc
+  ${PROJECT_SOURCE_DIR}/test/healthcare/joy/frational.cc
   ${PROJECT_SOURCE_DIR}/test/healthcare/person_tests.cc
   ${PROJECT_SOURCE_DIR}/test/healthcare/fitness/flat_loss_tests.cc
   ${PROJECT_SOURCE_DIR}/test/healthcare/fitness/proportional_loss.cc

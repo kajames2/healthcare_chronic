@@ -591,36 +591,6 @@ src/healthcare/decision_evaluator.cc.s:
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/decision_evaluator.cc.s
 .PHONY : src/healthcare/decision_evaluator.cc.s
 
-src/healthcare/enjoyment/fractional.o: src/healthcare/enjoyment/fractional.cc.o
-
-.PHONY : src/healthcare/enjoyment/fractional.o
-
-# target to build an object file
-src/healthcare/enjoyment/fractional.cc.o:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/enjoyment/fractional.cc.o
-	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/enjoyment/fractional.cc.o
-.PHONY : src/healthcare/enjoyment/fractional.cc.o
-
-src/healthcare/enjoyment/fractional.i: src/healthcare/enjoyment/fractional.cc.i
-
-.PHONY : src/healthcare/enjoyment/fractional.i
-
-# target to preprocess a source file
-src/healthcare/enjoyment/fractional.cc.i:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/enjoyment/fractional.cc.i
-	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/enjoyment/fractional.cc.i
-.PHONY : src/healthcare/enjoyment/fractional.cc.i
-
-src/healthcare/enjoyment/fractional.s: src/healthcare/enjoyment/fractional.cc.s
-
-.PHONY : src/healthcare/enjoyment/fractional.s
-
-# target to generate assembly for a file
-src/healthcare/enjoyment/fractional.cc.s:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/enjoyment/fractional.cc.s
-	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/enjoyment/fractional.cc.s
-.PHONY : src/healthcare/enjoyment/fractional.cc.s
-
 src/healthcare/fitness/composite.o: src/healthcare/fitness/composite.cc.o
 
 .PHONY : src/healthcare/fitness/composite.o
@@ -711,6 +681,36 @@ src/healthcare/fitness/quadratic_cost.cc.s:
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness/quadratic_cost.cc.s
 .PHONY : src/healthcare/fitness/quadratic_cost.cc.s
 
+src/healthcare/joy/fractional.o: src/healthcare/joy/fractional.cc.o
+
+.PHONY : src/healthcare/joy/fractional.o
+
+# target to build an object file
+src/healthcare/joy/fractional.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/joy/fractional.cc.o
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/joy/fractional.cc.o
+.PHONY : src/healthcare/joy/fractional.cc.o
+
+src/healthcare/joy/fractional.i: src/healthcare/joy/fractional.cc.i
+
+.PHONY : src/healthcare/joy/fractional.i
+
+# target to preprocess a source file
+src/healthcare/joy/fractional.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/joy/fractional.cc.i
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/joy/fractional.cc.i
+.PHONY : src/healthcare/joy/fractional.cc.i
+
+src/healthcare/joy/fractional.s: src/healthcare/joy/fractional.cc.s
+
+.PHONY : src/healthcare/joy/fractional.s
+
+# target to generate assembly for a file
+src/healthcare/joy/fractional.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/joy/fractional.cc.s
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/joy/fractional.cc.s
+.PHONY : src/healthcare/joy/fractional.cc.s
+
 src/healthcare/period_result.o: src/healthcare/period_result.cc.o
 
 .PHONY : src/healthcare/period_result.o
@@ -797,33 +797,6 @@ test/healthcare/decision_test.s: test/healthcare/decision_test.cc.s
 test/healthcare/decision_test.cc.s:
 	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/decision_test.cc.s
 .PHONY : test/healthcare/decision_test.cc.s
-
-test/healthcare/enjoyment/frational.o: test/healthcare/enjoyment/frational.cc.o
-
-.PHONY : test/healthcare/enjoyment/frational.o
-
-# target to build an object file
-test/healthcare/enjoyment/frational.cc.o:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/enjoyment/frational.cc.o
-.PHONY : test/healthcare/enjoyment/frational.cc.o
-
-test/healthcare/enjoyment/frational.i: test/healthcare/enjoyment/frational.cc.i
-
-.PHONY : test/healthcare/enjoyment/frational.i
-
-# target to preprocess a source file
-test/healthcare/enjoyment/frational.cc.i:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/enjoyment/frational.cc.i
-.PHONY : test/healthcare/enjoyment/frational.cc.i
-
-test/healthcare/enjoyment/frational.s: test/healthcare/enjoyment/frational.cc.s
-
-.PHONY : test/healthcare/enjoyment/frational.s
-
-# target to generate assembly for a file
-test/healthcare/enjoyment/frational.cc.s:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/enjoyment/frational.cc.s
-.PHONY : test/healthcare/enjoyment/frational.cc.s
 
 test/healthcare/fitness/composite_tests.o: test/healthcare/fitness/composite_tests.cc.o
 
@@ -1041,6 +1014,33 @@ test/healthcare/job/flat_tests.cc.s:
 	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/job/flat_tests.cc.s
 .PHONY : test/healthcare/job/flat_tests.cc.s
 
+test/healthcare/joy/frational.o: test/healthcare/joy/frational.cc.o
+
+.PHONY : test/healthcare/joy/frational.o
+
+# target to build an object file
+test/healthcare/joy/frational.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/joy/frational.cc.o
+.PHONY : test/healthcare/joy/frational.cc.o
+
+test/healthcare/joy/frational.i: test/healthcare/joy/frational.cc.i
+
+.PHONY : test/healthcare/joy/frational.i
+
+# target to preprocess a source file
+test/healthcare/joy/frational.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/joy/frational.cc.i
+.PHONY : test/healthcare/joy/frational.cc.i
+
+test/healthcare/joy/frational.s: test/healthcare/joy/frational.cc.s
+
+.PHONY : test/healthcare/joy/frational.s
+
+# target to generate assembly for a file
+test/healthcare/joy/frational.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/joy/frational.cc.s
+.PHONY : test/healthcare/joy/frational.cc.s
+
 test/healthcare/person_tests.o: test/healthcare/person_tests.cc.o
 
 .PHONY : test/healthcare/person_tests.o
@@ -1149,9 +1149,6 @@ help:
 	@echo "... src/healthcare/decision_evaluator.o"
 	@echo "... src/healthcare/decision_evaluator.i"
 	@echo "... src/healthcare/decision_evaluator.s"
-	@echo "... src/healthcare/enjoyment/fractional.o"
-	@echo "... src/healthcare/enjoyment/fractional.i"
-	@echo "... src/healthcare/enjoyment/fractional.s"
 	@echo "... src/healthcare/fitness/composite.o"
 	@echo "... src/healthcare/fitness/composite.i"
 	@echo "... src/healthcare/fitness/composite.s"
@@ -1161,6 +1158,9 @@ help:
 	@echo "... src/healthcare/fitness/quadratic_cost.o"
 	@echo "... src/healthcare/fitness/quadratic_cost.i"
 	@echo "... src/healthcare/fitness/quadratic_cost.s"
+	@echo "... src/healthcare/joy/fractional.o"
+	@echo "... src/healthcare/joy/fractional.i"
+	@echo "... src/healthcare/joy/fractional.s"
 	@echo "... src/healthcare/period_result.o"
 	@echo "... src/healthcare/period_result.i"
 	@echo "... src/healthcare/period_result.s"
@@ -1170,9 +1170,6 @@ help:
 	@echo "... test/healthcare/decision_test.o"
 	@echo "... test/healthcare/decision_test.i"
 	@echo "... test/healthcare/decision_test.s"
-	@echo "... test/healthcare/enjoyment/frational.o"
-	@echo "... test/healthcare/enjoyment/frational.i"
-	@echo "... test/healthcare/enjoyment/frational.s"
 	@echo "... test/healthcare/fitness/composite_tests.o"
 	@echo "... test/healthcare/fitness/composite_tests.i"
 	@echo "... test/healthcare/fitness/composite_tests.s"
@@ -1197,6 +1194,9 @@ help:
 	@echo "... test/healthcare/job/flat_tests.o"
 	@echo "... test/healthcare/job/flat_tests.i"
 	@echo "... test/healthcare/job/flat_tests.s"
+	@echo "... test/healthcare/joy/frational.o"
+	@echo "... test/healthcare/joy/frational.i"
+	@echo "... test/healthcare/joy/frational.s"
 	@echo "... test/healthcare/person_tests.o"
 	@echo "... test/healthcare/person_tests.i"
 	@echo "... test/healthcare/person_tests.s"

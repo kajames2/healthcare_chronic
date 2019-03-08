@@ -6,31 +6,31 @@
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include "healthcare/enjoyment.h"
-#include "healthcare/enjoyment/fractional.h"
+#include "healthcare/joy.h"
+#include "healthcare/joy/fractional.h"
 
 namespace healthcare {
 namespace configuration {
 
 using ::boost::property_tree::ptree;
 
-std::unique_ptr<const Enjoyment> ReadFractionalJoy(ptree joy_config);
+std::unique_ptr<const Joy> ReadFractionalJoy(ptree joy_config);
 
-std::unique_ptr<const Enjoyment> ReadEnjoyment(ptree joy_config) {
+std::unique_ptr<const Joy> ReadJoy(ptree joy_config) {
   std::string type = joy_config.get<std::string>("type");
-  std::unique_ptr<const Enjoyment> joy;
+  std::unique_ptr<const Joy> joy;
   if (type == "Fractional") {
     joy = ReadFractionalJoy(joy_config);
   } else {
-    assert(false && "Unsupported Enjoyment type");
-    joy = std::unique_ptr<const Enjoyment>();
+    assert(false && "Unsupported Joy type");
+    joy = std::unique_ptr<const Joy>();
   }
   return joy;
 }
 
-std::unique_ptr<const Enjoyment> ReadFractionalJoy(ptree joy_config) {
+std::unique_ptr<const Joy> ReadFractionalJoy(ptree joy_config) {
   float j = joy_config.get<float>("j");
-  return std::make_unique<enjoyment::Fractional>(j);
+  return std::make_unique<joy::Fractional>(j);
 }
 
 }  // namespace configuration

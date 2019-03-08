@@ -40,7 +40,7 @@ Configuration ReadConfigurationFile(std::string filename) {
   config.max_budget = CalculateMaxBudget(config);
   config.fitness = configuration::ReadFitnesses(
       root.get_child("fitnesses"), config.max_fitness, config.max_budget);
-  config.joy = configuration::ReadEnjoyment(root.get_child("enjoyment"));
+  config.joy = configuration::ReadJoy(root.get_child("joy"));
   config.shock_prob = configuration::ReadProb(root.get_child("probability"));
   config.shock_income_size = root.get<int>("shock_income_size");
   config.shock_count_size = root.get<int>("shock_count_size");
@@ -56,9 +56,9 @@ Configuration ReadConfigurationFile(std::string filename) {
         modulator::Constant::NoModulation());
   }
 
-  if (root.count("enjoyment_modulation")) {
+  if (root.count("joy_modulation")) {
     config.joy_mod =
-        configuration::ReadModulator(root.get_child("enjoyment_modulation"),
+        configuration::ReadModulator(root.get_child("joy_modulation"),
                                      config.max_shocks, config.max_fitness);
   } else {
     config.joy_mod = std::make_unique<modulator::Constant>(

@@ -5,12 +5,12 @@
 #include <string>
 
 #include <boost/property_tree/ptree.hpp>
-#include "healthcare/enjoyment.h"
+#include "healthcare/joy.h"
 
 namespace healthcare {
 namespace configuration {
 
-std::unique_ptr<const healthcare::Enjoyment> ReadEnjoyment(
+std::unique_ptr<const healthcare::Joy> ReadJoy(
     boost::property_tree::ptree joy_config);
 
 }  // namespace configuration
