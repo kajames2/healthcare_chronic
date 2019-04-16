@@ -1,5 +1,5 @@
 # Ignore configuration files
-#*.json
+*.json
 
 # Ignore the build and lib dirs
 build
@@ -9,8 +9,8 @@ lib/*
 bin/*
 
 # Ignore output files
-#*.csv
-#*.pdf
+*.csv
+*.pdf
 
 # Prerequisites
 *.d
