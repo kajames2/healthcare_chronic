@@ -11,7 +11,8 @@ namespace healthcare {
 namespace configuration {
 
 std::unique_ptr<const healthcare::Joy> ReadJoy(
-    boost::property_tree::ptree joy_config);
+    boost::property_tree::ptree joy_config, int max_shocks,
+    int max_fitness);
 
 }  // namespace configuration
 }  // namespace healthcare

@@ -9,7 +9,7 @@ namespace fitness {
 class QuadraticCost : public Fitness {
  public:
   explicit QuadraticCost(float coeff);
-  int GetFitness(int fitness, int fitness_investment) const override;
+  double GetDecimalFitness(double fitness, int fitness_investment) const override;
   int GetFitnessCost(int fitness, int end_fitness) const override;
 
  private:

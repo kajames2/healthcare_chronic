@@ -11,8 +11,8 @@ namespace fitness {
 class FlatLoss : public Fitness {
  public:
   explicit FlatLoss(int degen) : degen_(degen) {}
-  int GetFitness(int fitness, int fitness_investment) const override {
-    return std::max(0, fitness - degen_);
+  double GetDecimalFitness(double fitness, int fitness_investment) const override {
+    return std::max(0.0, fitness - degen_);
   }
   int GetFitnessCost(int fitness, int end_fitness) const override {
     return end_fitness == GetFitness(fitness, 0) ? 0 : 10000;

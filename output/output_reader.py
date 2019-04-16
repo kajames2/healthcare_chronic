@@ -1,5 +1,7 @@
 import random
 from array import array
+import sys
+import os
 
 # Result features
 # Separation across fixed price vs actuarial
@@ -36,13 +38,21 @@ def get_data_features(filename):
 
     line = f.readline();
     line_len = len(line);
-        
+    #Add this in mingw.
+    #header_len += 1
+    #line_len += 1
+
     (min_cash, max_cash) = get_min_max(f, header_indices["Cash"], header_len, line_len)
-    (min_fitness, max_fitness) = get_min_max(f, header_indices["Fitness"], header_len, line_len * (max_cash - min_cash + 1))
-    (min_shocks, max_shocks) = get_min_max(f, header_indices["Shocks"], header_len, line_len * (max_cash - min_cash + 1) * (max_fitness - min_fitness + 1))
-    (min_age, max_age) = get_min_max(f, header_indices["Age"], header_len, line_len * (max_cash - min_cash + 1) * (max_fitness - min_fitness + 1) * (max_shocks - min_shocks + 1))
+    n_cash = max_cash - min_cash + 1
+    (min_fitness, max_fitness) = get_min_max(f, header_indices["Fitness"], header_len, line_len * n_cash)
+    n_fitness = max_fitness - min_fitness + 1
+    (min_shocks, max_shocks) = get_min_max(f, header_indices["Shocks"], header_len, line_len * n_cash * n_fitness)
+    n_shocks = max_shocks - min_shocks + 1
+    (min_age, max_age) = get_min_max(f, header_indices["Age"], header_len, line_len * n_cash * n_fitness * n_shocks)
     f.close()
-    return ((header_len, line_len), {"max_age" : max_age, "max_shocks" : max_shocks, "max_fitness" : max_fitness, "max_cash" : max_cash, "min_cash" : min_cash}, header)
+    return ((header_len, line_len), {"max_age" : max_age, "max_shocks" : max_shocks,
+                                     "max_fitness" : max_fitness, "max_cash" : max_cash,
+                                     "min_cash" : min_cash}, header)
 
 def process_line(raw_line):
     line = raw_line.strip('\n').split(",")
@@ -80,8 +90,7 @@ def get_life_random(fstream, start_state):
         state = next_state(row)
     return life
 
-filenames = ["employer_flat_60_2",
-             "actuarial_flat_60_2"]
+filenames = sys.argv[1:]
 for filename_base in filenames:
     random.seed(12345678)
     filename = filename_base + ".csv"
@@ -99,12 +108,12 @@ for filename_base in filenames:
     header_indices = {header[i] : i for i in range(len(header))}
     n_lives = 1000
     lives_digits = len(str(abs(n_lives-1)))
-    start_state = [1,0,10,0]
+    start_state = [1,0,20,0]
     fstream = open(filename)
     rand_lives = [get_life_random(fstream, start_state) for i in range(n_lives)]
     
     f= open(filename_base + "_rand_lives.csv","w+")
-    f.write(','.join(header) + ",RandDraw,Shocked,TotalJoy,BuyIns,InsurancePayout,ShockProb,Life\n")
+    f.write(','.join(header) + ",RandDraw,Shocked,TotalJoy,BuyIns,InsurancePaid,ShockProb,AtMaxShocks,Life\n")
     for life in range(n_lives):
         tot_enjoyment = 0;
         for period in rand_lives[life]:
@@ -112,10 +121,12 @@ for filename_base in filenames:
             tot_enjoyment += float(period[header_indices["Enjoyment"]])
             buy_ins = int(int(period[header_indices["InsuranceSpending"]])>0)
             shock_prob = shocked * (float(period[header_indices["Probability"]])) + (1-shocked) * (1 - float(period[header_indices["Probability"]]))
-            payout = buy_ins * shocked * 200
+            payout = buy_ins * shocked
+            at_max_shocks = int(int(period[header_indices["Shocks"]]) == max_shocks)
             period.append("{0:6.2f}".format(tot_enjoyment))
             period.append("{0:1}".format(buy_ins))
-            period.append("{0:3}".format(payout))
+            period.append("{0:1}".format(payout))
             period.append("{0:5.3f}".format(shock_prob))
+            period.append("{0:1}".format(at_max_shocks))
             period.append("{0:3}".format(life))
             f.write(','.join(period) + '\n')

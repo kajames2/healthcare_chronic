@@ -13,9 +13,11 @@ class Composite : public Fitness {
  public:
   Composite(int max_fitness, int max_budget,
             std::vector<std::shared_ptr<const Fitness>>);
-  int GetFitness(int fitness, int fitness_investment) const override;
   int GetFitnessCost(int fitness, int end_fitness) const override;
+  double GetDecimalFitness(double fitness,
+                           int fitness_investment) const override;
 
+ protected:
  private:
   int max_fitness_;
   std::vector<std::shared_ptr<const Fitness>> fits_;

@@ -7,9 +7,9 @@ namespace fitness {
 
 QuadraticCost::QuadraticCost(float coeff) : coeff_(coeff) {}
 
-int QuadraticCost::GetFitness(int fitness, int fitness_investment) const {
-  return fitness +
-         static_cast<int>(coeff_ * fitness_investment * fitness_investment);
+double QuadraticCost::GetDecimalFitness(double fitness,
+                                        int fitness_investment) const {
+  return fitness + std::sqrt(fitness_investment / coeff_);
 }
 
 int QuadraticCost::GetFitnessCost(int fitness, int end_fitness) const {
@@ -17,7 +17,8 @@ int QuadraticCost::GetFitnessCost(int fitness, int end_fitness) const {
     return 100000;
   }
 
-  return static_cast<int>(std::sqrt((end_fitness - fitness) / coeff_));
+  return static_cast<int>(
+      std::ceil(coeff_ * (end_fitness - fitness) * (end_fitness - fitness)));
 }
 
 }  // namespace fitness

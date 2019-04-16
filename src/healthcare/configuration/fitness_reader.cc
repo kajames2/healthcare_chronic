@@ -54,12 +54,12 @@ std::unique_ptr<const Fitness> ReadFitness(ptree fit_config) {
 }
 
 std::unique_ptr<const Fitness> ReadFixedPriceFitness(ptree fit_config) {
-  int price = fit_config.get<int>("price");
+  double price = fit_config.get<double>("price");
   return std::make_unique<fitness::FixedPrice>(price);
 }
 
 std::unique_ptr<const Fitness> ReadQuadraticCostFitness(ptree fit_config) {
-  int coeff = fit_config.get<int>("coeff");
+  float coeff = fit_config.get<float>("coeff");
   return std::make_unique<fitness::QuadraticCost>(coeff);
 }
 

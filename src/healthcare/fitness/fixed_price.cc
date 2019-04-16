@@ -5,11 +5,11 @@
 namespace healthcare {
 namespace fitness {
 
-FixedPrice::FixedPrice(int price)
-    : price_(price) {}
+FixedPrice::FixedPrice(double price) : price_(price) {}
 
-int FixedPrice::GetFitness(int fitness, int fitness_investment) const {
-  return fitness + (fitness_investment / price_);
+double FixedPrice::GetDecimalFitness(double fitness,
+                                     int fitness_investment) const {
+  return fitness + (fitness_investment / price_) + 0.00001;
 }
 
 int FixedPrice::GetFitnessCost(int fitness, int end_fitness) const {

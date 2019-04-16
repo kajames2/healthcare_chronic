@@ -5,7 +5,8 @@ namespace healthcare {
 
 class Joy {
  public:
-  virtual double GetJoy(int shocks, int life_investment) const = 0;
+  virtual double GetJoy(int age, int shocks, int fitness,
+                        int investment) const = 0;
   virtual ~Joy() {}
 };
 

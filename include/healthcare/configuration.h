@@ -27,8 +27,6 @@ struct Configuration {
   std::shared_ptr<const healthcare::Joy> joy;
   std::shared_ptr<const healthcare::Probability> shock_prob;
   std::shared_ptr<const healthcare::Insurance> insurance;
-  std::shared_ptr<const healthcare::Modulator> shock_prob_mod;
-  std::shared_ptr<const healthcare::Modulator> joy_mod;
   int shock_income_size;
   int shock_count_size;
 };

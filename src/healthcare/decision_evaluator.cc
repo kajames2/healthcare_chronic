@@ -50,13 +50,12 @@ void DecisionEvaluator::Precalculate() {
     for (int fitness = 0; fitness <= config_.max_fitness; ++fitness) {
       std::vector<float> sub_sub_joy;
       for (int joy_spend = 0; joy_spend <= config_.max_budget; ++joy_spend) {
-        sub_sub_joy.push_back(config_.joy->GetJoy(shocks, joy_spend) *
-                              config_.joy_mod->GetModulation(shocks, fitness));
+        sub_sub_joy.push_back(
+            config_.joy->GetJoy(age_, shocks, fitness, joy_spend));
       }
       sub_joy.push_back(sub_sub_joy);
       sub_prob.push_back(
-          config_.shock_prob->GetProbability(age_, shocks, fitness) *
-          config_.shock_prob_mod->GetModulation(shocks, fitness));
+          config_.shock_prob->GetProbability(age_, shocks, fitness));
     }
     joy_.push_back(sub_joy);
     shock_prob_.push_back(sub_prob);

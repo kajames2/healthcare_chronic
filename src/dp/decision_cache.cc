@@ -56,8 +56,8 @@ void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
   int min_fitness = config_.fitness->GetFitness(fitness, 0);
   int max_fitness = config_.fitness->GetFitness(fitness, config_.max_budget);
 
-  // You can always purchase insurance (and nothing else)
-  decs.push_back(Decision{0, 0, insurance_cost});
+  // // You can always purchase insurance (and nothing else)
+  // decs.push_back(Decision{0, 0, insurance_cost});
 
   for (int fit = min_fitness; fit <= max_fitness; ++fit) {
     int fit_cost = config_.fitness->GetFitnessCost(fitness, fit);
@@ -71,17 +71,21 @@ void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
       decs.push_back(Decision{fit_cost, joy_spending, insurance_cost});
     }
   }
-
-  // Sort all except the guaranteed insurance purchase
-  std::stable_sort(decs.begin() + 1, decs.end(),
+  // // Sort all except the guaranteed insurance purchase
+  // std::stable_sort(decs.begin() + 1, decs.end(),
+  //                  [](Decision dec, Decision dec2) {
+  //                    return TotalSpending(dec) < TotalSpending(dec2);
+  //                  });
+  std::stable_sort(decs.begin(), decs.end(),
                    [](Decision dec, Decision dec2) {
                      return TotalSpending(dec) < TotalSpending(dec2);
                    });
 
   std::vector<int> counts(config_.max_budget + 1, 0);
   // Account for guaranteed insurance purchase option
-  counts[0] = 1;
-  for (auto dec = decs.begin() + 1; dec != decs.end(); ++dec) {
+  // counts[0] = 1;
+  // for (auto dec = decs.begin() + 1; dec != decs.end(); ++dec) {
+  for (auto dec = decs.begin(); dec != decs.end(); ++dec) {
     ++counts[TotalSpending(*dec)];
   }
 

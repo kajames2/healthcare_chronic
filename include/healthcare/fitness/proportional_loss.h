@@ -12,8 +12,8 @@ namespace fitness {
 class ProportionalLoss : public Fitness {
  public:
   explicit ProportionalLoss(double rate) : rate_(rate) {}
-  int GetFitness(int fitness, int fitness_investment) const override {
-    return std::max(0, static_cast<int>((1 - rate_) * fitness));
+  double GetDecimalFitness(double fitness, int fitness_investment) const override {
+    return (1 - rate_) * fitness + 0.00001;
   }
   int GetFitnessCost(int fitness, int end_fitness) const override {
     return end_fitness == GetFitness(fitness, 0) ? 0 : 10000;

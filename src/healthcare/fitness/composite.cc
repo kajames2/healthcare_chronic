@@ -22,12 +22,12 @@ Composite::Composite(int max_fitness, int max_budget,
   }
 }
 
-int Composite::GetFitness(int fitness, int fitness_investment) const {
-  int fit = fitness;
-  for (const auto& func : fits_) {
-    fit = func->GetFitness(fit, fitness_investment);
+double Composite::GetDecimalFitness(double fitness,
+                                    int fitness_investment) const {
+  for (const auto &func : fits_) {
+    fitness = func->GetDecimalFitness(fitness, fitness_investment);
   }
-  return std::clamp(fit, 0, max_fitness_);
+  return std::clamp(fitness, 0.0, static_cast<double>(max_fitness_));
 }
 
 int Composite::GetFitnessCost(int fitness, int end_fitness) const {

@@ -5,8 +5,9 @@ namespace joy {
 
 Fractional::Fractional(double j) : j_(j) {}
 
-double Fractional::GetJoy(int shocks, int life_investment) const {
-  return life_investment / (life_investment + j_);
+double Fractional::GetJoy(int age, int shocks, int fitness,
+                          int investment) const {
+  return investment / (investment + j_);
 }
 
 }  // namespace joy

@@ -8,12 +8,12 @@ namespace fitness {
 
 class FixedPrice : public Fitness {
  public:
-  explicit FixedPrice(int price);
-  int GetFitness(int fitness, int fitness_investment) const override;
+  explicit FixedPrice(double price);
+  double GetDecimalFitness(double fitness, int fitness_investment) const override;
   int GetFitnessCost(int fitness, int end_fitness) const override;
 
  private:
-  int price_;
+  double price_;
 };
 
 }  // namespace fitness

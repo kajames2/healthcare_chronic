@@ -1,9 +1,15 @@
 #!/bin/bash
 
 mkdir -p output
-DESTINATION="output/"
-for file in configs/*.json
+SOURCE="configs"
+DESTINATION="output"
+CURRENT=${pwd}
+for file in $SOURCE/*.json
 do
-    echo bin/healthdp --i $file --o "$DESTINATION"
-    bin/healthdp --i $file --o "$DESTINATION"
+    filename="${file#$SOURCE/}"
+    filename2="${filename%.*}"
+    echo bin/healthdp --i $file --o "$DESTINATION/"
+    bin/healthdp --i $file --o "$DESTINATION/"
+    python3 "$DESTINATION/output_reader.py" "$DESTINATION/$filename2"
+    rm "$DESTINATION/$filename2.csv"
 done

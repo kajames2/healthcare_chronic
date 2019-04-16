@@ -9,7 +9,8 @@ namespace joy {
 class Fractional : public Joy {
  public:
   explicit Fractional(double j);
-  double GetJoy(int shocks, int life_investment) const override;
+  double GetJoy(int age, int shocks, int fitness,
+                int investment) const override;
 
  private:
   double j_;
