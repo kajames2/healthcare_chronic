@@ -1,6 +1,7 @@
 #include "healthcare/decision_evaluator.h"
 
 #include <iostream>
+#include <algorithm>
 
 namespace healthcare {
 
@@ -55,7 +56,7 @@ void DecisionEvaluator::Precalculate() {
       }
       sub_joy.push_back(sub_sub_joy);
       sub_prob.push_back(
-          config_.shock_prob->GetProbability(age_, shocks, fitness));
+          std::clamp(config_.shock_prob->GetProbability(age_, shocks, fitness),0.f,1.f));
     }
     joy_.push_back(sub_joy);
     shock_prob_.push_back(sub_prob);

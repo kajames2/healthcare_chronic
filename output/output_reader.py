@@ -23,7 +23,8 @@ def get_min_max(stream, index, init_offset, offset_increment):
         count += 1
         stream.seek(init_offset + count * offset_increment)
         prev_val = cur_val
-        cur_val = int(parse_line(stream.readline())[index])
+        line = stream.readline()
+        cur_val = int(parse_line(line)[index])
     max_val = prev_val
     return (min_val, max_val)
 

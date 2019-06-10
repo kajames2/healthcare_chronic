@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/kajames/Dropbox/Health Care Insurance/Model2"
+CMAKE_SOURCE_DIR = /home/healthcare/healthcare_chronic
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/kajames/Dropbox/Health Care Insurance/Model2"
+CMAKE_BINARY_DIR = /home/healthcare/healthcare_chronic
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,9 +126,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/kajames/Dropbox/Health Care Insurance/Model2/CMakeFiles" "/home/kajames/Dropbox/Health Care Insurance/Model2/CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/healthcare/healthcare_chronic/CMakeFiles /home/healthcare/healthcare_chronic/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/kajames/Dropbox/Health Care Insurance/Model2/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/healthcare/healthcare_chronic/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -218,7 +218,7 @@ gtest_main: cmake_check_build_system
 
 # fast build rule for target.
 gtest_main/fast:
-	$(MAKE) -f bin/googletest-build/googlemock/gtest/CMakeFiles/gtest_main.dir/build.make bin/googletest-build/googlemock/gtest/CMakeFiles/gtest_main.dir/build
+	$(MAKE) -f bin/googletest-build/googletest/CMakeFiles/gtest_main.dir/build.make bin/googletest-build/googletest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
 #=============================================================================
@@ -231,7 +231,7 @@ gtest: cmake_check_build_system
 
 # fast build rule for target.
 gtest/fast:
-	$(MAKE) -f bin/googletest-build/googlemock/gtest/CMakeFiles/gtest.dir/build.make bin/googletest-build/googlemock/gtest/CMakeFiles/gtest.dir/build
+	$(MAKE) -f bin/googletest-build/googletest/CMakeFiles/gtest.dir/build.make bin/googletest-build/googletest/CMakeFiles/gtest.dir/build
 .PHONY : gtest/fast
 
 health_dp_main.o: health_dp_main.cc.o

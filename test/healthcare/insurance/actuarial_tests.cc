@@ -16,7 +16,7 @@ class FlatProb : public healthcare::Probability {
 
 TEST_F(ActuarialTest, equaltest) {
   auto prob = std::make_shared<FlatProb>();
-  healthcare::insurance::Actuarial f(1.1, 100, prob);
+  healthcare::insurance::Actuarial f(1.1, 0, 100, prob);
   float total = f.GetPrice(5, 2, 10);
   EXPECT_NEAR(total, 55, 0.00001);
 }

@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <numeric>
 #include <vector>
+#include <omp.h>
 
 namespace dp {
 
@@ -91,12 +92,17 @@ void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
 
   std::partial_sum(counts.begin(), counts.end(), counts.begin());
 
-  std::vector<healthcare::DecisionResults> res;
-  std::transform(
-      decs.begin(), decs.end(), std::back_inserter(res),
-      [this, shocks, fitness](const Decision& dec) {
-        return eval_.GetDecisionResults({age_, shocks, fitness, 0}, dec);
-      });
+  std::vector<healthcare::DecisionResults> res(decs.size());
+  #pragma omp parallel for
+  for (int i = 0 ; i < decs.size(); ++i) {
+    res[i] = eval_.GetDecisionResults({age_, shocks, fitness, 0}, decs[i]);
+  }
+//  std::vector<healthcare::DecisionResults> res;
+//  std::transform(
+//      decs.begin(), decs.end(), std::back_inserter(res),
+//      [this, shocks, fitness](const Decision& dec) {
+//        return eval_.GetDecisionResults({age_, shocks, fitness, 0}, dec);
+//      });
 
   decisions_[shocks].push_back(res);
   counts_[shocks].push_back(counts);
