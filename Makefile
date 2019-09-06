@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/healthcare/healthcare_chronic
+CMAKE_SOURCE_DIR = "/home/kajames/Dropbox/Health Care Insurance/Model2"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/healthcare/healthcare_chronic
+CMAKE_BINARY_DIR = "/home/kajames/Dropbox/Health Care Insurance/Model2"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,9 +126,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/healthcare/healthcare_chronic/CMakeFiles /home/healthcare/healthcare_chronic/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/kajames/Dropbox/Health Care Insurance/Model2/CMakeFiles" "/home/kajames/Dropbox/Health Care Insurance/Model2/CMakeFiles/progress.marks"
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/healthcare/healthcare_chronic/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/kajames/Dropbox/Health Care Insurance/Model2/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -530,6 +530,36 @@ src/healthcare/configuration/prob_reader.cc.s:
 	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/prob_reader.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/prob_reader.cc.s
 .PHONY : src/healthcare/configuration/prob_reader.cc.s
+
+src/healthcare/configuration/shifter_reader.o: src/healthcare/configuration/shifter_reader.cc.o
+
+.PHONY : src/healthcare/configuration/shifter_reader.o
+
+# target to build an object file
+src/healthcare/configuration/shifter_reader.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/shifter_reader.cc.o
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/shifter_reader.cc.o
+.PHONY : src/healthcare/configuration/shifter_reader.cc.o
+
+src/healthcare/configuration/shifter_reader.i: src/healthcare/configuration/shifter_reader.cc.i
+
+.PHONY : src/healthcare/configuration/shifter_reader.i
+
+# target to preprocess a source file
+src/healthcare/configuration/shifter_reader.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/shifter_reader.cc.i
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/shifter_reader.cc.i
+.PHONY : src/healthcare/configuration/shifter_reader.cc.i
+
+src/healthcare/configuration/shifter_reader.s: src/healthcare/configuration/shifter_reader.cc.s
+
+.PHONY : src/healthcare/configuration/shifter_reader.s
+
+# target to generate assembly for a file
+src/healthcare/configuration/shifter_reader.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/shifter_reader.cc.s
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/shifter_reader.cc.s
+.PHONY : src/healthcare/configuration/shifter_reader.cc.s
 
 src/healthcare/decision.o: src/healthcare/decision.cc.o
 
@@ -1143,6 +1173,9 @@ help:
 	@echo "... src/healthcare/configuration/prob_reader.o"
 	@echo "... src/healthcare/configuration/prob_reader.i"
 	@echo "... src/healthcare/configuration/prob_reader.s"
+	@echo "... src/healthcare/configuration/shifter_reader.o"
+	@echo "... src/healthcare/configuration/shifter_reader.i"
+	@echo "... src/healthcare/configuration/shifter_reader.s"
 	@echo "... src/healthcare/decision.o"
 	@echo "... src/healthcare/decision.i"
 	@echo "... src/healthcare/decision.s"

@@ -19,6 +19,7 @@ set(SOURCES
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/job_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/fitness_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/modulator_reader.cc
+  ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/shifter_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/prob_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/insurance_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/joy/fractional.cc

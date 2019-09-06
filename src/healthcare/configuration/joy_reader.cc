@@ -13,7 +13,9 @@
 #include "healthcare/joy/health_dependent_dustin.h"
 #include "healthcare/joy/health_dependent_fan.h"
 #include "healthcare/joy/mod_decorator.h"
+#include "healthcare/joy/shift_decorator.h"
 #include "modulator_reader.h"
+#include "shifter_reader.h"
 
 namespace healthcare {
 namespace configuration {
@@ -52,6 +54,10 @@ std::unique_ptr<const Joy> ReadJoy(ptree joy_config, int max_shocks,
     std::unique_ptr<const Modulator> mod =
         ReadModulator(joy_config.get_child("mod"), max_shocks, max_fitness);
     joy = std::make_unique<joy::ModDecorator>(std::move(joy), std::move(mod));
+  }
+  if (joy_config.count("shift")) {
+    std::unique_ptr<const Shifter> shift = ReadShifter(joy_config.get_child("shift"), max_shocks, max_fitness);
+    joy = std::make_unique<joy::ShiftDecorator>(std::move(joy), std::move(shift));
   }
   return joy;
 }
