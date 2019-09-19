@@ -11,17 +11,17 @@ namespace joy {
 
 class ShiftDecorator : public Joy {
  public:
-  ShiftDecorator(std::shared_ptr<const Joy> prob,
+  ShiftDecorator(std::shared_ptr<const Joy> joy,
                std::shared_ptr<const Shifter> shift)
-      : prob_(prob), shift_(shift) {}
+      : joy_(joy), shift_(shift) {}
   double GetJoy(int age, int shocks, int fitness,
                 int investment) const override {
-    return prob_->GetJoy(age, shocks, fitness, investment) *
+    return joy_->GetJoy(age, shocks, fitness, investment) +
            shift_->GetShift(shocks, fitness);
   };
 
  private:
-  std::shared_ptr<const Joy> prob_;
+  std::shared_ptr<const Joy> joy_;
   std::shared_ptr<const Shifter> shift_;
 };
 

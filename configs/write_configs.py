@@ -20,9 +20,10 @@ bases_dict['MaxShocks'] =    [6]
 bases_dict['Size'] =         [200]
 bases_dict['JoyJ'] =         [40]
 bases_dict['JoyMod'] =       ['ShockLinear']
-bases_dict['ProbCoeff'] =    [1.5, 2]
+bases_dict['JoyShift'] =     [0, 0.1, 0.2]
+bases_dict['ProbCoeff'] =    [1.5]
 bases_dict['ProbRate'] =     [0.75]
-bases_dict['ProbModJ'] =     [30, 40]
+bases_dict['ProbModJ'] =     [40]
 bases_dict['ProbModMax'] =   [1.00]
 bases_dict['FitDegen'] =     [0.20]
 bases_dict['FitPrice'] =     [3.0]
@@ -30,7 +31,6 @@ bases_dict['JobIntercept'] = [100]
 bases_dict['JobSlope'] =     [0]
 bases_dict['Discount'] =     [1.00]
 bases_dict['Ins'] =          ['Actuarial']
-
 
 # Note: Changing these parameters will not show up in file name
 actuarial_scale = 1
@@ -41,7 +41,7 @@ base_age_rate = 0.02   #0.027465
 base_shock_coeff = 0.1 #0.045
 base_shock_rate = 0.35 #0.27
 
-max_age = 30
+max_age = 40
 max_fitness = 100
 min_debt_payment = 1
 shock_count_per_shock = 1
@@ -84,6 +84,9 @@ def init_out():
         'type' : 'Fractional',
         'mod' : {
             'max_modulation' : joy_max_mod
+        },
+        'shift' : {
+            'type' : 'Constant'
         }
     }
     out['probability'] = {
@@ -144,6 +147,7 @@ def create_parameter_sets(out):
     dicts = add_options(dicts, 'Size', 'shock_income_size')
     dicts = add_options(dicts, 'JoyJ', 'j', 'joy')
     dicts = add_options(dicts, 'JoyMod', 'type', 'joy', 'mod')
+    dicts = add_options(dicts, 'JoyShift', 'shift', 'joy', 'shift')    
     dicts = add_options(dicts, 'ProbCoeff', 'age_coeff', 'probability')
     dicts = add_options(dicts, 'ProbCoeff', 'shock_coeff', 'probability')
     dicts = add_options(dicts, 'ProbRate', 'age_rate', 'probability')
@@ -172,6 +176,7 @@ initials = {
     'Size' : 'ss',
     'JoyJ' : 'j',
     'JoyMod' : 'j',
+    'JoyShift' : 'js',
     'ProbCoeff' : 'pc',
     'ProbRate' : 'pr',
     'ProbModJ' : 'pj',
@@ -186,6 +191,7 @@ initials = {
 mult_dict = {'MaxShocks' : 1,
              'Size' : 1,
              'JoyJ' : 1,
+             'JoyShift' : 100,
              'ProbCoeff': 100,
              'ProbRate' : 100,
              'ProbModJ' : 1,

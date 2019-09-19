@@ -15,9 +15,7 @@ from math import log2, floor
 from pprint import pprint
 
 # These can be changed easily
-condition_on_alive = True
-
-display_cols =  ['Cash', 'Shocks', 'ShockProb', 'AtMaxShocks', 'NextFitness',
+display_cols =  ['Cash', 'Shocks', 'ShockProb', 'AtMaxShocks', 'DieFrac', 'NextFitness',
                  'InsurancePaid','BuyIns', 'Enjoyment', 'TotalJoy',
                  'JoySpending', 'FitnessSpending', 'InsuranceSpending', 'NextCash']
 
@@ -25,6 +23,7 @@ display_cols =  ['Cash', 'Shocks', 'ShockProb', 'AtMaxShocks', 'NextFitness',
 mult_dict = {'MaxShocks' : 1,
              'Size' : 1,
              'JoyJ' : 1,
+             'JoyShift' : 100,
              'ProbCoeff': 100,
              'ProbRate' : 100,
              'ProbModJ' : 1,
@@ -39,6 +38,7 @@ initials = {
     'MaxShocks' : 'ms',
     'Size' : 'ss',
     'JoyJ' : 'j',
+    'JoyShift' : 'js',
     'ProbCoeff' : 'pc',
     'ProbRate' : 'pr',
     'ProbModJ' : 'pj',
@@ -145,7 +145,12 @@ for key in flex_keys:
         tuple_vals[key] = zipped_vals
         for k in key:
             del tuple_vals[k]
-        
+
+for key in tuple_vals:
+    tuple_vals[key] = sorted(tuple_vals[key])
+for key in joint_vals:
+    joint_vals[key] = sorted(joint_vals[key])
+
 file_titles = list(joint_vals.keys())
 titles = list(tuple_vals.keys())
 keys = list(tuple_vals.keys())
@@ -263,7 +268,6 @@ for (name, title, filename, legends) in zip(treat_names, fixed_titles, file_name
                      'Title' : title,
                      'Filename' : filename,
                      'Legends' : legends})
-ages = range(1,31)
 
 all_treatments = set()
 for treats in treat_names:
@@ -271,33 +275,39 @@ for treats in treat_names:
         all_treatments.add(t)
 all_treatments = list(all_treatments)
 
-def get_file_means(filebase):
+def get_file_means(filebase, condition_on_alive):
     df = pd.read_csv(dir_name + "/" + filebase + "_rand_lives.csv")
     if condition_on_alive:
         df = df.loc[df['AtMaxShocks'] == False]
     df = df.groupby(['Age'], as_index=False).mean()
+    df.loc[df['Dies'] == 0, 'DieFrac'] = 0
+    df.loc[df['Dies'] > 0, 'DieFrac'] = df['Dies'] / (1 - df['AtMaxShocks'] + df['Dies'])
     return df
 
-print("Reading Data...")
-treatment_means = {treat : get_file_means(treat) for treat in all_treatments}
-print("Done!  Now processing...")
+for condition_on_alive in [True, False]:
+    print("Reading Data..." + str(condition_on_alive))
+    treatment_means = {treat : get_file_means(treat, condition_on_alive) for treat in all_treatments}
+    print("Done!  Now processing...")
 
-colors=['blue', 'red', 'green', 'orange']
-ages = treatment_means[all_treatments[0]]['Age'].tolist()
-for data in metadata:
-    treatments = data['Treatments']
-    n_ins = len(treatments)
-    with PdfPages(dir_name + "/" + data['Filename'] + '.pdf') as pdf:
-        for col in display_cols:
-            plt.figure(figsize=(6, 6))
-            for i in range(len(treatments)):
-                if i >= n_ins:
-                    plt.plot(ages, treatment_means[treatments[i]][col].tolist(), '--', linewidth=2, color=colors[i-n_ins], label=data['Legends'][i])
-                else:
-                    plt.plot(ages, treatment_means[treatments[i]][col].tolist(), linewidth=2, color=colors[i], label=data['Legends'][i])
-            plt.title(col)
-            plt.legend()
-            pdf.savefig()
-            plt.close()
-        d = pdf.infodict()
-        d['Title'] = data['Title']
+    colors=['blue', 'red', 'green', 'orange']
+    ages = treatment_means[all_treatments[0]]['Age'].tolist()
+    for data in metadata:
+        treatments = data['Treatments']
+        n_ins = len(treatments)
+        ext = ''
+        if condition_on_alive:
+            ext = '_dd'
+        with PdfPages(dir_name + "/" + data['Filename'] + ext + '.pdf') as pdf:
+            for col in display_cols:
+                plt.figure(figsize=(6, 6))
+                for i in range(len(treatments)):
+                    if i >= n_ins:
+                        plt.plot(ages, treatment_means[treatments[i]][col].tolist(), '--', linewidth=2, color=colors[i-n_ins], label=data['Legends'][i])
+                    else:
+                        plt.plot(ages, treatment_means[treatments[i]][col].tolist(), linewidth=2, color=colors[i], label=data['Legends'][i])
+                plt.title(col)
+                plt.legend()
+                pdf.savefig()
+                plt.close()
+            d = pdf.infodict()
+            d['Title'] = data['Title']

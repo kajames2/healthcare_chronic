@@ -114,9 +114,10 @@ for filename_base in filenames:
     rand_lives = [get_life_random(fstream, start_state) for i in range(n_lives)]
     
     f= open(filename_base + "_rand_lives.csv","w+")
-    f.write(','.join(header) + ",RandDraw,Shocked,TotalJoy,BuyIns,InsurancePaid,ShockProb,AtMaxShocks,Life\n")
+    f.write(','.join(header) + ",RandDraw,Shocked,TotalJoy,BuyIns,InsurancePaid,ShockProb,AtMaxShocks,Dies,Life\n")
     for life in range(n_lives):
-        tot_enjoyment = 0;
+        tot_enjoyment = 0
+        prev_at_max_shocks = 0
         for period in rand_lives[life]:
             shocked = int(period[-1])
             tot_enjoyment += float(period[header_indices["Enjoyment"]])
@@ -124,10 +125,13 @@ for filename_base in filenames:
             shock_prob = shocked * (float(period[header_indices["Probability"]])) + (1-shocked) * (1 - float(period[header_indices["Probability"]]))
             payout = buy_ins * shocked
             at_max_shocks = int(int(period[header_indices["Shocks"]]) == max_shocks)
+            died = at_max_shocks - prev_at_max_shocks
+            prev_at_max_shocks = at_max_shocks
             period.append("{0:6.2f}".format(tot_enjoyment))
             period.append("{0:1}".format(buy_ins))
             period.append("{0:1}".format(payout))
             period.append("{0:5.3f}".format(shock_prob))
             period.append("{0:1}".format(at_max_shocks))
+            period.append("{0:1}".format(died))
             period.append("{0:3}".format(life))
             f.write(','.join(period) + '\n')

@@ -8,10 +8,11 @@ namespace shifter {
 
 class Constant : public Shifter {
  public:
-  explicit Constant(float shift) : shift_(shift) {}
-  float GetShift(int shocks, int fitness) const override { return shift_; }
-  static Constant NoShift() { return Constant(0); }
+  explicit Constant(float shift, int max_shocks) : shift_(shift), max_shocks_(max_shocks) {}
+  float GetShift(int shocks, int fitness) const override { return shocks < max_shocks_ ? shift_ : 0; }
+  static Constant NoShift() { return Constant(0, 0); }
   float shift_;
+  int max_shocks_;
 };
 
 }  // namespace shifter
