@@ -1,5 +1,6 @@
 import random
 from array import array
+from itertools import chain
 import sys
 import os
 
@@ -71,13 +72,17 @@ def select_state(fstream, state):
 def next_state(row):
     return [int(row["NextAge"]), int(row["NextShocks"]), int(row["NextFitness"]), int(row["NextCash"])]
 
-def get_life_random(fstream, start_state):
+def get_life_random(fstream, start_state, max_age):
+    rands = [random.uniform(0,1) for i in range(0, max_age)]
+    return get_life_with_draws(fstream, start_state, rands)
+
+def get_life_with_draws(fstream, start_state, draws):
     life = []
     state = start_state
     while state[0] <= max_age:
+        rand = draws[state[0] - 1]
         row_pair = select_state(fstream, state)
         probs = [float(row["Probability"]) for row in row_pair]
-        rand = random.uniform(0, 1)
         if (rand <= probs[1]):
             row = row_pair[1]
             shocked = 1
@@ -90,6 +95,31 @@ def get_life_random(fstream, start_state):
         life.append(out_row)
         state = next_state(row)
     return life
+    
+
+def generate_fair_draws(max_age, n_lives):
+    n_segments = 3
+    base_segments = []
+    for i in range(n_segments):
+        base_segments.append(list(range(i + 1, max_age + 1, n_segments)))
+    fair_draws = []
+    for i in range(0,n_lives // 2):
+        rand_segments = [random.sample(segment, len(segment)) for segment in base_segments]
+        sample = []
+        for i in random.sample(range(n_segments),n_segments):
+            sample += rand_segments[i]
+        antithetic = [max_age + 1 - s for s in sample]
+        fair_draws.append([stratified_sample(s, max_age) for s in sample])
+        fair_draws.append([stratified_sample(s, max_age) for s in antithetic])
+    if n_lives % 2 == 1:
+        rand_segments = [random.sample(segment, len(segment)) for segment in base_segments]
+        sample = chain(*rand_segments)
+        fair_draws.append([stratified_sample(s, max_age) for s in sample])
+    return fair_draws
+
+def stratified_sample(segment, n_segments):
+    segment_size = 1/n_segments
+    return random.uniform((segment - 1)/n_segments, segment/n_segments)
 
 filenames = sys.argv[1:]
 for filename_base in filenames:
@@ -107,12 +137,13 @@ for filename_base in filenames:
     meta_grid_size = (max_shocks + 1) * grid_size
     print(config)
     header_indices = {header[i] : i for i in range(len(header))}
-    n_lives = 1000
+    n_lives = 10000
     lives_digits = len(str(abs(n_lives-1)))
     start_state = [1,0,20,0]
     fstream = open(filename)
-    rand_lives = [get_life_random(fstream, start_state) for i in range(n_lives)]
-    
+#    rand_lives = [get_life_random(fstream, start_state, max_age) for i in range(n_lives)]
+    rands = generate_fair_draws(max_age, n_lives)
+    rand_lives = [get_life_with_draws(fstream, start_state, draws) for draws in rands]
     f= open(filename_base + "_rand_lives.csv","w+")
     f.write(','.join(header) + ",RandDraw,Shocked,TotalJoy,BuyIns,InsurancePaid,ShockProb,AtMaxShocks,Dies,Life\n")
     for life in range(n_lives):

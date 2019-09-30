@@ -93,7 +93,7 @@ void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
   std::partial_sum(counts.begin(), counts.end(), counts.begin());
 
   std::vector<healthcare::DecisionResults> res(decs.size());
-  #pragma omp parallel for
+  //  #pragma omp parallel for
   for (int i = 0 ; i < decs.size(); ++i) {
     res[i] = eval_.GetDecisionResults({age_, shocks, fitness, 0}, decs[i]);
   }
