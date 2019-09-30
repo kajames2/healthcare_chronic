@@ -106,8 +106,9 @@ def generate_fair_draws(max_age, n_lives):
     for i in range(0,n_lives // 2):
         rand_segments = [random.sample(segment, len(segment)) for segment in base_segments]
         sample = []
-        for i in random.sample(range(n_segments),n_segments):
-            sample += rand_segments[i]
+        segment_samples = random.sample(rand_segments,n_segments)
+        for seg in segment_samples:
+            sample += seg
         antithetic = [max_age + 1 - s for s in sample]
         fair_draws.append([stratified_sample(s, max_age) for s in sample])
         fair_draws.append([stratified_sample(s, max_age) for s in antithetic])
