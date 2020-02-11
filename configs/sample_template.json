@@ -1,0 +1,64 @@
+{
+    "max_age": 40,
+    "max_fitness": 100,
+    "min_debt_payment": 1,
+    "shock_count_size": 1,
+    "job": {
+        "type": "AgeLinear",
+        "intercept": 100,
+        "slope": 0
+    },
+    "joy": {
+        "type": "Fractional",
+        "j": 40,
+        "mods": [
+            {
+                "func": "Multiply",
+                "type": "Linear",
+                "param": "Age",
+                "max_modification": 1
+            },
+            {
+                "func": "Add",
+                "type": "Constant",
+                "max_modification": 0.2
+            }
+        ]
+    },
+    "probability": {
+        "type": "GompertzShocks",
+        "age_coeff": 0.0375,
+        "shock_coeff": 0.150,
+        "age_rate": 0.015,
+        "shock_rate": 0.2625,
+        "mods": [
+            {
+                "func": "Multiply",
+                "type": "Fractional",
+                "param": "Fitness",
+                "max_modification": 1.0,
+                "j": 40
+            }
+        ]
+    },
+    "fitnesses": [
+        {
+            "type": "ProportionalLoss",
+            "rate": 0.2
+        },
+        {
+            "type": "FixedPrice",
+            "price": 3.0
+        }
+    ],
+    "max_shocks": 6,
+    "shock_income_size": 200,
+    "discount": 1.0,
+    "insurance": {
+        "type": "Actuarial",
+        "scale": 1,
+        "admin_cost": 0
+    },
+    "max_savings": 0,
+    "min_savings": -300
+}
