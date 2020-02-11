@@ -5,7 +5,7 @@ namespace healthcare {
 
 class Shifter {
  public:
-  virtual float GetShift(int shocks, int fitness) const = 0;
+  virtual float GetShift(int age, int shocks, int fitness) const = 0;
   virtual ~Shifter() {}
 };
 

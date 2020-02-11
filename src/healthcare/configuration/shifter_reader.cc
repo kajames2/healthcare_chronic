@@ -17,8 +17,9 @@ using ::boost::property_tree::ptree;
 std::unique_ptr<const Shifter> ReadConstantShifter(
     ptree shifter_config, int max_shocks);
 std::unique_ptr<const Shifter> ReadShifter(ptree shifter_config,
-                                               int max_shocks,
-                                               int max_fitness) {
+                                           int max_age,
+                                           int max_shocks,
+                                           int max_fitness) {
   std::string type = shifter_config.get<std::string>("type");
   std::unique_ptr<const Shifter> shift;
   if (type == "Constant") {

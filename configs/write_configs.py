@@ -1,229 +1,177 @@
 #!/usr/bin/env python3
 
 import json
-import copy
 import os
-import sys
-from collections import OrderedDict
+import copy
 import time
-
-# Notes:
-#   Instead of all combos, job intercepts and slopes are paired up.
-#     i.e. intercepts = [0, 0, 1], slopes = [1, 2, 1]
-#           => 3 job settings.  int/slope pairing =  [[0,1], [0,2], [1,1]]
-#
-#   Allowable 'Ins' values: ['Actuarial', 'Fixed']
-#   Allowable 'JoyMod' values: ['ShockLinear', 'ShockCosine']
-#   Order of parameters here will be reflected in file name
-bases_dict = OrderedDict()
-bases_dict['MaxShocks'] =    [6]
-bases_dict['Size'] =         [200]
-bases_dict['JoyJ'] =         [40]
-bases_dict['JoyMod'] =       ['ShockLinear']
-bases_dict['JoyShift'] =     [0, 0.1, 0.2]
-bases_dict['ProbCoeff'] =    [1.5]
-bases_dict['ProbRate'] =     [0.75]
-bases_dict['ProbModJ'] =     [40]
-bases_dict['ProbModMax'] =   [1.00]
-bases_dict['FitDegen'] =     [0.20]
-bases_dict['FitPrice'] =     [3.0]
-bases_dict['JobIntercept'] = [100]
-bases_dict['JobSlope'] =     [0]
-bases_dict['Discount'] =     [1.00]
-bases_dict['Ins'] =          ['Actuarial']
-
-# Note: Changing these parameters will not show up in file name
-actuarial_scale = 1
-actuarial_admin_cost = 0
-
-base_age_coeff = 0.025 #0.09
-base_age_rate = 0.02   #0.027465
-base_shock_coeff = 0.1 #0.045
-base_shock_rate = 0.35 #0.27
-
-max_age = 40
-max_fitness = 100
-min_debt_payment = 1
-shock_count_per_shock = 1
-joy_max_mod = 1
-employer_premium_frac = 1/4
-
-def employer_total_price_estimate(shock_size):
-    return (2/15 * shock_size) + 3
-
-def get_max_savings(shock_size):
-    return 0 #int(shock_size/5)
+from shutil import copyfile
+import sys
 
 
+def generate_non_combos(config, variations):
+    out_templates = []
+    name_sets = []
+    for var in variations:
+        new_templates, new_names = vary_template(config, var)
+        out_templates += new_templates
+        name_sets.append(new_names)
+    return out_templates, name_sets
 
 
+def generate_all_combos(config, variations):
+    out_templates = [config]
+    name_sets = []
+    for var in variations:
+        new_out_templates = []
+        for template in out_templates:
+            new_templates, new_names = vary_template(template, var)
+            new_out_templates += new_templates
+        name_sets.append(new_names)
+        out_templates = new_out_templates
+    return out_templates, name_sets
 
-#### Shouldn't need to change anything below here for basic parameter file making ####
+
+def vary_template(config, var):
+    var.pop("_COMMENT", None)
+    for key in var.keys():
+        if type(var[key]) is not list:
+            var[key] = [var[key]]
+    covary_lengths = [len(val) for val in var.values()]
+    if len(set(covary_lengths)) > 1:
+        print("covarying lengths are not equal: ", var)
+        exit()
+    n_vars = covary_lengths[0]
+    out_templates = []
+    names = [''] * n_vars
+    for i in range(n_vars):
+        conf = copy.deepcopy(config["config"])
+        name = config["name"]
+        for key in var.keys():
+            conf_mod = conf
+            val = var[key][i]
+            subkeys = key.split(':')
+            sub_name = gen_name(subkeys, val, i)
+            names[i] += '_' + sub_name
+            name += '_' + sub_name
+            subkeys = [int(val) if val.isdigit() else val for val in subkeys]
+            for j in range(len(subkeys) - 1):
+                conf_mod = conf_mod[subkeys[j]]
+            if type(val) is dict:
+                conf_mod = conf_mod[subkeys[-1]]
+                for key in val:
+                    conf_mod[key] = val[key]
+            else:
+                conf_mod[subkeys[-1]] = val
+        out_templates.append({"name": name, "config": conf})
+    names = [name.strip('_') for name in names]
+    return out_templates, names
+
+
+def gen_name(sub_keys, val, i):
+    shortened_keys = {
+        'max_age': 'maxage',
+        'max_fitness': 'maxfit',
+        'min_debt_payment': 'minpay',
+        'shock_count_size': 'ssizec',
+        'job': 'job',
+        'joy': 'joy',
+        'probability': 'prob',
+        'fitnesses': 'fit',
+        'max_shocks': 'maxs',
+        'shock_income_size': 'ssizei',
+        'discount': 'beta',
+        'insurance': 'ins',
+        'max_savings': 'maxs',
+        'min_savings': 'mins',
+        'type': 't',
+        'intercept': 'b',
+        'slope': 'm',
+        'j': 'j',
+        'mods': 'mods',
+        'func': 'f',
+        'param': '',
+        'max_modification': 'mm',
+        'age_coeff': 'ac',
+        'shock_coeff': 'sc',
+        'age_rate': 'ar',
+        'shock_rate': 'sr',
+        'rate': 'r',
+        'price': 'p',
+        'scale': 's',
+        'admin_cost': 'acost',
+        'FlatLoss': 'FL',
+        'ProportionalLoss': 'PL',
+        'Multiply': 'Mul',
+        'Add': 'Add',
+        'Linear': 'Lin',
+        'Fractional': 'Fr ac',
+        'Constant': 'Con',
+        'Cosine': 'Cos',
+        'Age': 'A',
+        'Shocks': 'S',
+        'Fitness': 'F'
+    }
+    name = shortened_keys.get(sub_keys[0], sub_keys[0])
+    if (len(sub_keys) > 1):
+        name += shortened_keys.get(sub_keys[-1], sub_keys[-1])
+    if type(val) is dict:
+        for key in val:
+            valstr = str(val[key]).replace('.', '')
+            name += shortened_keys.get(valstr, valstr)
+    elif type(val) is list:
+        name += str(i)
+    else:
+        valstr = str(val).replace('.', '')
+        name += shortened_keys.get(valstr, valstr)
+    return name
+
+
+def write_configs(configs, base_name):
+    timestr = time.strftime("%m%d%y_%H%M%S")
+    unique_dir_name = base_name + "_" + timestr
+    os.mkdir(unique_dir_name)
+    for config in configs:
+        with open(
+                unique_dir_name + '/' + config['name'].strip('_') +
+                '_conf.json', 'w') as outfile:
+            json.dump(config['config'], outfile, indent=4)
+    return unique_dir_name
+
+
 def main():
     if len(sys.argv) != 2:
         print("Error: expects exactly one argument")
-        print("\twrite_configs.py dir_name")
-        exit()
+        print("\\write_configs2.py config_name")
+        exit
 
-    dir_name = sys.argv[1]
-    out = init_out()
-    dicts = create_parameter_sets(out)
-    write_files(dir_name, dicts)
-
-def init_out():
-    out = {}
-    out['treatments'] = {}
-    out['max_age'] = max_age
-    out['max_fitness'] = max_fitness
-    out['min_debt_payment'] = min_debt_payment
-    out['shock_count_size'] = shock_count_per_shock
-    out['job'] = {
-        'type' : 'AgeLinear'
-    }
-    out['joy'] = {
-        'type' : 'Fractional',
-        'mod' : {
-            'max_modulation' : joy_max_mod
-        },
-        'shift' : {
-            'type' : 'Constant'
-        }
-    }
-    out['probability'] = {
-        'type' : 'GompertzShocks'
-    }
-    out['probability']['mod'] = {
-        'type' : 'FitnessFractional'
-    }
-    out['fitnesses'] = [{'type' : 'ProportionalLoss'}, {'type' : 'FixedPrice'}]
-    return out
-
-
-def add_options(dicts, titles, option_names, parent = '', sub_parent = ''): 
-    new_dicts = []
-    for cur_out in dicts:
-        if type(titles) != list:
-            titles = [titles]
-        if type(option_names) != list:
-            option_names = [option_names]
-        value_sets = [bases_dict[title] for title in titles]
-        for value_set in zip(*value_sets):
-            out2 = copy.deepcopy(cur_out)
-            for title, option_name, value in zip(titles, option_names, value_set):
-                if parent:
-                    if sub_parent != '':
-                        out2[parent][sub_parent][option_name] = value                    
-                    else:
-                        out2[parent][option_name] = value
-                else:
-                    out2[option_name] = value
-                out2['treatments'][title] = value
-            new_dicts.append(out2)
-    return new_dicts
-
-
-def add_ins_options(dicts):
-    new_dicts = []
-    title = 'Ins'
-    for cur_out in dicts:
-        for ins in bases_dict[title]:
-            out2 = copy.deepcopy(cur_out)
-            out2['insurance'] = {
-                'type' : ins
-            }
-            if ins == 'Actuarial':
-                out2['insurance']['scale'] = actuarial_scale
-                out2['insurance']['admin_cost'] = actuarial_admin_cost
-            else:
-                out2['insurance']['premium'] = int(employer_total_price_estimate(out2['treatments']['Size']) * employer_premium_frac)
-
-            out2['treatments'][title] = ins
-            new_dicts.append(out2)
-    return new_dicts
-
-def create_parameter_sets(out):
-    dicts = [out]
-    dicts = add_options(dicts, 'MaxShocks', 'max_shocks')
-    dicts = add_options(dicts, 'Size', 'shock_income_size')
-    dicts = add_options(dicts, 'JoyJ', 'j', 'joy')
-    dicts = add_options(dicts, 'JoyMod', 'type', 'joy', 'mod')
-    dicts = add_options(dicts, 'JoyShift', 'shift', 'joy', 'shift')    
-    dicts = add_options(dicts, 'ProbCoeff', 'age_coeff', 'probability')
-    dicts = add_options(dicts, 'ProbCoeff', 'shock_coeff', 'probability')
-    dicts = add_options(dicts, 'ProbRate', 'age_rate', 'probability')
-    dicts = add_options(dicts, 'ProbRate', 'shock_rate', 'probability')
-    dicts = add_options(dicts, 'ProbModMax', 'max_modulation', 'probability', 'mod')
-    dicts = add_options(dicts, 'ProbModJ', 'j', 'probability', 'mod')
-    dicts = add_options(dicts, 'FitDegen', 'rate', 'fitnesses', 0)
-    dicts = add_options(dicts, 'FitPrice', 'price', 'fitnesses', 1)
-    dicts = add_options(dicts, ['JobIntercept','JobSlope'], ['intercept','slope'], 'job')
-    dicts = add_options(dicts, 'Discount', 'discount')
-    dicts = add_ins_options(dicts)
-    for s in dicts:
-        s['probability']['age_coeff'] *= base_age_coeff
-        s['probability']['age_rate'] *= base_age_rate
-        s['probability']['shock_coeff'] *= base_shock_coeff
-        s['probability']['shock_rate'] *= base_shock_rate
-    for s in dicts:
-        s['max_savings'] = get_max_savings(s['shock_income_size'])
-        s['min_savings'] = -int(1.5 * s['shock_income_size'])
-        if s['insurance']['type'] == 'Fixed':
-            s['job']['intercept'] = s['job']['intercept'] - employer_total_price_estimate(s['shock_income_size'] * (1 - employer_premium_frac))
-    return dicts
-
-initials = {
-    'MaxShocks' : 'ms',
-    'Size' : 'ss',
-    'JoyJ' : 'j',
-    'JoyMod' : 'j',
-    'JoyShift' : 'js',
-    'ProbCoeff' : 'pc',
-    'ProbRate' : 'pr',
-    'ProbModJ' : 'pj',
-    'ProbModMax' : 'pm',
-    'FitDegen' : 'd',
-    'FitPrice' : 'p',
-    'JobIntercept' : 'i',
-    'JobSlope' : 's',
-    'Discount' : 'dc',
-    'Ins' : ''}
-
-mult_dict = {'MaxShocks' : 1,
-             'Size' : 1,
-             'JoyJ' : 1,
-             'JoyShift' : 100,
-             'ProbCoeff': 100,
-             'ProbRate' : 100,
-             'ProbModJ' : 1,
-             'ProbModMax' : 100,
-             'FitDegen' : 100,
-             'FitPrice' : 10,
-             'JobIntercept': 1,
-             'JobSlope' : 1,
-             'Discount' : 100}
-
-def get_value_string(name, val):
-    if name == 'Ins':
-        return {'Actuarial' : 'act', 'Fixed': 'emp'}[val]
-    elif name == 'JoyMod':
-        return {'ShockLinear' : 'l', 'ShockCosine' : 'c'}[val]
+    filename = sys.argv[1]
+    with open(filename, "r") as f:
+        temp_dic = json.load(f)
+    template = temp_dic["template"]
+    base_name = temp_dic.get("name", template)
+    all_combos = temp_dic.get("all_combos", True)
+    variations = temp_dic["variations"]
+    template_json = json.load(open(template + ".json", "r"))
+    out_configs = None
+    name_sets = None
+    if not all_combos:
+        out_configs, name_sets = generate_non_combos(
+            {
+                "name": '',
+                "config": template_json
+            }, variations)
     else:
-        multiplier = mult_dict[name]
-        return str(int(val * multiplier))
+        out_configs, name_sets = generate_all_combos(
+            {
+                "name": '',
+                "config": template_json
+            }, variations)
+    dir_name = write_configs(out_configs, base_name)
+    copyfile(filename, dir_name + "/" + filename)
+    copyfile(template + ".json", dir_name + "/" + template + ".json")
+    with open(dir_name + '/subnames_lists.json', 'w') as outfile:
+        json.dump(name_sets, outfile, indent=4)
 
-def to_name(name, val):
-    return initials[name] + get_value_string(name, val)
-
-def write_files(dir_name, dicts):
-    timestr = time.strftime("%m%d%y_%H%M%S")
-    unique_dir_name = dir_name + "_" + timestr
-    os.mkdir(unique_dir_name)
-    for out in dicts:
-        inits = []
-        for key,val in out['treatments'].items():
-            inits.append(to_name(key, val))
-        with open(unique_dir_name + '/' + '_'.join(inits) + '.json', 'w') as outfile:
-            json.dump(out, outfile, indent=4)
 
 if __name__ == "__main__":
     main()

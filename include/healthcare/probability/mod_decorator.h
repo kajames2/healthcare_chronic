@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "healthcare/modulator.h"
+#include "healthcare/modifier.h"
 #include "healthcare/probability.h"
 
 namespace healthcare {
@@ -12,16 +12,16 @@ namespace probability {
 class ModDecorator : public Probability {
  public:
   ModDecorator(std::shared_ptr<const Probability> prob,
-               std::shared_ptr<const Modulator> mod)
+               std::shared_ptr<const Modifier> mod)
       : prob_(prob), mod_(mod) {}
   float GetProbability(int age, int shocks, int fitness) const override {
-    return prob_->GetProbability(age, shocks, fitness) *
-           mod_->GetModulation(shocks, fitness);
+    float prob = prob_->GetProbability(age, shocks, fitness);
+    return mod_->Modify(prob, age, shocks, fitness);
   };
 
  private:
   std::shared_ptr<const Probability> prob_;
-  std::shared_ptr<const Modulator> mod_;
+  std::shared_ptr<const Modifier> mod_;
 };
 
 }  // namespace probability

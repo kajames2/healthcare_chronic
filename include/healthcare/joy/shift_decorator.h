@@ -17,7 +17,7 @@ class ShiftDecorator : public Joy {
   double GetJoy(int age, int shocks, int fitness,
                 int investment) const override {
     return joy_->GetJoy(age, shocks, fitness, investment) +
-           shift_->GetShift(shocks, fitness);
+        shift_->GetShift(age, shocks, fitness);
   };
 
  private:

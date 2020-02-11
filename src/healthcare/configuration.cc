@@ -9,9 +9,9 @@
 #include "configuration/insurance_reader.h"
 #include "configuration/job_reader.h"
 #include "configuration/joy_reader.h"
-#include "configuration/modulator_reader.h"
+#include "configuration/modifier_reader.h"
 #include "configuration/prob_reader.h"
-#include "healthcare/modulator/constant.h"
+#include "healthcare/modifier/constant.h"
 
 using ::boost::property_tree::ptree;
 
@@ -40,8 +40,8 @@ Configuration ReadConfigurationFile(std::string filename) {
   config.max_budget = CalculateMaxBudget(config);
   config.fitness = configuration::ReadFitnesses(
       root.get_child("fitnesses"), config.max_fitness, config.max_budget);
-  config.joy = configuration::ReadJoy(root.get_child("joy"), config.max_shocks,
-                                      config.max_fitness);
+  config.joy = configuration::ReadJoy(root.get_child("joy"), config.max_age,
+                                      config.max_shocks, config.max_fitness);
   config.shock_prob =
       configuration::ReadProb(root.get_child("probability"), config.max_age,
                               config.max_shocks, config.max_fitness);

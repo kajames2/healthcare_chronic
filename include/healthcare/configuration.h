@@ -8,7 +8,7 @@
 #include "healthcare/insurance.h"
 #include "healthcare/job.h"
 #include "healthcare/joy.h"
-#include "healthcare/modulator.h"
+#include "healthcare/modifier.h"
 #include "healthcare/probability.h"
 
 namespace healthcare {

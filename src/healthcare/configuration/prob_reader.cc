@@ -10,11 +10,11 @@
 #include "healthcare/probability/gompertz_makeham.h"
 #include "healthcare/probability/gompertz_shocks.h"
 #include "healthcare/probability/health_dependent.h"
-#include "healthcare/probability/health_dependent_steve.h"
 #include "healthcare/probability/health_dependent_dustin.h"
 #include "healthcare/probability/health_dependent_fan.h"
+#include "healthcare/probability/health_dependent_steve.h"
 #include "healthcare/probability/mod_decorator.h"
-#include "modulator_reader.h"
+#include "modifier_reader.h"
 
 namespace healthcare {
 namespace configuration {
@@ -26,15 +26,14 @@ std::unique_ptr<const Probability> ReadGompertzShocksProb(ptree prob_config);
 std::unique_ptr<const Probability> ReadHealthDependentProb(ptree prob_config,
                                                            int max_age,
                                                            int max_shocks);
-std::unique_ptr<const Probability> ReadHealthDependentProbSteve(ptree prob_config,
-                                                           int max_age,
-                                                           int max_shocks);
-std::unique_ptr<const Probability> ReadHealthDependentProbDustin(ptree prob_config,
-                                                           int max_age,
-                                                           int max_shocks);
+std::unique_ptr<const Probability> ReadHealthDependentProbSteve(
+    ptree prob_config, int max_age, int max_shocks);
+std::unique_ptr<const Probability> ReadHealthDependentProbDustin(
+    ptree prob_config, int max_age, int max_shocks);
 std::unique_ptr<const Probability> ReadHealthDependentProbFan(ptree prob_config,
-                                                           int max_age,
-                                                           int max_shocks, int max_fitness);
+                                                              int max_age,
+                                                              int max_shocks,
+                                                              int max_fitness);
 
 std::unique_ptr<const Probability> ReadProb(ptree prob_config, int max_age,
                                             int max_shocks, int max_fitness) {
@@ -51,14 +50,15 @@ std::unique_ptr<const Probability> ReadProb(ptree prob_config, int max_age,
   } else if (type == "HealthDependentDustin") {
     prob = ReadHealthDependentProbDustin(prob_config, max_age, max_shocks);
   } else if (type == "HealthDependentFan") {
-    prob = ReadHealthDependentProbFan(prob_config, max_age, max_shocks, max_fitness);
+    prob = ReadHealthDependentProbFan(prob_config, max_age, max_shocks,
+                                      max_fitness);
   } else {
     assert(false && "Unsupported Probability type");
     prob = std::unique_ptr<const Probability>();
   }
-  if (prob_config.count("mod")) {
-    std::unique_ptr<const Modulator> mod =
-        ReadModulator(prob_config.get_child("mod"), max_shocks, max_fitness);
+  if (prob_config.count("mods")) {
+    std::unique_ptr<const Modifier> mod = ReadModifiers(
+        prob_config.get_child("mods"), max_age, max_shocks, max_fitness);
     prob = std::make_unique<probability::ModDecorator>(std::move(prob),
                                                        std::move(mod));
   }
@@ -76,9 +76,8 @@ std::unique_ptr<const Probability> ReadHealthDependentProb(ptree prob_config,
       alpha, beta, eta, fitness_r, max_age, max_shocks);
 }
 
-std::unique_ptr<const Probability> ReadHealthDependentProbSteve(ptree prob_config,
-                                                           int max_age,
-                                                           int max_shocks) {
+std::unique_ptr<const Probability> ReadHealthDependentProbSteve(
+    ptree prob_config, int max_age, int max_shocks) {
   float alpha = prob_config.get<float>("alpha");
   float beta = prob_config.get<float>("beta");
   float eta = prob_config.get<float>("eta");
@@ -89,9 +88,8 @@ std::unique_ptr<const Probability> ReadHealthDependentProbSteve(ptree prob_confi
       alpha, beta, eta, fitness_r, lambda, mu, max_age, max_shocks);
 }
 
-std::unique_ptr<const Probability> ReadHealthDependentProbDustin(ptree prob_config,
-                                                           int max_age,
-                                                           int max_shocks) {
+std::unique_ptr<const Probability> ReadHealthDependentProbDustin(
+    ptree prob_config, int max_age, int max_shocks) {
   float alpha = prob_config.get<float>("alpha");
   float beta = prob_config.get<float>("beta");
   float eta = prob_config.get<float>("eta");
@@ -102,10 +100,10 @@ std::unique_ptr<const Probability> ReadHealthDependentProbDustin(ptree prob_conf
       alpha, beta, eta, fitness_r, lambda, mu, max_age, max_shocks);
 }
 
-
 std::unique_ptr<const Probability> ReadHealthDependentProbFan(ptree prob_config,
-                                                           int max_age,
-                                                           int max_shocks, int max_fitness) {
+                                                              int max_age,
+                                                              int max_shocks,
+                                                              int max_fitness) {
   float alpha = prob_config.get<float>("alpha");
   float beta = prob_config.get<float>("beta");
   float eta = prob_config.get<float>("eta");
@@ -115,7 +113,6 @@ std::unique_ptr<const Probability> ReadHealthDependentProbFan(ptree prob_config,
   return std::make_unique<probability::HealthDependentFan>(
       alpha, beta, eta, p, k, c, max_age, max_shocks, max_fitness);
 }
-
 
 std::unique_ptr<const Probability> ReadGompertzMakehamProb(ptree prob_config) {
   float lambda = prob_config.get<float>("lambda");

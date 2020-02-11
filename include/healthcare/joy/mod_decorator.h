@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "healthcare/joy.h"
-#include "healthcare/modulator.h"
+#include "healthcare/modifier.h"
 
 namespace healthcare {
 namespace joy {
@@ -12,17 +12,17 @@ namespace joy {
 class ModDecorator : public Joy {
  public:
   ModDecorator(std::shared_ptr<const Joy> prob,
-               std::shared_ptr<const Modulator> mod)
+               std::shared_ptr<const Modifier> mod)
       : prob_(prob), mod_(mod) {}
   double GetJoy(int age, int shocks, int fitness,
                 int investment) const override {
-    return prob_->GetJoy(age, shocks, fitness, investment) *
-           mod_->GetModulation(shocks, fitness);
+    float joy = prob_->GetJoy(age, shocks, fitness, investment);
+    return mod_->Modify(joy, age, shocks, fitness);
   };
 
  private:
   std::shared_ptr<const Joy> prob_;
-  std::shared_ptr<const Modulator> mod_;
+  std::shared_ptr<const Modifier> mod_;
 };
 
 }  // namespace joy
