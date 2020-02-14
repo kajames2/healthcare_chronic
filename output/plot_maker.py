@@ -60,7 +60,11 @@ def main():
                 for col in display_cols:
                     plt.figure(figsize=(6, 6))
                     for i in range(len(data)):
-                        plt.plot(ages,
+                        plt.plot(list(
+                            range(
+                                1,
+                                len(treatment_means[data[i][1]][col].tolist())
+                                + 1)),
                                  treatment_means[data[i][1]][col].tolist(),
                                  linewidth=2,
                                  color=colors[i],

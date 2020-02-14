@@ -1,7 +1,6 @@
 #include <omp.h>
 #include <algorithm>
 #include <cmath>
-#include <fstream>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -9,6 +8,7 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
+#include <vector>
 #include "dp/decision_cache.h"
 #include "dp/storage.h"
 #include "healthcare/configuration.h"
@@ -171,38 +171,47 @@ void StoreAgeOptimals(Storage& storage,
   //#pragma omp parallel for private(dec_states)
   for (int cur = 0; cur < init_states.size(); ++cur) {
     PersonIncome cur_state = init_states[cur];
-    auto start_it =
-        dec_cache.begin(cur_state.shocks, cur_state.fitness, cur_state.budget);
-    auto end_it =
-        dec_cache.end(cur_state.shocks, cur_state.fitness, cur_state.budget);
-    size_t n_decisions = std::distance(start_it, end_it);
-    dec_states.resize(n_decisions);
-    std::copy(start_it, end_it, dec_states.begin());
-    for (auto& pair : dec_states) {
-      auto& res = pair.result;
-      auto& res_shock = pair.result_shock;
-      res.person.cash = cur_state.cash + cur_state.income - res.spending;
-      res.person.cash =
-          std::clamp(res.person.cash, config.min_savings, config.max_savings);
-      res.future_value = opt_lookup(res.person);
-      res.value += res.joy + config.discount * res.future_value;
+    bool is_dead = cur_state.shocks >= config.max_shocks;
+    if (is_dead) {
+      auto opt = DecisionResults{Decision(), PeriodResult(), PeriodResult(), 0};
+      Person next_person = cur_state;
+      next_person.age += 1;
+      opt.result.person = next_person;
+      opt.result_shock.person = next_person;
+      storage.StoreResult(init_states[cur], opt);
+    } else {
+      auto start_it = dec_cache.begin(cur_state.shocks, cur_state.fitness,
+                                      cur_state.budget);
+      auto end_it =
+          dec_cache.end(cur_state.shocks, cur_state.fitness, cur_state.budget);
+      size_t n_decisions = std::distance(start_it, end_it);
+      dec_states.resize(n_decisions);
+      std::copy(start_it, end_it, dec_states.begin());
+      for (auto& pair : dec_states) {
+        auto& res = pair.result;
+        auto& res_shock = pair.result_shock;
+        res.person.cash = cur_state.cash + cur_state.income - res.spending;
+        res.person.cash =
+            std::clamp(res.person.cash, config.min_savings, config.max_savings);
+        res.future_value = opt_lookup(res.person);
+        res.value += res.joy + config.discount * res.future_value;
 
-      res_shock.person.cash =
-          cur_state.cash + cur_state.income - res_shock.spending;
-      res_shock.person.cash = std::clamp(
-          res_shock.person.cash, config.min_savings, config.max_savings);
-      res_shock.future_value = opt_lookup(res_shock.person);
-      res_shock.value +=
-          res_shock.joy + config.discount * res_shock.future_value;
-      pair.value = ExpectedUtility(pair);
-    };
+        res_shock.person.cash =
+            cur_state.cash + cur_state.income - res_shock.spending;
+        res_shock.person.cash = std::clamp(
+            res_shock.person.cash, config.min_savings, config.max_savings);
+        res_shock.future_value = opt_lookup(res_shock.person);
+        res_shock.value +=
+            res_shock.joy + config.discount * res_shock.future_value;
+        pair.value = ExpectedUtility(pair);
+      };
+      auto opts = std::max_element(
+          dec_states.begin(), dec_states.end(),
+          [](const DecisionResults& p1, const DecisionResults& p2) -> bool {
+            return p1.value < p2.value;
+          });
 
-    auto opts = std::max_element(
-        dec_states.begin(), dec_states.end(),
-        [](const DecisionResults& p1, const DecisionResults& p2) -> bool {
-          return p1.value < p2.value;
-        });
-
-    storage.StoreResult(init_states[cur], *opts);
+      storage.StoreResult(init_states[cur], *opts);
+    }
   }
 }
