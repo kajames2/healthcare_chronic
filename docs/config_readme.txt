@@ -29,10 +29,11 @@ Flat					income = rate --- Fixed income.  Equivalent to AgeLinear with 0 slope.
 
 joy			object		the amount of life enjoyment gained as a function of age, shocks, fitness, joy_investment
   type			string		allowable values: "Fractional"
-  mod			object		modulator function:  joy = joy_func(age, shocks, fitness, joy_investment) * mod(shocks, fitness)
+  mod			object		modifier function
 
 Fractional				enjoyment = spending/(spending + j)
   j			real		
+
 
 
 
@@ -53,9 +54,10 @@ ProportionalLoss			fitness_(t+1) = ceil((1-rate) * fitness_t) --- Decreases fitn
 
 
 
+
 probability		object		the probability of a shock each period as a function of age, shocks, and fitness
   type			string		allowable values: "GompertzMakeham", "GompertzShocks"
-  mod			object		modulator function:  P(shock) = p_func(age, shocks, fitness) * mod(shocks, fitness)
+  mod			object		modulator function
   
 GompertzMakeham				P(shock) = lambda + alpha * e^(age * beta) --- probability follows a Gompertz-Makeham mortality hazard curve.
   lambda		real
@@ -70,25 +72,22 @@ GompertzShocks				P(shock) = (age_coeff * e^(age * age_rate) + shock_coeff * e^(
 
 
 
-modulation				functions that map between 0 and 1 to modulate probability/joy functions.  Function of fitness & shocks.
-type		        string		Allowable values: "LinearFitness", "LinearShock", "CosineFitness", "CosineShock", "FractionalFitness", "FractionalShock"
-LinearFitness		object		1 - max_modifier * fitness/max_fitness
+
+modifier				functions that modify the probability/joy functions.  Multiple modifiers can be composited together.
+func			string		Allowable values: "Add", "Multiply".  Determines whether the modifier adds to or multiplies the current value.
+type		        string		Allowable values: "Linear", "Cosine", "Fractional", "Constant"
+param			string		Allowable values: "Age", "Fitness", "Shocks".  (Note, not used for "Constant" type)
+
+Constant		object		value
+  value			real
+
+Linear			object		1 - max_modifier * param/max_param
   max_modifier		real
 
-LinearShock		object		1 - max_modifier * shocks/max_shocks
+CosineShock		object		1 - max_modifier * cos(pi/(2*max_param) * param)
   max_modifier		real
 
-CosineFitness		object		1 - max_modifier * cos(pi/(2*max_fitness) * fitness)
-  max_modifier		real
-
-CosineShock		object		1 - max_modifier * cos(pi/(2*max_shocks) * shocks)
-  max_modifier		real
-
-FractionalFitness	object		1 - max_modifier * fitness/(fitness + j)
-  max_modifier		real		
-  j			real		
-
-FractionalShock		object		1 - max_modifier * shocks/(shocks + j)
+FractionalShock		object		1 - max_modifier * param/(param + j)
   max_modifier		real		
   j			real		
 
@@ -99,6 +98,7 @@ insurance		object		the cost of insurance as a function of age, shocks, and fitne
 
 Actuarial				cost = round(scale * prob * shock_income_size) --- Charges the expected cost, scaled by some factor, rounded to the nearest dollar.  Note: prob is a function of current age, shocks, and fitness
   scale			real		a factor to scale the cost of insurance by.  1 is actuarially fair, 1.2 is 20% above expected, etc.
+  admin_cost		int		a fixed increase in premiums above actuarial
 
 Fixed					cost = premium --- Charges a flat rate regardless of circumstance.  
   premium		int		the fixed price of the insurance

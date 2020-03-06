@@ -11,6 +11,7 @@
 #include "healthcare/modifier/composite.h"
 #include "healthcare/modifier/constant.h"
 #include "healthcare/modifier/cosine.h"
+#include "healthcare/modifier/sqrt_cosine.h"
 #include "healthcare/modifier/fractional.h"
 #include "healthcare/modifier/linear.h"
 
@@ -22,6 +23,10 @@ using ::boost::property_tree::ptree;
 std::unique_ptr<const Modifier> ReadConstantModifier(ptree modifier_config,
                                                      modifier::Func);
 std::unique_ptr<const Modifier> ReadCosineModifier(ptree modifier_config,
+                                                   modifier::Param,
+                                                   modifier::Func,
+                                                   int max_param);
+std::unique_ptr<const Modifier> ReadSqrtCosineModifier(ptree modifier_config,
                                                    modifier::Param,
                                                    modifier::Func,
                                                    int max_param);
@@ -81,6 +86,8 @@ std::unique_ptr<const Modifier> ReadModifier(ptree modifier_config, int max_age,
 
     if (type == "Cosine") {
       mod = ReadCosineModifier(modifier_config, mod_param, mod_func, max_param);
+    } else if (type == "SqrtCosine") {
+      mod = ReadSqrtCosineModifier(modifier_config, mod_param, mod_func, max_param);
     } else if (type == "Linear") {
       mod = ReadLinearModifier(modifier_config, mod_param, mod_func, max_param);
     } else if (type == "Fractional") {
@@ -95,7 +102,7 @@ std::unique_ptr<const Modifier> ReadModifier(ptree modifier_config, int max_age,
 
 std::unique_ptr<const Modifier> ReadConstantModifier(ptree modifier_config,
                                                      modifier::Func func) {
-  float max_modification = modifier_config.get<float>("max_modification");
+  float max_modification = modifier_config.get<float>("value");
   return std::make_unique<modifier::Constant>(func, max_modification);
 }
 
@@ -108,6 +115,14 @@ std::unique_ptr<const Modifier> ReadCosineModifier(ptree modifier_config,
                                             max_param);
 }
 
+std::unique_ptr<const Modifier> ReadSqrtCosineModifier(ptree modifier_config,
+                                                   modifier::Param param,
+                                                   modifier::Func func,
+                                                   int max_param) {
+  float max_modification = modifier_config.get<float>("max_modification");
+  return std::make_unique<modifier::SqrtCosine>(param, func, max_modification,
+                                            max_param);
+}
 std::unique_ptr<const Modifier> ReadLinearModifier(ptree modifier_config,
                                                    modifier::Param param,
                                                    modifier::Func func,

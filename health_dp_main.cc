@@ -168,7 +168,7 @@ void StoreAgeOptimals(Storage& storage,
                       const Configuration& config) {
   std::vector<DecisionResults> dec_states;
   // Performance critical loop.  Be careful when modifying.
-  //#pragma omp parallel for private(dec_states)
+  #pragma omp parallel for private(dec_states)
   for (int cur = 0; cur < init_states.size(); ++cur) {
     PersonIncome cur_state = init_states[cur];
     bool is_dead = cur_state.shocks >= config.max_shocks;

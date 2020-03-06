@@ -17,8 +17,7 @@ class Cosine : public Modifier {
         max_modification_(max_modification) {}
   float GetModification(int param) const override {
     static const double pi = boost::math::constants::pi<double>();
-    return max_modification_ *
-           std::sqrt(std::cos(pi / (2 * max_param_) * param));
+    return (1 - (max_modification_ * (1 - std::cos(pi / (2 * max_param_) * param))));
   }
 
   int max_param_;

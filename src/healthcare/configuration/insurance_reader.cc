@@ -46,6 +46,9 @@ std::unique_ptr<const Insurance> ReadActuarialInsurance(
 
 std::unique_ptr<const Insurance> ReadFixedInsurance(ptree insure_config) {
   int premium = insure_config.get<int>("premium");
+  if (insure_config.count("admin_cost") != 0) {
+    premium += static_cast<int>(insure_config.get<float>("admin_cost"));
+  }
   return std::make_unique<insurance::Fixed>(premium);
 }
 

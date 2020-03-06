@@ -50,7 +50,7 @@ def main():
         }
         print("Done!  Now processing...")
 
-        colors = ['blue', 'red', 'green', 'orange']
+        colors = ['blue', 'red', 'green', 'orange','magenta','cyan','black','yellow']
         ages = treatment_means[all_treatments[0]]['Age'].tolist()
         for (data, outname) in zip(out_file_sets, out_filenames):
             ext = ''
