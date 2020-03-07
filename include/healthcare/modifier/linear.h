@@ -13,7 +13,7 @@ class Linear : public SingleType {
         max_modification_(max_modification),
         max_param_(max_param) {}
   float GetModification(int param) const override {
-    return (1 - (max_modification_ * param) / max_param_);
+    return (1 - max_modification_) + max_modification_ * param / max_param_;
   }
 
   int max_param_;
