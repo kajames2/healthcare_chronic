@@ -21,7 +21,7 @@
             {
                 "func": "Add",
                 "type": "Constant",
-                "max_modification": 0.2
+                "value": 0.2
             }
         ]
     },
@@ -59,6 +59,6 @@
         "scale": 1,
         "admin_cost": 0
     },
-    "max_savings": 0,
+    "max_savings": 200,
     "min_savings": -300
 }

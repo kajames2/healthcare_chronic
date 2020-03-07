@@ -1,23 +1,22 @@
 #ifndef HEALTHCARE_MODIFIER_COSINE_H_
 #define HEALTHCARE_MODIFIER_COSINE_H_
 
-#include <cmath>
-
 #include <boost/math/constants/constants.hpp>
-#include "healthcare/modifier.h"
+#include "healthcare/modifier/single_type.h"
 
 namespace healthcare {
 namespace modifier {
 
-class Cosine : public Modifier {
+class Cosine : public SingleType {
  public:
   Cosine(Param param, Func func, float max_modification, int max_param)
-      : Modifier(param, func),
+      : SingleType(param, func),
         max_param_(max_param),
         max_modification_(max_modification) {}
   float GetModification(int param) const override {
     static const double pi = boost::math::constants::pi<double>();
-    return (1 - (max_modification_ * (1 - std::cos(pi / (2 * max_param_) * param))));
+    return (1 - (max_modification_ *
+                 (1 - std::cos(pi / (2 * max_param_) * param))));
   }
 
   int max_param_;

@@ -1,0 +1,15 @@
+{
+    "template": "sample_template",
+    "name": "sample",
+    "all_combos" : true,
+    "variations" : [
+        {
+            "probability:mods:0:j" : [30, 40, 50]
+        },
+    	{
+    	    "max_age" : [20,30]
+	},
+    	{
+	    "max_savings" : [0]
+    	}]
+}

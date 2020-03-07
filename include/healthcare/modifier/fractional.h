@@ -1,15 +1,15 @@
 #ifndef HEALTHCARE_MODIFIER_FRACTIONAL_H_
 #define HEALTHCARE_MODIFIER_FRACTIONAL_H_
 
-#include "healthcare/modifier.h"
+#include "healthcare/modifier/single_type.h"
 
 namespace healthcare {
 namespace modifier {
 
-class Fractional : public Modifier {
+class Fractional : public SingleType {
  public:
   Fractional(Param param, Func func, float max_modification, float j)
-      : Modifier(param, func), max_modification_(max_modification), j_(j) {}
+      : SingleType(param, func), max_modification_(max_modification), j_(j) {}
   float GetModification(int param) const override {
     return (1 - (max_modification_ * param / (param + j_)));
   }

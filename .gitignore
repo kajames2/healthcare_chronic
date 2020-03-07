@@ -4,6 +4,7 @@ configs/*/*
 # Ignore the build and lib dirs
 build
 lib/*
+.mypy_cache/*
 
 # Ignore any executables
 bin/*

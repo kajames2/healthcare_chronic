@@ -51,7 +51,7 @@
                     {
                         "func": "Add",
                         "type": "Constant",
-                        "max_modification": 0.2
+                        "value": 0.2
                     }
                 ]
             ]
