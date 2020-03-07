@@ -8,12 +8,14 @@ namespace modifier {
 
 class Linear : public SingleType {
  public:
-  Linear(Param param, Func func, float max_modification, int max_param)
-      : SingleType(param, func),
+  Linear(Param param, Func func, float max_modification, int max_param,
+         std::shared_ptr<const Modifier> param_mod = nullptr)
+      : SingleType(param, func, param_mod),
         max_modification_(max_modification),
         max_param_(max_param) {}
   float GetModification(int param) const override {
-    return (1 - max_modification_) + max_modification_ * param / max_param_;
+    return (1 - max_modification_) +
+           max_modification_ * (max_param_ - param) / max_param_;
   }
 
   int max_param_;

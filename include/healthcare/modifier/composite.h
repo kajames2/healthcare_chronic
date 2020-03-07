@@ -12,7 +12,7 @@ namespace modifier {
 class Composite : public Modifier {
  public:
   Composite(std::vector<std::shared_ptr<const Modifier>> mods)
-      : Modifier(Func::ADD), mods_(std::move(mods)) {}
+      : Modifier(Func::ADD), mods_(mods) {}
   float Modify(float val, int age, int shocks, int fitness) const override {
     for (const auto& mod : mods_) {
       val = mod->Modify(val, age, shocks, fitness);

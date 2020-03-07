@@ -9,8 +9,9 @@ namespace modifier {
 
 class Cosine : public SingleType {
  public:
-  Cosine(Param param, Func func, float max_modification, int max_param)
-      : SingleType(param, func),
+  Cosine(Param param, Func func, float max_modification, int max_param,
+         std::shared_ptr<const Modifier> param_mod = nullptr)
+      : SingleType(param, func, param_mod),
         max_param_(max_param),
         max_modification_(max_modification) {}
   float GetModification(int param) const override {

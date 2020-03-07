@@ -6,8 +6,9 @@ namespace modifier {
 
 class SingleType : public Modifier {
  public:
-  SingleType(modifier::Param param, modifier::Func func)
-      : Modifier(func), param_(param) {}
+  SingleType(modifier::Param param, modifier::Func func,
+             std::shared_ptr<const Modifier> param_mod = nullptr)
+      : Modifier(func), param_(param), param_mod_(param_mod) {}
   virtual float Modify(int age, int shocks, int fitness) const override {
     int x;
     switch (param_) {
@@ -23,6 +24,9 @@ class SingleType : public Modifier {
       default:
         assert(false);
     }
+    if (param_mod_) {
+      x = param_mod_->Modify(x, age, shocks, fitness);
+    }
     GetModification(x);
   }
 
@@ -31,6 +35,7 @@ class SingleType : public Modifier {
 
  private:
   Param param_;
+  std::shared_ptr<const Modifier> param_mod_;
 };
 
 }  // namespace modifier

@@ -1,19 +1,19 @@
 #include "modifier_reader.h"
 
-#include <cassert>
-#include <iostream>
 #include <memory>
 #include <string>
 
+#include <algorithm>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <vector>
 #include "healthcare/modifier.h"
 #include "healthcare/modifier/composite.h"
 #include "healthcare/modifier/constant.h"
 #include "healthcare/modifier/cosine.h"
-#include "healthcare/modifier/sqrt_cosine.h"
 #include "healthcare/modifier/fractional.h"
 #include "healthcare/modifier/linear.h"
+#include "healthcare/modifier/sqrt_cosine.h"
 
 namespace healthcare {
 namespace configuration {
@@ -22,21 +22,18 @@ using ::boost::property_tree::ptree;
 
 std::unique_ptr<const Modifier> ReadConstantModifier(ptree modifier_config,
                                                      modifier::Func);
-std::unique_ptr<const Modifier> ReadCosineModifier(ptree modifier_config,
-                                                   modifier::Param,
-                                                   modifier::Func,
-                                                   int max_param);
-std::unique_ptr<const Modifier> ReadSqrtCosineModifier(ptree modifier_config,
-                                                   modifier::Param,
-                                                   modifier::Func,
-                                                   int max_param);
-std::unique_ptr<const Modifier> ReadLinearModifier(ptree modifier_config,
-                                                   modifier::Param,
-                                                   modifier::Func,
-                                                   int max_param);
-std::unique_ptr<const Modifier> ReadFractionalModifier(ptree modifier_config,
-                                                       modifier::Param,
-                                                       modifier::Func);
+std::unique_ptr<const Modifier> ReadCosineModifier(
+    ptree modifier_config, modifier::Param, modifier::Func, int max_param,
+    std::shared_ptr<const Modifier> param_mod);
+std::unique_ptr<const Modifier> ReadSqrtCosineModifier(
+    ptree modifier_config, modifier::Param, modifier::Func, int max_param,
+    std::shared_ptr<const Modifier> param_mod);
+std::unique_ptr<const Modifier> ReadLinearModifier(
+    ptree modifier_config, modifier::Param, modifier::Func, int max_param,
+    std::shared_ptr<const Modifier> param_mod);
+std::unique_ptr<const Modifier> ReadFractionalModifier(
+    ptree modifier_config, modifier::Param, modifier::Func,
+    std::shared_ptr<const Modifier> param_mod);
 std::unique_ptr<const Modifier> ReadModifier(ptree modifier_config, int max_age,
                                              int max_shocks, int max_fitness);
 
@@ -84,14 +81,23 @@ std::unique_ptr<const Modifier> ReadModifier(ptree modifier_config, int max_age,
       assert(false && "Unsupported Modifier Parameter type");
     }
 
+    std::shared_ptr<const Modifier> param_mod = nullptr;
+    if (modifier_config.count("mods")) {
+      param_mod = ReadModifiers(modifier_config.get_child("mods"), max_age,
+                                max_shocks, max_fitness);
+    }
     if (type == "Cosine") {
-      mod = ReadCosineModifier(modifier_config, mod_param, mod_func, max_param);
+      mod = ReadCosineModifier(modifier_config, mod_param, mod_func, max_param,
+                               param_mod);
     } else if (type == "SqrtCosine") {
-      mod = ReadSqrtCosineModifier(modifier_config, mod_param, mod_func, max_param);
+      mod = ReadSqrtCosineModifier(modifier_config, mod_param, mod_func,
+                                   max_param, param_mod);
     } else if (type == "Linear") {
-      mod = ReadLinearModifier(modifier_config, mod_param, mod_func, max_param);
+      mod = ReadLinearModifier(modifier_config, mod_param, mod_func, max_param,
+                               param_mod);
     } else if (type == "Fractional") {
-      mod = ReadFractionalModifier(modifier_config, mod_param, mod_func);
+      mod = ReadFractionalModifier(modifier_config, mod_param, mod_func,
+                                   param_mod);
     } else {
       assert(false && "Unsupported Modifier type");
       mod = std::unique_ptr<const Modifier>();
@@ -106,39 +112,36 @@ std::unique_ptr<const Modifier> ReadConstantModifier(ptree modifier_config,
   return std::make_unique<modifier::Constant>(func, max_modification);
 }
 
-std::unique_ptr<const Modifier> ReadCosineModifier(ptree modifier_config,
-                                                   modifier::Param param,
-                                                   modifier::Func func,
-                                                   int max_param) {
+std::unique_ptr<const Modifier> ReadCosineModifier(
+    ptree modifier_config, modifier::Param param, modifier::Func func,
+    int max_param, std::shared_ptr<const Modifier> param_mod) {
   float max_modification = modifier_config.get<float>("max_modification");
   return std::make_unique<modifier::Cosine>(param, func, max_modification,
-                                            max_param);
+                                            max_param, param_mod);
 }
 
-std::unique_ptr<const Modifier> ReadSqrtCosineModifier(ptree modifier_config,
-                                                   modifier::Param param,
-                                                   modifier::Func func,
-                                                   int max_param) {
+std::unique_ptr<const Modifier> ReadSqrtCosineModifier(
+    ptree modifier_config, modifier::Param param, modifier::Func func,
+    int max_param, std::shared_ptr<const Modifier> param_mod) {
   float max_modification = modifier_config.get<float>("max_modification");
   return std::make_unique<modifier::SqrtCosine>(param, func, max_modification,
-                                            max_param);
+                                                max_param, param_mod);
 }
-std::unique_ptr<const Modifier> ReadLinearModifier(ptree modifier_config,
-                                                   modifier::Param param,
-                                                   modifier::Func func,
-                                                   int max_param) {
+std::unique_ptr<const Modifier> ReadLinearModifier(
+    ptree modifier_config, modifier::Param param, modifier::Func func,
+    int max_param, std::shared_ptr<const Modifier> param_mod) {
   float max_modification = modifier_config.get<float>("max_modification");
   return std::make_unique<modifier::Linear>(param, func, max_modification,
-                                            max_param);
+                                            max_param, param_mod);
 }
 
-std::unique_ptr<const Modifier> ReadFractionalModifier(ptree modifier_config,
-                                                       modifier::Param param,
-                                                       modifier::Func func) {
+std::unique_ptr<const Modifier> ReadFractionalModifier(
+    ptree modifier_config, modifier::Param param, modifier::Func func,
+    std::shared_ptr<const Modifier> param_mod) {
   float j = modifier_config.get<float>("j");
   float max_modification = modifier_config.get<float>("max_modification");
   return std::make_unique<modifier::Fractional>(param, func, max_modification,
-                                                j);
+                                                j, param_mod);
 }
 
 }  // namespace configuration
