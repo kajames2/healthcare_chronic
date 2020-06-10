@@ -194,7 +194,7 @@ for filename_base in filenames:
             shocked = int(period[-1])
             tot_enjoyment += float(period[header_indices["Enjoyment"]])
             total_insurance_spending += int(period[header_indices["InsuranceSpending"]])
-            buy_ins = int(int(period[header_indices["InsuranceSpending"]]) > 0)
+            buy_ins = int(period[header_indices["BuyIns"]])
             shock_prob = shocked * (float(period[header_indices["Probability"]])) + (
                 1 - shocked
             ) * (1 - float(period[header_indices["Probability"]]))

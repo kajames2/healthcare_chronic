@@ -37,7 +37,7 @@ PeriodResult DecisionEvaluator::ApplyShock(PeriodResult res,
   res.probability = shock_prob_[res.person.shocks][res.person.fitness];
   res.person.shocks += config_.shock_count_size;
   res.person.shocks = std::min(config_.max_shocks, res.person.shocks);
-  if (dec.insurance_spending == 0) {
+  if (!dec.buy_insurance) {
     res.spending += config_.shock_income_size;
   }
   res.person.cash -= res.spending;

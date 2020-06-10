@@ -4,6 +4,9 @@ configs/*/*
 # Ignore output files
 output/*/*
 
+# Ignore .clangd stuff
+.clangd/*
+
 # Ignore the build and lib dirs
 build
 lib/*

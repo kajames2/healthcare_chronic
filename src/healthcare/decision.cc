@@ -10,7 +10,7 @@ int TotalSpending(Decision dec) {
 
 std::ostream& operator<<(std::ostream& out, const Decision& d) {
   return out << d.fitness_spending << "," << d.joy_spending << ","
-             << d.insurance_spending;
+             << d.insurance_spending << "," << d.buy_insurance;
 }
 
 }  // namespace healthcare

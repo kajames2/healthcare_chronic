@@ -107,7 +107,7 @@ void RunOptimization(const Configuration& config, std::string out_dir,
   std::ofstream max_stream(max_filename, std::ofstream::out);
 
   max_stream << "Age,Shocks,Fitness,Cash,"
-                "FitnessSpending,JoySpending,InsuranceSpending,"
+                "FitnessSpending,JoySpending,InsuranceSpending,BuyIns,"
                 "NextAge,NextShocks,NextFitness,NextCash,"
                 "Probability,Enjoyment,FutureValue,Value\n";
 
@@ -167,8 +167,8 @@ void StoreAgeOptimals(Storage& storage,
                       const std::vector<PersonIncome>& init_states,
                       const Configuration& config) {
   std::vector<DecisionResults> dec_states;
-  // Performance critical loop.  Be careful when modifying.
-  #pragma omp parallel for private(dec_states)
+// Performance critical loop.  Be careful when modifying.
+#pragma omp parallel for private(dec_states)
   for (int cur = 0; cur < init_states.size(); ++cur) {
     PersonIncome cur_state = init_states[cur];
     bool is_dead = cur_state.shocks >= config.max_shocks;

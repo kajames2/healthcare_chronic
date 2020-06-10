@@ -9,7 +9,7 @@
 	{
 	    "_COMMENT" : "optimal | Don't buy fitness | Don't insure",
 	    "fitnesses:1:price": [3, 3000, 3],
-	    "insurance:admin_cost": [0.1, 0.1, 300]
+	    "insurance:admin_cost": [0, 0, 300]
 	}
     ]
 }

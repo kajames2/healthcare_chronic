@@ -2,10 +2,10 @@
 #include "healthcare/decision.h"
 #include "healthcare/decision_evaluator.h"
 
+#include <omp.h>
 #include <algorithm>
 #include <numeric>
 #include <vector>
-#include <omp.h>
 
 namespace dp {
 
@@ -65,11 +65,11 @@ void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
     int insurance_cost = config_.insurance->GetPrice(age_, shocks, fit);
 
     for (int joy_spending = 0; joy_spending <= rem_budget; ++joy_spending) {
-      decs.push_back(Decision{fit_cost, joy_spending, 0});
+      decs.push_back(Decision{fit_cost, joy_spending, 0, false});
     }
     rem_budget -= insurance_cost;
     for (int joy_spending = 0; joy_spending <= rem_budget; ++joy_spending) {
-      decs.push_back(Decision{fit_cost, joy_spending, insurance_cost});
+      decs.push_back(Decision{fit_cost, joy_spending, insurance_cost, true});
     }
   }
   // // Sort all except the guaranteed insurance purchase
@@ -77,10 +77,9 @@ void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
   //                  [](Decision dec, Decision dec2) {
   //                    return TotalSpending(dec) < TotalSpending(dec2);
   //                  });
-  std::stable_sort(decs.begin(), decs.end(),
-                   [](Decision dec, Decision dec2) {
-                     return TotalSpending(dec) < TotalSpending(dec2);
-                   });
+  std::stable_sort(decs.begin(), decs.end(), [](Decision dec, Decision dec2) {
+    return TotalSpending(dec) < TotalSpending(dec2);
+  });
 
   std::vector<int> counts(config_.max_budget + 1, 0);
   // Account for guaranteed insurance purchase option
@@ -94,15 +93,15 @@ void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
 
   std::vector<healthcare::DecisionResults> res(decs.size());
   //  #pragma omp parallel for
-  for (int i = 0 ; i < decs.size(); ++i) {
+  for (int i = 0; i < decs.size(); ++i) {
     res[i] = eval_.GetDecisionResults({age_, shocks, fitness, 0}, decs[i]);
   }
-//  std::vector<healthcare::DecisionResults> res;
-//  std::transform(
-//      decs.begin(), decs.end(), std::back_inserter(res),
-//      [this, shocks, fitness](const Decision& dec) {
-//        return eval_.GetDecisionResults({age_, shocks, fitness, 0}, dec);
-//      });
+  //  std::vector<healthcare::DecisionResults> res;
+  //  std::transform(
+  //      decs.begin(), decs.end(), std::back_inserter(res),
+  //      [this, shocks, fitness](const Decision& dec) {
+  //        return eval_.GetDecisionResults({age_, shocks, fitness, 0}, dec);
+  //      });
 
   decisions_[shocks].push_back(res);
   counts_[shocks].push_back(counts);

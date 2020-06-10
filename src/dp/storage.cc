@@ -71,7 +71,9 @@ std::ostream& operator<<(std::ostream& out, const Storage& s) {
             << std::setw(spending_size) << opt.decision.fitness_spending << ","
             << std::setw(spending_size) << opt.decision.joy_spending << ","
             << std::setw(spending_size) << opt.decision.insurance_spending
-            << "," << std::setw(age_size) << opt.result.person.age << ","
+            << "," << std::setw(1)
+            << static_cast<int>(opt.decision.buy_insurance) << ","
+            << std::setw(age_size) << opt.result.person.age << ","
             << std::setw(shocks_size) << opt.result.person.shocks << ","
             << std::setw(fitness_size) << opt.result.person.fitness << ","
             << std::setw(savings_size) << opt.result.person.cash << ","
@@ -87,7 +89,9 @@ std::ostream& operator<<(std::ostream& out, const Storage& s) {
             << std::setw(spending_size) << opt.decision.fitness_spending << ","
             << std::setw(spending_size) << opt.decision.joy_spending << ","
             << std::setw(spending_size) << opt.decision.insurance_spending
-            << "," << std::setw(age_size) << opt.result_shock.person.age << ","
+            << "," << std::setw(1)
+            << static_cast<int>(opt.decision.buy_insurance) << ","
+            << std::setw(age_size) << opt.result_shock.person.age << ","
             << std::setw(shocks_size) << opt.result_shock.person.shocks << ","
             << std::setw(fitness_size) << opt.result_shock.person.fitness << ","
             << std::setw(savings_size) << opt.result_shock.person.cash << ","
