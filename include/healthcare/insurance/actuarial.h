@@ -17,7 +17,7 @@ class Actuarial : public Insurance {
       : scale_(scale), admin_cost_(admin_cost), shock_income_size_(shock_income_size), prob_(prob) {}
   float GetPrice(int age, int shocks, int fitness) const override {
     auto prob = prob_->GetProbability(age, shocks, fitness);
-    return std::round(scale_ * prob * shock_income_size_ + admin_cost_);
+    return std::ceil(scale_ * prob * shock_income_size_ + admin_cost_);
   }
 
  private:

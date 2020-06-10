@@ -1,15 +1,15 @@
 {
-    "template": "sample_template",
-    "name": "sample",
+    "_COMMENT": "The filename (without extension) of the configuration file to be varied.",
+    "template": "test_template",
+    "_COMMENT": "name is optional.  Gives the name of the folder the configs will go.  Uses template value by default",
+    "name": "insurance",
+    "_COMMENT": "all_combos is optional. Defaults true.  If false, it will generate each variation alone, not every permutation of variations",
     "all_combos" : true,
     "variations" : [
-        {
-            "probability:mods:0:j" : [30, 40, 50]
-        },
-    	{
-    	    "max_age" : [20,30]
-	},
-    	{
-	    "max_savings" : [0]
-    	}]
+	{
+	    "_COMMENT" : "optimal | Don't buy fitness | Don't insure",
+	    "fitnesses:1:price": [3, 3000, 3],
+	    "insurance:admin_cost": [0.1, 0.1, 300]
+	}
+    ]
 }

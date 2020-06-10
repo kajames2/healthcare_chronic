@@ -1,6 +1,9 @@
 # Ignore configuration files
 configs/*/*
 
+# Ignore output files
+output/*/*
+
 # Ignore the build and lib dirs
 build
 lib/*

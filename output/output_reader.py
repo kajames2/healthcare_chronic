@@ -116,7 +116,7 @@ def get_life_with_draws(fstream, start_state, draws):
             row = row_pair[0]
             shocked = 0
         out_row = list(row.values())
-        out_row.append("{0:5.3f}".format(rand))
+        out_row.append("{0:8.6f}".format(rand))
         out_row.append("{0:1}".format(shocked))
         life.append(out_row)
         state = next_state(row)
@@ -156,7 +156,7 @@ def stratified_sample(segment, n_segments):
 
 filenames = sys.argv[1:]
 for filename_base in filenames:
-    random.seed(12345678)
+    random.seed(12345679)
     filename = filename_base + ".csv"
     (offsets, config, header) = get_data_features(filename)
 
@@ -174,9 +174,9 @@ for filename_base in filenames:
     lives_digits = len(str(abs(n_lives - 1)))
     start_state = [1, 0, 20, 0]
     fstream = open(filename)
-    #    rand_lives = [get_life_random(fstream, start_state, max_age) for i in range(n_lives)]
-    rands = generate_fair_draws(max_age, n_lives)
-    rand_lives = [get_life_with_draws(fstream, start_state, draws) for draws in rands]
+    rand_lives = [get_life_random(fstream, start_state, max_age) for i in range(n_lives)]
+    #rands = generate_fair_draws(max_age, n_lives)
+    #rand_lives = [get_life_with_draws(fstream, start_state, draws) for draws in rands]
     f = open(filename_base + "_rand_lives.csv", "w+")
     f.write(
         ",".join(header)
@@ -204,13 +204,13 @@ for filename_base in filenames:
             at_max_shocks = int(int(period[header_indices["Shocks"]]) == max_shocks)
             died = at_max_shocks - prev_at_max_shocks
             prev_at_max_shocks = at_max_shocks
-            period.append("{0:6.2f}".format(tot_enjoyment))
+            period.append("{0:8.4f}".format(tot_enjoyment))
             period.append("{0:1}".format(buy_ins))
             period.append("{0:4}".format(total_insurance_spending))
             period.append("{0:4f}".format(payout))
             period.append("{0:4f}".format(total_payout))
             period.append("{0:4f}".format(total_insurer_profit))
-            period.append("{0:5.3f}".format(shock_prob))
+            period.append("{0:8.6f}".format(shock_prob))
             period.append("{0:1}".format(at_max_shocks))
             period.append("{0:1}".format(died))
             period.append("{0:3}".format(life))

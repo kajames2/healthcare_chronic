@@ -53,7 +53,6 @@ void DecisionCache::BuildCache() {
 
 void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
   std::vector<Decision> decs;
-  int insurance_cost = config_.insurance->GetPrice(age_, shocks, fitness);
   int min_fitness = config_.fitness->GetFitness(fitness, 0);
   int max_fitness = config_.fitness->GetFitness(fitness, config_.max_budget);
 
@@ -63,6 +62,7 @@ void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
   for (int fit = min_fitness; fit <= max_fitness; ++fit) {
     int fit_cost = config_.fitness->GetFitnessCost(fitness, fit);
     int rem_budget = config_.max_budget - fit_cost;
+    int insurance_cost = config_.insurance->GetPrice(age_, shocks, fit);
 
     for (int joy_spending = 0; joy_spending <= rem_budget; ++joy_spending) {
       decs.push_back(Decision{fit_cost, joy_spending, 0});

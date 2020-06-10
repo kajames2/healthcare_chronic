@@ -7,6 +7,9 @@ import time
 from shutil import copyfile
 import sys
 
+if sys.version_info < (3,0):
+    print("Sorry, requires Python 3.x, not Python 2.x")
+    sys.exit(1)
 
 def generate_non_combos(config, variations):
     out_templates = []

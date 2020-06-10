@@ -4,6 +4,8 @@ import itertools
 import json
 import sys
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.backends.backend_pdf import PdfPages
@@ -13,6 +15,7 @@ display_cols = [
     "Cash",
     "Shocks",
     "ShockProb",
+    "Shocked",
     "AtMaxShocks",
     "DieFrac",
     "NextFitness",
