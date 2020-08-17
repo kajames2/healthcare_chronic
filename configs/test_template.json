@@ -1,5 +1,6 @@
 {
     "max_age": 50,
+    "decision_periods": 30,
     "max_fitness": 80,
     "min_debt_payment": 1,
     "shock_count_size": 1,

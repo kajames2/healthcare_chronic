@@ -27,7 +27,7 @@ class SingleType : public Modifier {
     if (param_mod_) {
       x = param_mod_->Modify(x, age, shocks, fitness);
     }
-    GetModification(x);
+    return(GetModification(x));
   }
 
   virtual float GetModification(int param) const = 0;

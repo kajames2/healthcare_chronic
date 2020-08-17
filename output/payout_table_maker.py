@@ -98,18 +98,20 @@ max_shocks = config["max_shocks"]
 max_fitness = config["max_fitness"]
 max_cash = config["max_cash"]
 min_cash = config["min_cash"]
+json_config = json.load(open(sys.argv[2], "r"))
+decision_periods = json_config.get('decision_periods', max_age)
+if decision_periods == max_age:
+    exit()
 row_size = max_cash - min_cash + 1
 grid_size = (max_fitness + 1) * row_size
 meta_grid_size = (max_shocks + 1) * grid_size
-print(config)
 header_indices = {header[i]: i for i in range(len(header))}
-print(header)
 fstream = open(filename)
 f = open(filename_base + "_payout_table.csv", "w+")
 f.write(
     ",".join(['Shocks', 'Fitness']) + ',' + ','.join([str(i) for i in range(min_cash, max_cash + 1)]) + '\n'
 )
-payout_age = int(sys.argv[2])
+payout_age = decision_periods + 1
 for shocks in range(0, max_shocks + 1):
   for fitness in range(0, max_fitness + 1):
     f.write(','.join([str(shocks), str(fitness)]))

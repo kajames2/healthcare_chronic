@@ -17,6 +17,7 @@ do
 	      echo bin/healthdp --i $file --o "$destdir/"
 	      bin/healthdp --i $file --o "$destdir/"
 	      mv "$file" "$destdir/"
+	      python3 "$DESTINATION/payout_table_maker.py" "$destdir/$filename2" "$destdir/$filename"
 	      python3 "$DESTINATION/output_reader.py" "$destdir/$filename2"
 	      rm "$destdir/$filename2.csv"
     done
