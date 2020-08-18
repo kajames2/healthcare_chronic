@@ -1,6 +1,7 @@
 {
-    "max_age": 40,
-    "max_fitness": 100,
+    "max_age": 50,
+    "decision_periods": 30,
+    "max_fitness": 80,
     "min_debt_payment": 1,
     "shock_count_size": 1,
     "job": {
@@ -9,56 +10,31 @@
         "slope": 0
     },
     "joy": {
-        "type": "Fractional",
-        "j": 40,
-        "mods": [
-            {
-                "func": "Multiply",
-                "type": "Linear",
-                "param": "Age",
-                "max_modification": 1
-            },
-            {
-                "func": "Add",
-                "type": "Constant",
-                "value": 0.2
-            }
-        ]
+	"name" : "Base",
+	"function" : "(1 - shocks/max_shocks) * (x / (x + j)) + 0.2",
+        "j": 20
     },
     "probability": {
-        "type": "GompertzShocks",
-        "age_coeff": 0.0375,
-        "shock_coeff": 0.150,
-        "age_rate": 0.015,
-        "shock_rate": 0.2625,
-        "mods": [
-            {
-                "func": "Multiply",
-                "type": "Fractional",
-                "param": "Fitness",
-                "max_modification": 1.0,
-                "j": 40
-            }
-        ]
+	"name" : "Base",
+        "function" : "(1 * exp(age_rate * age) + 1 * exp(shock_rate * shocks) - 1.95) * (1 - max_effect * (fitness / (fitness + j)))",
+        "age_rate": 0.02,
+        "shock_rate": 0.05,
+        "max_effect": 1.2,
+        "j": 40
     },
-    "fitnesses": [
-        {
-            "type": "ProportionalLoss",
-            "rate": 0.2
-        },
-        {
-            "type": "FixedPrice",
-            "price": 3.0
-        }
-    ],
+    "fitness": {
+	"name" : "Base",
+        "function" : "(1-p) * fitness + x / price",
+        "p" : 0.333,
+        "price" : 3
+    },
     "max_shocks": 6,
-    "shock_income_size": 200,
+    "shock_income_size": 10,
     "discount": 1.0,
     "insurance": {
-        "type": "Actuarial",
-        "scale": 1,
-        "admin_cost": 0
+        "type": "Fixed",
+        "premium": 0
     },
-    "max_savings": 200,
+    "max_savings": 0,
     "min_savings": -300
 }

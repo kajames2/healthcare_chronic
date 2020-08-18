@@ -5,14 +5,13 @@
 #include <string>
 
 #include <boost/property_tree/ptree.hpp>
-#include "healthcare/fitness.h"
 
 namespace healthcare {
 namespace configuration {
 
-std::unique_ptr<const healthcare::Fitness> ReadFitnesses(
-    boost::property_tree::ptree fitness_config, int max_fitness,
-    int max_budget);
+std::function<int(int, int, int, int)> ReadFitness(
+    boost::property_tree::ptree fitness_config, int max_age, int max_shocks,
+    int max_fitness);
 
 }  // namespace configuration
 }  // namespace healthcare

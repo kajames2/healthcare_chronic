@@ -4,6 +4,7 @@
 
 #include <omp.h>
 #include <algorithm>
+#include <iostream>
 #include <numeric>
 #include <vector>
 
@@ -53,14 +54,17 @@ void DecisionCache::BuildCache() {
 
 void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
   std::vector<Decision> decs;
-  int min_fitness = config_.fitness->GetFitness(fitness, 0);
-  int max_fitness = config_.fitness->GetFitness(fitness, config_.max_budget);
 
   // // You can always purchase insurance (and nothing else)
   // decs.push_back(Decision{0, 0, insurance_cost});
 
-  for (int fit = min_fitness; fit <= max_fitness; ++fit) {
-    int fit_cost = config_.fitness->GetFitnessCost(fitness, fit);
+  int prev_fit = -1;
+  for (int fit_cost = 0; fit_cost <= config_.max_budget; ++fit_cost) {
+    int fit = config_.fitness(age_, shocks, fitness, fit_cost);
+    if (fit == prev_fit) {
+      continue;
+    }
+    prev_fit = fit;
     int rem_budget = config_.max_budget - fit_cost;
     int insurance_cost = config_.insurance->GetPrice(age_, shocks, fit);
 
@@ -102,7 +106,6 @@ void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
   //      [this, shocks, fitness](const Decision& dec) {
   //        return eval_.GetDecisionResults({age_, shocks, fitness, 0}, dec);
   //      });
-
   decisions_[shocks].push_back(res);
   counts_[shocks].push_back(counts);
 }

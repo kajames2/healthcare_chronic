@@ -5,12 +5,11 @@
 #include <string>
 
 #include <boost/property_tree/ptree.hpp>
-#include "healthcare/probability.h"
 
 namespace healthcare {
 namespace configuration {
 
-std::unique_ptr<const healthcare::Probability> ReadProb(
+std::function<float(int, int, int)> ReadProb(
     boost::property_tree::ptree prob_config, int max_age, int max_shocks,
     int max_fitness);
 

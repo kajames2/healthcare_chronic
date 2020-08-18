@@ -1,7 +1,7 @@
 #include "healthcare/configuration.h"
-
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -9,9 +9,8 @@
 #include "configuration/insurance_reader.h"
 #include "configuration/job_reader.h"
 #include "configuration/joy_reader.h"
-#include "configuration/modifier_reader.h"
 #include "configuration/prob_reader.h"
-#include "healthcare/modifier/constant.h"
+#include "exprtk.hpp"
 
 using ::boost::property_tree::ptree;
 
@@ -38,8 +37,9 @@ Configuration ReadConfigurationFile(std::string filename) {
   config.min_debt_payment = root.get<float>("min_debt_payment");
   config.job = configuration::ReadJob(root.get_child("job"));
   config.max_budget = CalculateMaxBudget(config);
-  config.fitness = configuration::ReadFitnesses(
-      root.get_child("fitnesses"), config.max_fitness, config.max_budget);
+  config.fitness =
+      configuration::ReadFitness(root.get_child("fitness"), config.max_age,
+                                 config.max_shocks, config.max_fitness);
   config.joy = configuration::ReadJoy(root.get_child("joy"), config.max_age,
                                       config.max_shocks, config.max_fitness);
   config.shock_prob =

@@ -1,60 +1,25 @@
 {
-    "template": "sample_template",
-    "name": "sample",
+    "template": "test_template",
+    "name": "test",
     "all_combos" : true,
     "variations" : [
         {
             "_COMMENT" : "Vary a top-level parameter",
-            "max_savings" : [0, 10, 20]
+            "max_age" : [10, 20, 30]
         },
         {
             "_COMMENT" : "Vary a nested parameter",
-            "probability:mods:0:j" : [30, 40, 50]
+            "probability:j" : [30, 40]
         },
         {
             "_COMMENT" : "Vary multiple parameters together.",
             "job:intercept": [100,68],
             "job:slope": [0, 2]
         },
-        {
-            "_COMMENT" : "Vary different sets of parameters together.",
-            "fitnesses:0" : [
-                {
-                    "type": "ProportionalLoss",
-                    "rate": 0.2
-                },
-                {
-                    "type": "FlatLoss",
-                    "degen": 5
-                }
-            ]
-        },
-        {
-            "_COMMENT" : "Vary a list of mods fully",
-            "joy:mods" : [
-                [
-                    {
-                        "func" : "Multiply",
-                        "type": "Linear",
-                        "param" : "Shocks",
-                        "max_modification" : 1
-                    }
-                ],
-                [
-                    {
-                        "func": "Multiply",
-                        "type": "Fractional",
-                        "param": "Shocks",
-                        "max_modification": 1,
-                        "j" : 1
-                    },
-                    {
-                        "func": "Add",
-                        "type": "Constant",
-                        "value": 0.2
-                    }
-                ]
-            ]
-        }
+	      {
+	          "_COMMENT" : "Vary a function.  Vary the name as well for title purposes",
+	          "fitness:function_name" : ["Base", "AgeDegen"],
+	          "fitness:function" : ["0.666 * fitness + x / 3",  "(1 - age / max_age) * fitness + x / 3" ]
+	      }
     ]
 }

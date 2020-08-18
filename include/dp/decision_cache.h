@@ -7,7 +7,6 @@
 #include "healthcare/configuration.h"
 #include "healthcare/decision.h"
 #include "healthcare/decision_evaluator.h"
-#include "healthcare/fitness.h"
 #include "healthcare/person.h"
 
 namespace dp {

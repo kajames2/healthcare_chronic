@@ -6,128 +6,72 @@
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include "healthcare/probability.h"
-#include "healthcare/probability/gompertz_makeham.h"
-#include "healthcare/probability/gompertz_shocks.h"
-#include "healthcare/probability/health_dependent.h"
-#include "healthcare/probability/health_dependent_dustin.h"
-#include "healthcare/probability/health_dependent_fan.h"
-#include "healthcare/probability/health_dependent_steve.h"
-#include "healthcare/probability/mod_decorator.h"
-#include "modifier_reader.h"
+#include "exprtk.hpp"
 
 namespace healthcare {
 namespace configuration {
 
 using ::boost::property_tree::ptree;
 
-std::unique_ptr<const Probability> ReadGompertzMakehamProb(ptree prob_config);
-std::unique_ptr<const Probability> ReadGompertzShocksProb(ptree prob_config);
-std::unique_ptr<const Probability> ReadHealthDependentProb(ptree prob_config,
-                                                           int max_age,
-                                                           int max_shocks);
-std::unique_ptr<const Probability> ReadHealthDependentProbSteve(
-    ptree prob_config, int max_age, int max_shocks);
-std::unique_ptr<const Probability> ReadHealthDependentProbDustin(
-    ptree prob_config, int max_age, int max_shocks);
-std::unique_ptr<const Probability> ReadHealthDependentProbFan(ptree prob_config,
-                                                              int max_age,
-                                                              int max_shocks,
-                                                              int max_fitness);
-
-std::unique_ptr<const Probability> ReadProb(ptree prob_config, int max_age,
-                                            int max_shocks, int max_fitness) {
-  std::string type = prob_config.get<std::string>("type");
-  std::unique_ptr<const Probability> prob;
-  if (type == "GompertzMakeham") {
-    prob = ReadGompertzMakehamProb(prob_config);
-  } else if (type == "GompertzShocks") {
-    prob = ReadGompertzShocksProb(prob_config);
-  } else if (type == "HealthDependent") {
-    prob = ReadHealthDependentProb(prob_config, max_age, max_shocks);
-  } else if (type == "HealthDependentSteve") {
-    prob = ReadHealthDependentProbSteve(prob_config, max_age, max_shocks);
-  } else if (type == "HealthDependentDustin") {
-    prob = ReadHealthDependentProbDustin(prob_config, max_age, max_shocks);
-  } else if (type == "HealthDependentFan") {
-    prob = ReadHealthDependentProbFan(prob_config, max_age, max_shocks,
-                                      max_fitness);
-  } else {
-    assert(false && "Unsupported Probability type");
-    prob = std::unique_ptr<const Probability>();
+std::function<float(int, int, int)> MakeProbFunc(
+    std::string func_str, std::unordered_map<std::string, double> prob_consts,
+    int max_age, int max_shocks, int max_fitness) {
+  std::string expression_str = func_str;
+  exprtk::symbol_table<double> symbol_table;
+  for (const auto& [key, value] : prob_consts) {
+    symbol_table.add_constant(key, value);
   }
-  if (prob_config.count("mods")) {
-    std::unique_ptr<const Modifier> mod = ReadModifiers(
-        prob_config.get_child("mods"), max_age, max_shocks, max_fitness);
-    prob = std::make_unique<probability::ModDecorator>(std::move(prob),
-                                                       std::move(mod));
+  symbol_table.add_constant("max_age", max_age);
+  symbol_table.add_constant("max_shocks", max_shocks);
+  symbol_table.add_constant("max_fitness", max_fitness);
+  symbol_table.add_constants();
+
+  double age = 1;
+  double shocks = 0;
+  double fitness = 0;
+  symbol_table.add_variable("age", age);
+  symbol_table.add_variable("shocks", shocks);
+  symbol_table.add_variable("fitness", fitness);
+
+  exprtk::expression<double> expression;
+  expression.register_symbol_table(symbol_table);
+  exprtk::parser<double> parser;
+  if (!parser.compile(expression_str, expression)) {
+    printf("Error: %s\tExpression: %s\n", parser.error().c_str(),
+           expression_str.c_str());
+    for (std::size_t i = 0; i < parser.error_count(); ++i) {
+      exprtk::parser_error::type error = parser.get_error(i);
+      printf(
+          "Error: %02d Position: %02d "
+          "Type: [%s] "
+          "Message: %s "
+          "Expression: %s\n",
+          static_cast<int>(i), static_cast<int>(error.token.position),
+          exprtk::parser_error::to_str(error.mode).c_str(),
+          error.diagnostic.c_str(), expression_str.c_str());
+    }
+    exit(1);
   }
-  return prob;
+  return [expression, &age, &shocks, &fitness](int age_in, int shocks_in,
+                                               int fitness_in) {
+    age = static_cast<double>(age_in);
+    shocks = static_cast<double>(shocks_in);
+    fitness = static_cast<double>(fitness_in);
+    return std::clamp(static_cast<float>(expression.value()), 0.0f, 1.0f);
+  };
 }
 
-std::unique_ptr<const Probability> ReadHealthDependentProb(ptree prob_config,
-                                                           int max_age,
-                                                           int max_shocks) {
-  float alpha = prob_config.get<float>("alpha");
-  float beta = prob_config.get<float>("beta");
-  float eta = prob_config.get<float>("eta");
-  float fitness_r = prob_config.get<float>("fitness_r");
-  return std::make_unique<probability::HealthDependent>(
-      alpha, beta, eta, fitness_r, max_age, max_shocks);
-}
-
-std::unique_ptr<const Probability> ReadHealthDependentProbSteve(
-    ptree prob_config, int max_age, int max_shocks) {
-  float alpha = prob_config.get<float>("alpha");
-  float beta = prob_config.get<float>("beta");
-  float eta = prob_config.get<float>("eta");
-  float fitness_r = prob_config.get<float>("fitness_r");
-  float lambda = prob_config.get<float>("lambda");
-  float mu = prob_config.get<float>("mu");
-  return std::make_unique<probability::HealthDependentSteve>(
-      alpha, beta, eta, fitness_r, lambda, mu, max_age, max_shocks);
-}
-
-std::unique_ptr<const Probability> ReadHealthDependentProbDustin(
-    ptree prob_config, int max_age, int max_shocks) {
-  float alpha = prob_config.get<float>("alpha");
-  float beta = prob_config.get<float>("beta");
-  float eta = prob_config.get<float>("eta");
-  float fitness_r = prob_config.get<float>("fitness_r");
-  float lambda = prob_config.get<float>("lambda");
-  float mu = prob_config.get<float>("mu");
-  return std::make_unique<probability::HealthDependentDustin>(
-      alpha, beta, eta, fitness_r, lambda, mu, max_age, max_shocks);
-}
-
-std::unique_ptr<const Probability> ReadHealthDependentProbFan(ptree prob_config,
-                                                              int max_age,
-                                                              int max_shocks,
-                                                              int max_fitness) {
-  float alpha = prob_config.get<float>("alpha");
-  float beta = prob_config.get<float>("beta");
-  float eta = prob_config.get<float>("eta");
-  float p = prob_config.get<float>("p");
-  float k = prob_config.get<float>("k");
-  float c = prob_config.get<float>("c");
-  return std::make_unique<probability::HealthDependentFan>(
-      alpha, beta, eta, p, k, c, max_age, max_shocks, max_fitness);
-}
-
-std::unique_ptr<const Probability> ReadGompertzMakehamProb(ptree prob_config) {
-  float lambda = prob_config.get<float>("lambda");
-  float alpha = prob_config.get<float>("alpha");
-  float beta = prob_config.get<float>("beta");
-  return std::make_unique<probability::GompertzMakeham>(lambda, alpha, beta);
-}
-
-std::unique_ptr<const Probability> ReadGompertzShocksProb(ptree prob_config) {
-  float age_coeff = prob_config.get<float>("age_coeff");
-  float age_rate = prob_config.get<float>("age_rate");
-  float shock_coeff = prob_config.get<float>("shock_coeff");
-  float shock_rate = prob_config.get<float>("shock_rate");
-  return std::make_unique<probability::GompertzShocks>(age_coeff, age_rate,
-                                                       shock_coeff, shock_rate);
+std::function<float(int, int, int)> ReadProb(ptree prob_config, int max_age,
+                                             int max_shocks, int max_fitness) {
+  std::string func_str = prob_config.get<std::string>("function");
+  std::unordered_map<std::string, double> const_map;
+  for (auto it : prob_config) {
+    boost::optional<float> f = it.second.get_value_optional<float>();
+    if (f) {
+      const_map[it.first] = f.value();
+    }
+  }
+  return MakeProbFunc(func_str, const_map, max_age, max_shocks, max_fitness);
 }
 
 }  // namespace configuration

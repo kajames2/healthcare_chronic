@@ -1,0 +1,1413 @@
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/Makefile,332
+SUFFIXES =SUFFIXES21,545
+SHELL = /bin/shSHELL39,903
+CMAKE_COMMAND = /usr/bin/cmakeCMAKE_COMMAND42,944
+RM = /usr/bin/cmake -E remove -fRM45,1008
+EQUALS = =EQUALS48,1077
+CMAKE_SOURCE_DIR = /home/kajames/healthcare_chronicCMAKE_SOURCE_DIR51,1146
+CMAKE_BINARY_DIR = /home/kajames/healthcare_chronicCMAKE_BINARY_DIR54,1255
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/cpplint.py,16404
+_ERROR_CATEGORIES = [_ERROR_CATEGORIES181,7551
+_LEGACY_ERROR_CATEGORIES = [_LEGACY_ERROR_CATEGORIES252,9555
+_DEFAULT_FILTERS = ['-build/include_alpha']_DEFAULT_FILTERS261,9974
+_DEFAULT_C_SUPPRESSED_CATEGORIES = [_DEFAULT_C_SUPPRESSED_CATEGORIES264,10089
+_DEFAULT_KERNEL_SUPPRESSED_CATEGORIES = [_DEFAULT_KERNEL_SUPPRESSED_CATEGORIES269,10233
+_CPP_HEADERS = frozenset([_CPP_HEADERS278,10551
+_TYPES = re.compile(_TYPES415,12911
+_THIRD_PARTY_HEADERS_PATTERN = re.compile(_THIRD_PARTY_HEADERS_PATTERN433,13502
+_TEST_FILE_SUFFIX = r'(_test|_unittest|_regtest)$'_TEST_FILE_SUFFIX437,13677
+_EMPTY_CONDITIONAL_BODY_PATTERN = re.compile(r'^\s*$', re.DOTALL)_EMPTY_CONDITIONAL_BODY_PATTERN440,13813
+_CHECK_MACROS = [_CHECK_MACROS444,13976
+_CHECK_REPLACEMENT = dict([(m, {}) for m in _CHECK_MACROS])_CHECK_REPLACEMENT451,14164
+_ALT_TOKEN_REPLACEMENT = {_ALT_TOKEN_REPLACEMENT472,15214
+_ALT_TOKEN_REPLACEMENT_PATTERN = re.compile(_ALT_TOKEN_REPLACEMENT_PATTERN491,15758
+_C_SYS_HEADER = 1_C_SYS_HEADER497,15984
+_CPP_SYS_HEADER = 2_CPP_SYS_HEADER498,16003
+_LIKELY_MY_HEADER = 3_LIKELY_MY_HEADER499,16024
+_POSSIBLE_MY_HEADER = 4_POSSIBLE_MY_HEADER500,16047
+_OTHER_HEADER = 5_OTHER_HEADER501,16072
+_NO_ASM = 0       # Outside of inline assembly block_NO_ASM504,16153
+_INSIDE_ASM = 1   # Inside inline assembly block_INSIDE_ASM505,16207
+_END_ASM = 2      # Last line of inline assembly block_END_ASM506,16257
+_BLOCK_ASM = 3    # The whole block is an inline assembly block_BLOCK_ASM507,16313
+_MATCH_ASM = re.compile(r'^\s*(?:asm|_asm|__asm|__asm__)'_MATCH_ASM510,16414
+_SEARCH_C_FILE = re.compile(r'\b(?:LINT_C_FILE|'_SEARCH_C_FILE515,16640
+_SEARCH_KERNEL_FILE = re.compile(r'\b(?:LINT_KERNEL_FILE)')_SEARCH_KERNEL_FILE519,16832
+_regexp_compile_cache = {}_regexp_compile_cache521,16895
+_error_suppressions = {}_error_suppressions525,17060
+_root = None_root529,17186
+_line_length = 80_line_length533,17276
+_valid_extensions = set(['cc', 'h', 'cpp', 'cu', 'cuh'])_valid_extensions537,17375
+_global_error_suppressions = {}_global_error_suppressions541,17562
+def ParseNolintSuppressions(filename, raw_line, linenum, error):ParseNolintSuppressions544,17599
+def ProcessGlobalSuppresions(lines):ProcessGlobalSuppresions576,18868
+def ResetNolintSuppressions():ResetNolintSuppressions594,19535
+def IsErrorSuppressedByNolint(category, linenum):IsErrorSuppressedByNolint600,19697
+def Match(pattern, s):Match618,20381
+def ReplaceAll(pattern, rep, s):ReplaceAll628,20832
+def Search(pattern, s):Search646,21357
+def _IsSourceExtension(s):_IsSourceExtension653,21623
+class _IncludeState(object):_IncludeState658,21769
+  _INITIAL_SECTION = 0_INITIAL_SECTION672,22433
+  _MY_H_SECTION = 1_MY_H_SECTION673,22457
+  _C_SECTION = 2_C_SECTION674,22478
+  _CPP_SECTION = 3_CPP_SECTION675,22496
+  _OTHER_H_SECTION = 4_OTHER_H_SECTION676,22516
+  _TYPE_NAMES = {_TYPE_NAMES678,22542
+  _SECTION_NAMES = {_SECTION_NAMES685,22813
+  def __init__(self):__init__693,23089
+  def FindHeader(self, header):FindHeader697,23171
+  def ResetSection(self, directive):ResetSection712,23563
+  def SetLastHeader(self, header_path):SetLastHeader730,24142
+  def CanonicalizeAlphabeticalOrder(self, header_path):CanonicalizeAlphabeticalOrder733,24222
+  def IsInAlphabeticalOrder(self, clean_lines, linenum, header_path):IsInAlphabeticalOrder748,24712
+  def CheckNextIncludeOrder(self, header_type):CheckNextIncludeOrder769,25562
+class _CppLintState(object):_CppLintState823,27321
+  def __init__(self):__init__826,27392
+  def SetOutputFormat(self, output_format):SetOutputFormat841,28058
+  def SetVerboseLevel(self, level):SetVerboseLevel845,28191
+  def SetCountingStyle(self, counting_style):SetCountingStyle851,28412
+  def SetFilters(self, filters):SetFilters855,28544
+  def AddFilters(self, filters):AddFilters873,29195
+  def BackupFilters(self):BackupFilters884,29663
+  def RestoreFilters(self):RestoreFilters888,29798
+  def ResetErrorCounts(self):ResetErrorCounts892,29924
+  def IncrementErrorCount(self, category):IncrementErrorCount897,30076
+  def PrintErrorCounts(self):PrintErrorCounts907,30473
+_cpplint_state = _CppLintState()_cpplint_state914,30811
+def _OutputFormat():_OutputFormat917,30849
+def _SetOutputFormat(output_format):_SetOutputFormat922,30956
+def _VerboseLevel():_VerboseLevel927,31089
+def _SetVerboseLevel(level):_SetVerboseLevel932,31203
+def _SetCountingStyle(level):_SetCountingStyle937,31357
+def _Filters():_Filters942,31479
+def _SetFilters(filters):_SetFilters947,31598
+def _AddFilters(filters):_AddFilters959,31958
+def _BackupFilters():_BackupFilters971,32314
+def _RestoreFilters():_RestoreFilters975,32432
+class _FunctionState(object):_FunctionState979,32542
+  _NORMAL_TRIGGER = 250  # for --v=0, 500 for --v=1, etc._NORMAL_TRIGGER982,32650
+  _TEST_TRIGGER = 400    # about 50% more than _NORMAL_TRIGGER._TEST_TRIGGER983,32709
+  def __init__(self):__init__985,32776
+  def Begin(self, function_name):Begin990,32897
+  def Count(self):Count1000,33163
+  def Check(self, error, filename, linenum):Check1005,33296
+  def End(self):End1033,34368
+class _IncludeError(Exception):_IncludeError1038,34463
+class FileInfo(object):FileInfo1043,34571
+  def __init__(self, filename):__init__1050,34756
+  def FullName(self):FullName1053,34822
+  def RepositoryName(self):RepositoryName1057,34951
+  def Split(self):Split1103,37070
+  def BaseName(self):BaseName1117,37478
+  def Extension(self):Extension1121,37612
+  def NoExtension(self):NoExtension1125,37727
+  def IsSource(self):IsSource1129,37841
+def _ShouldPrintError(category, confidence, linenum):_ShouldPrintError1134,37966
+def Error(filename, linenum, category, confidence, message):Error1162,38865
+_RE_PATTERN_CLEANSE_LINE_ESCAPES = re.compile(_RE_PATTERN_CLEANSE_LINE_ESCAPES1198,40568
+_RE_PATTERN_C_COMMENTS = r'/\*(?:[^*]|\*(?!/))*\*/'_RE_PATTERN_C_COMMENTS1201,40715
+_RE_PATTERN_CLEANSE_LINE_C_COMMENTS = re.compile(_RE_PATTERN_CLEANSE_LINE_C_COMMENTS1210,41238
+def IsCppString(line):IsCppString1217,41472
+def CleanseRawStrings(raw_lines):CleanseRawStrings1234,41981
+def FindNextMultiLineCommentStart(lines, lineix):FindNextMultiLineCommentStart1310,44647
+def FindNextMultiLineCommentEnd(lines, lineix):FindNextMultiLineCommentEnd1321,45022
+def RemoveMultiLineCommentsFromRange(lines, begin, end):RemoveMultiLineCommentsFromRange1330,45265
+def RemoveMultiLineComments(filename, lines, error):RemoveMultiLineComments1338,45571
+def CleanseComments(line):CleanseComments1354,46199
+class CleansedLines(object):CleansedLines1370,46631
+  def __init__(self, lines):__init__1381,47105
+  def NumLines(self):NumLines1393,47593
+  def _CollapseStrings(elided):_CollapseStrings1398,47714
+def FindEndOfExpressionInLine(line, startpos, stack):FindEndOfExpressionInLine1465,50180
+def CloseExpression(clean_lines, linenum, pos):CloseExpression1543,52885
+def FindStartOfExpressionInLine(line, endpos, stack):FindStartOfExpressionInLine1587,54520
+def ReverseCloseExpression(clean_lines, linenum, pos):ReverseCloseExpression1664,57016
+def CheckForCopyright(filename, lines, error):CheckForCopyright1702,58339
+def GetIndentLevel(line):GetIndentLevel1715,58904
+def GetHeaderGuardCPPVariable(filename):GetHeaderGuardCPPVariable1731,59210
+def CheckForHeaderGuard(filename, clean_lines, error):CheckForHeaderGuard1762,60243
+def CheckHeaderFileIncluded(filename, include_state, error):CheckHeaderFileIncluded1860,63951
+def CheckForBadCharacters(filename, lines, error):CheckForBadCharacters1885,64821
+def CheckForNewlineAtEOF(filename, lines, error):CheckForNewlineAtEOF1910,65816
+def CheckForMultilineCommentsAndStrings(filename, clean_lines, linenum, error):CheckForMultilineCommentsAndStrings1928,66560
+_UNSAFE_FUNC_PREFIX = r'(?:[-+*/=%^&|(<]\s*|>\s+)'_UNSAFE_FUNC_PREFIX1978,68957
+_THREADING_LIST = (_THREADING_LIST1979,69009
+def CheckPosixThreading(filename, clean_lines, linenum, error):CheckPosixThreading1996,69949
+def CheckVlogArguments(filename, clean_lines, linenum, error):CheckVlogArguments2022,71075
+_RE_PATTERN_INVALID_INCREMENT = re.compile(_RE_PATTERN_INVALID_INCREMENT2042,71925
+def CheckInvalidIncrement(filename, clean_lines, linenum, error):CheckInvalidIncrement2046,72003
+def IsMacroDefinition(clean_lines, linenum):IsMacroDefinition2068,72811
+def IsForwardClassDeclaration(clean_lines, linenum):IsForwardClassDeclaration2078,73028
+class _BlockInfo(object):_BlockInfo2082,73166
+  def __init__(self, linenum, seen_open_brace):__init__2085,73254
+  def CheckBegin(self, filename, clean_lines, linenum, error):CheckBegin2092,73494
+  def CheckEnd(self, filename, clean_lines, linenum, error):CheckEnd2107,74079
+  def IsBlockInfo(self):IsBlockInfo2120,74527
+class _ExternCInfo(_BlockInfo):_ExternCInfo2132,74873
+  def __init__(self, linenum):__init__2135,74965
+class _ClassInfo(_BlockInfo):_ClassInfo2139,75047
+  def __init__(self, name, class_or_struct, clean_lines, linenum):__init__2142,75123
+  def CheckBegin(self, filename, clean_lines, linenum, error):CheckBegin2172,76148
+  def CheckEnd(self, filename, clean_lines, linenum, error):CheckEnd2177,76337
+class _NamespaceInfo(_BlockInfo):_NamespaceInfo2208,77650
+  def __init__(self, name, linenum):__init__2211,77734
+  def CheckEnd(self, filename, clean_lines, linenum, error):CheckEnd2216,77894
+class _PreprocessorInfo(object):_PreprocessorInfo2269,80449
+  def __init__(self, stack_before_if):__init__2272,80555
+class NestingState(object):NestingState2283,80846
+  def __init__(self):__init__2286,80926
+  def SeenOpenBrace(self):SeenOpenBrace2309,81836
+  def InNamespaceBody(self):InNamespaceBody2318,82147
+  def InExternC(self):InExternC2326,82414
+  def InClassDeclaration(self):InClassDeclaration2334,82676
+  def InAsmBlock(self):InAsmBlock2342,82952
+  def InTemplateArgumentList(self, clean_lines, linenum, pos):InTemplateArgumentList2350,83210
+  def UpdatePreprocessor(self, line):UpdatePreprocessor2402,85025
+  def Update(self, filename, clean_lines, linenum, error):Update2459,87406
+  def InnermostClass(self):InnermostClass2623,94252
+  def CheckCompletedBlocks(self, filename, error):CheckCompletedBlocks2635,94598
+def CheckForNonStandardConstructs(filename, clean_lines, linenum,CheckForNonStandardConstructs2657,95550
+def CheckSpacingForFunctionCall(filename, clean_lines, linenum, error):CheckSpacingForFunctionCall2816,102883
+def IsBlankLine(line):IsBlankLine2893,106759
+def CheckForNamespaceIndentation(filename, nesting_state, clean_lines, line,CheckForNamespaceIndentation2908,107067
+def CheckForFunctionLengths(filename, clean_lines, linenum,CheckForFunctionLengths2922,107729
+_RE_PATTERN_TODO = re.compile(r'^//(\s*)TODO(\(.+?\))?:?(\s|$)?')_RE_PATTERN_TODO2990,110616
+def CheckComment(line, filename, linenum, next_line_start, error):CheckComment2993,110687
+def CheckAccess(filename, clean_lines, linenum, nesting_state, error):CheckAccess3047,113118
+def CheckSpacing(filename, clean_lines, linenum, nesting_state, error):CheckSpacing3077,114392
+def CheckOperatorSpacing(filename, clean_lines, linenum, error):CheckOperatorSpacing3205,120354
+def CheckParenthesisSpacing(filename, clean_lines, linenum, error):CheckParenthesisSpacing3320,125466
+def CheckCommaSpacing(filename, clean_lines, linenum, error):CheckCommaSpacing3358,127122
+def _IsType(clean_lines, nesting_state, expr):_IsType3394,128581
+def CheckBracesSpacing(filename, clean_lines, linenum, nesting_state, error):CheckBracesSpacing3457,130830
+def IsDecltype(clean_lines, linenum, column):IsDecltype3546,134955
+def CheckSectionSpacing(filename, clean_lines, class_info, linenum, error):CheckSectionSpacing3564,135532
+def GetPreviousNonBlankLine(clean_lines, linenum):GetPreviousNonBlankLine3619,138065
+def CheckBraces(filename, clean_lines, linenum, error):CheckBraces3642,138866
+def CheckTrailingSemicolon(filename, clean_lines, linenum, error):CheckTrailingSemicolon3761,145373
+def CheckEmptyBlockBody(filename, clean_lines, linenum, error):CheckEmptyBlockBody3908,151170
+def FindCheckMacro(line):FindCheckMacro4012,156198
+def CheckCheck(filename, clean_lines, linenum, error):CheckCheck4035,156894
+def CheckAltTokens(filename, clean_lines, linenum, error):CheckAltTokens4153,161408
+def GetLineWidth(line):GetLineWidth4185,162625
+def CheckStyle(filename, clean_lines, linenum, file_extension, nesting_state,CheckStyle4207,163205
+_RE_PATTERN_INCLUDE = re.compile(r'^\s*#\s*include\s*([<"])([^>"]*)[>"].*$')_RE_PATTERN_INCLUDE4327,168981
+_RE_FIRST_COMPONENT = re.compile(r'^[^-_.]+')_RE_FIRST_COMPONENT4333,169382
+def _DropCommonSuffixes(filename):_DropCommonSuffixes4336,169433
+def _ClassifyInclude(fileinfo, include, is_system):_ClassifyInclude4363,170272
+def CheckIncludeLine(filename, clean_lines, linenum, include_state, error):CheckIncludeLine4423,172500
+def _GetTextInside(text, start_pattern):_GetTextInside4497,175919
+_RE_PATTERN_IDENT = r'[_a-zA-Z]\w*'  # =~ [[:alpha:]][[:alnum:]]*_RE_PATTERN_IDENT4562,178683
+_RE_PATTERN_TYPE = (_RE_PATTERN_TYPE4563,178750
+_RE_PATTERN_REF_PARAM = re.compile(_RE_PATTERN_REF_PARAM4569,178981
+_RE_PATTERN_CONST_REF_PARAM = (_RE_PATTERN_CONST_REF_PARAM4574,179283
+_RE_PATTERN_REF_STREAM_PARAM = (_RE_PATTERN_REF_STREAM_PARAM4578,179464
+def CheckLanguage(filename, clean_lines, linenum, file_extension,CheckLanguage4582,179557
+def CheckGlobalStatic(filename, clean_lines, linenum, error):CheckGlobalStatic4740,186613
+def CheckPrintf(filename, clean_lines, linenum, error):CheckPrintf4801,189230
+def IsDerivedFunction(clean_lines, linenum):IsDerivedFunction4830,190413
+def IsOutOfLineMethodDefinition(clean_lines, linenum):IsOutOfLineMethodDefinition4852,191217
+def IsInitializerList(clean_lines, linenum):IsInitializerList4868,191821
+def CheckForNonConstReference(filename, clean_lines, linenum,CheckForNonConstReference4910,193437
+def CheckCasts(filename, clean_lines, linenum, error):CheckCasts5049,199292
+def CheckCStyleCast(filename, clean_lines, linenum, cast_type, pattern, error):CheckCStyleCast5168,204454
+def ExpectingFunctionArgs(clean_lines, linenum):ExpectingFunctionArgs5221,206387
+_HEADERS_CONTAINING_TEMPLATES = (_HEADERS_CONTAINING_TEMPLATES5243,207241
+_HEADERS_MAYBE_TEMPLATES = (_HEADERS_MAYBE_TEMPLATES5284,209089
+_RE_PATTERN_STRING = re.compile(r'\bstring\b')_RE_PATTERN_STRING5291,209317
+_re_pattern_headers_maybe_templates = []_re_pattern_headers_maybe_templates5293,209367
+_re_pattern_templates = []_re_pattern_templates5304,209813
+def FilesBelongToSameModule(filename_cc, filename_h):FilesBelongToSameModule5313,210076
+def UpdateIncludeState(filename, include_dict, io=codecs):UpdateIncludeState5368,212380
+def CheckForIncludeWhatYouUse(filename, clean_lines, include_state, error,CheckForIncludeWhatYouUse5395,213187
+_RE_PATTERN_EXPLICIT_MAKEPAIR = re.compile(r'\bmake_pair\s*<')_RE_PATTERN_EXPLICIT_MAKEPAIR5494,217694
+def CheckMakePairUsesDeduction(filename, clean_lines, linenum, error):CheckMakePairUsesDeduction5497,217762
+def CheckRedundantVirtual(filename, clean_lines, linenum, error):CheckRedundantVirtual5518,218630
+def CheckRedundantOverrideOrFinal(filename, clean_lines, linenum, error):CheckRedundantOverrideOrFinal5582,221245
+def IsBlockInNameSpace(nesting_state, is_forward_declaration):IsBlockInNameSpace5615,222470
+def ShouldCheckNamespaceIndentation(nesting_state, is_namespace_indent_item,ShouldCheckNamespaceIndentation5636,223206
+def CheckItemIndentationInNamespace(filename, raw_lines_no_comments, linenum,CheckItemIndentationInNamespace5669,224585
+def ProcessLine(filename, file_extension, clean_lines, line,ProcessLine5677,224895
+def FlagCxx11Features(filename, clean_lines, linenum, error):FlagCxx11Features5721,227434
+def FlagCxx14Features(filename, clean_lines, linenum, error):FlagCxx14Features5773,229661
+def ProcessFileData(filename, file_extension, lines, error,ProcessFileData5792,230344
+def ProcessConfigOverrides(filename):ProcessConfigOverrides5843,232537
+def ProcessFile(filename, vlevel, extra_check_functions=[]):ProcessFile5922,235372
+def PrintUsage(message):PrintUsage6010,238877
+def PrintCategories():PrintCategories6023,239158
+def ParseArguments(args):ParseArguments6032,239422
+def main():main6102,241562
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/scripts/make_run_configs.sh,0
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/scripts/run_configs.sh,0
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/scripts/mingw_run_configs.sh,0
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/person.cc,194
+namespace healthcare {healthcare5,56
+bool operator==(const Person& lhs, const Person& rhs) {operator ==7,82
+std::ostream& operator<<(std::ostream& out, const Person& p) {operator <<12,266
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/period_result.cc,125
+namespace healthcare {healthcare3,41
+std::ostream& operator<<(std::ostream& os, const PeriodResult& pr) {operator <<5,67
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/decision_evaluator.cc,433
+namespace healthcare {healthcare6,89
+DecisionResults DecisionEvaluator::GetDecisionResults(GetDecisionResults8,115
+PeriodResult DecisionEvaluator::ApplyDecision(Person state,ApplyDecision16,394
+PeriodResult DecisionEvaluator::ApplyNoShock(PeriodResult res) const {ApplyNoShock29,829
+PeriodResult DecisionEvaluator::ApplyShock(PeriodResult res,ApplyShock35,1034
+void DecisionEvaluator::Precalculate() {Precalculate47,1502
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/shifter_reader.cc,251
+namespace healthcare {healthcare12,247
+namespace configuration {configuration13,270
+std::unique_ptr<const Shifter> ReadShifter(ptree shifter_config,ReadShifter19,430
+std::unique_ptr<const Shifter> ReadConstantShifter(ReadConstantShifter31,886
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/shifter_reader.h,187
+#define HEALTHCARE_CONFIGURATION_SHIFTER_READER_H_HEALTHCARE_CONFIGURATION_SHIFTER_READER_H_2,51
+namespace healthcare {healthcare10,214
+namespace configuration {configuration11,237
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/joy_reader.cc,685
+namespace healthcare {healthcare19,567
+namespace configuration {configuration20,591
+std::unique_ptr<const Joy> ReadJoy(ptree joy_config, int max_age,ReadJoy35,1374
+std::unique_ptr<const Joy> ReadFractionalJoy(ptree joy_config) {ReadFractionalJoy61,2504
+std::unique_ptr<const Joy> ReadHealthDependentJoy(ptree joy_config,ReadHealthDependentJoy66,2664
+std::unique_ptr<const Joy> ReadHealthDependentJoySteve(ptree joy_config,ReadHealthDependentJoySteve75,3157
+std::unique_ptr<const Joy> ReadHealthDependentJoyDustin(ptree joy_config,ReadHealthDependentJoyDustin86,3730
+std::unique_ptr<const Joy> ReadHealthDependentJoyFan(ptree joy_config,ReadHealthDependentJoyFan97,4306
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/fitness_reader.h,187
+#define HEALTHCARE_CONFIGURATION_FITNESS_READER_H_HEALTHCARE_CONFIGURATION_FITNESS_READER_H_2,52
+namespace healthcare {healthcare10,223
+namespace configuration {configuration11,247
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/modifier_reader.cc,723
+namespace healthcare {healthcare18,482
+namespace configuration {configuration19,505
+std::unique_ptr<const Modifier> ReadModifiers(ptree modifier_config,ReadModifiers40,1570
+std::unique_ptr<const Modifier> ReadModifier(ptree modifier_config, int max_age,ReadModifier51,2014
+std::unique_ptr<const Modifier> ReadConstantModifier(ptree modifier_config,ReadConstantModifier109,4203
+std::unique_ptr<const Modifier> ReadCosineModifier(ReadCosineModifier115,4493
+std::unique_ptr<const Modifier> ReadSqrtCosineModifier(ReadSqrtCosineModifier123,4900
+std::unique_ptr<const Modifier> ReadLinearModifier(ReadLinearModifier130,5318
+std::unique_ptr<const Modifier> ReadFractionalModifier(ReadFractionalModifier138,5725
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/joy_reader.h,179
+#define HEALTHCARE_CONFIGURATION_JOY_READER_H_HEALTHCARE_CONFIGURATION_JOY_READER_H_2,48
+namespace healthcare {healthcare10,211
+namespace configuration {configuration11,235
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/job_reader.h,179
+#define HEALTHCARE_CONFIGURATION_JOB_READER_H_HEALTHCARE_CONFIGURATION_JOB_READER_H_2,48
+namespace healthcare {healthcare10,211
+namespace configuration {configuration11,235
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/job_reader.cc,411
+namespace healthcare {healthcare15,340
+namespace configuration {configuration16,364
+std::unique_ptr<const Job> ReadJob(ptree job_config) {ReadJob24,620
+std::unique_ptr<const Job> ReadFlatJob(ptree job_config) {ReadFlatJob40,1107
+std::unique_ptr<const Job> ReadAgeLinearJob(ptree job_config) {ReadAgeLinearJob45,1260
+std::unique_ptr<const Job> ReadDefinedJob(ptree job_config) {ReadDefinedJob51,1498
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/modifier_reader.h,189
+#define HEALTHCARE_CONFIGURATION_MODIFIER_READER_H_HEALTHCARE_CONFIGURATION_MODIFIER_READER_H_2,52
+namespace healthcare {healthcare10,217
+namespace configuration {configuration11,240
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/fitness_reader.cc,698
+namespace healthcare {healthcare16,446
+namespace configuration {configuration17,470
+std::unique_ptr<const Fitness> ReadFitnesses(ptree fit_config, int max_fitness,ReadFitnesses28,925
+std::unique_ptr<const Fitness> ReadFitness(ptree fit_config) {ReadFitness38,1296
+std::unique_ptr<const Fitness> ReadFixedPriceFitness(ptree fit_config) {ReadFixedPriceFitness56,1933
+std::unique_ptr<const Fitness> ReadQuadraticCostFitness(ptree fit_config) {ReadQuadraticCostFitness61,2119
+std::unique_ptr<const Fitness> ReadFlatLossFitness(ptree fit_config) {ReadFlatLossFitness66,2309
+std::unique_ptr<const Fitness> ReadProportionalLossFitness(ptree fit_config) {ReadProportionalLossFitness71,2485
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/prob_reader.h,181
+#define HEALTHCARE_CONFIGURATION_PROB_READER_H_HEALTHCARE_CONFIGURATION_PROB_READER_H_2,49
+namespace healthcare {healthcare10,221
+namespace configuration {configuration11,245
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/insurance_reader.h,191
+#define HEALTHCARE_CONFIGURATION_INSURANCE_READER_H_HEALTHCARE_CONFIGURATION_INSURANCE_READER_H_2,54
+namespace healthcare {healthcare11,268
+namespace configuration {configuration12,292
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/prob_reader.cc,838
+namespace healthcare {healthcare19,638
+namespace configuration {configuration20,662
+std::unique_ptr<const Probability> ReadProb(ptree prob_config, int max_age,ReadProb38,1680
+std::unique_ptr<const Probability> ReadHealthDependentProb(ptree prob_config,ReadHealthDependentProb68,3116
+std::unique_ptr<const Probability> ReadHealthDependentProbSteve(ReadHealthDependentProbSteve79,3669
+std::unique_ptr<const Probability> ReadHealthDependentProbDustin(ReadHealthDependentProbDustin91,4226
+std::unique_ptr<const Probability> ReadHealthDependentProbFan(ptree prob_config,ReadHealthDependentProbFan103,4785
+std::unique_ptr<const Probability> ReadGompertzMakehamProb(ptree prob_config) {ReadGompertzMakehamProb117,5509
+std::unique_ptr<const Probability> ReadGompertzShocksProb(ptree prob_config) {ReadGompertzShocksProb124,5824
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration/insurance_reader.cc,367
+namespace healthcare {healthcare14,345
+namespace configuration {configuration15,369
+std::unique_ptr<const Insurance> ReadInsurance(ptree insure_config,ReadInsurance23,629
+std::unique_ptr<const Insurance> ReadActuarialInsurance(ReadActuarialInsurance38,1198
+std::unique_ptr<const Insurance> ReadFixedInsurance(ptree insure_config) {ReadFixedInsurance47,1646
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/configuration.cc,211
+namespace healthcare {healthcare18,489
+Configuration ReadConfigurationFile(std::string filename) {ReadConfigurationFile22,567
+int CalculateMaxBudget(const Configuration& config) {CalculateMaxBudget62,2156
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/decision.cc,176
+namespace healthcare {healthcare5,58
+int TotalSpending(Decision dec) {TotalSpending7,84
+std::ostream& operator<<(std::ostream& out, const Decision& d) {operator <<11,200
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/joy/fractional.cc,197
+namespace healthcare {healthcare3,42
+namespace joy {joy4,66
+Fractional::Fractional(double j) : j_(j) {}Fractional6,85
+double Fractional::GetJoy(int age, int shocks, int fitness,GetJoy8,132
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/fitness/quadratic_cost.cc,328
+namespace healthcare {healthcare5,66
+namespace fitness {fitness6,89
+QuadraticCost::QuadraticCost(float coeff) : coeff_(coeff) {}QuadraticCost8,110
+double QuadraticCost::GetDecimalFitness(double fitness,GetDecimalFitness10,172
+int QuadraticCost::GetFitnessCost(int fitness, int end_fitness) const {GetFitnessCost15,362
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/fitness/composite.cc,312
+namespace healthcare {healthcare7,107
+namespace fitness {fitness8,131
+Composite::Composite(int max_fitness, int max_budget,Composite10,154
+double Composite::GetDecimalFitness(double fitness,GetDecimalFitness25,644
+int Composite::GetFitnessCost(int fitness, int end_fitness) const {GetFitnessCost33,952
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/healthcare/fitness/fixed_price.cc,314
+namespace healthcare {healthcare5,71
+namespace fitness {fitness6,95
+FixedPrice::FixedPrice(double price) : price_(price) {}FixedPrice8,118
+double FixedPrice::GetDecimalFitness(double fitness,GetDecimalFitness10,177
+int FixedPrice::GetFitnessCost(int fitness, int end_fitness) const {GetFitnessCost15,367
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/dp/storage.cc,394
+namespace dp {dp10,152
+Storage::Storage(const healthcare::Configuration& c)Storage12,168
+int Storage::GetIndex(const healthcare::Person& state) const {GetIndex29,855
+bool Storage::IsValidState(const healthcare::Person& state) const {IsValidState37,1208
+int GetPrintSize(int num) {GetPrintSize43,1499
+std::ostream& operator<<(std::ostream& out, const Storage& s) {operator <<54,1635
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/src/dp/decision_cache.cc,524
+namespace dp {dp10,193
+DecisionCache::DecisionCache(healthcare::Configuration config,DecisionCache14,244
+DecisionCache::begin(int shocks, int fitness, int budget) const {begin25,640
+DecisionCache::end(int shocks, int fitness, int budget) const {end34,992
+int DecisionCache::GetDecisionCount(int shocks, int fitness, int budget) const {GetDecisionCount38,1144
+void DecisionCache::BuildCache() {BuildCache46,1438
+void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {BuildShockFitnessCache54,1661
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/configs/health_write_configs.py,4564
+max_shocks = ['ms6']max_shocks4,25
+max_shocks_bases = [6]max_shocks_bases5,46
+size = ['s50']size7,70
+size_bases = [50]size_bases8,85
+alpha = ['a020']alpha10,104
+alpha_bases = [0.20]alpha_bases11,121
+beta = ['b025']beta13,143
+beta_bases = [0.025]beta_bases14,159
+eta = ['e80']eta16,181
+eta_bases = [0.80]eta_bases17,195
+gamma_c = ['gc8']gamma_c19,215
+gamma_c_bases = [8]gamma_c_bases20,233
+gamma_h = ['gh8']gamma_h22,254
+gamma_h_bases = [8]gamma_h_bases23,272
+fit_degen = ['d15']fit_degen25,293
+fit_degen_bases = [0.15]fit_degen_bases26,313
+fit_price = ['fp6']fit_price28,339
+fit_price_bases = [6.0]fit_price_bases29,359
+fitness_r = []fitness_r31,384
+fitness_r_bases = []fitness_r_bases32,399
+lambda_h = []lambda_h34,421
+lambda_h_bases = []lambda_h_bases35,435
+mu_h = []mu_h37,456
+mu_h_bases = []mu_h_bases38,466
+p = []p40,483
+p_bases = []p_bases41,490
+k = []k43,504
+k_bases = []k_bases44,511
+c = []c46,525
+c_bases = []c_bases47,532
+health_model = []health_model49,546
+health_model_bases = []health_model_bases50,564
+discount = ['d100']discount52,589
+discount_bases = [1.00]discount_bases53,609
+insures = ['emp', 'act']insures55,634
+insures_bases = ['Fixed', 'Actuarial']insures_bases56,659
+actuarial_scale = 1actuarial_scale58,699
+actuarial_admin_cost = 0actuarial_admin_cost59,719
+def est_emp_insurance_price(shock_size):est_emp_insurance_price61,745
+fitness_r = ['fr1.0']fitness_r67,888
+fitness_r_bases = [1.0]fitness_r_bases68,910
+lambda_h = ['lam10']lambda_h70,935
+lambda_h_bases = [10]lambda_h_bases71,956
+mu_h = ['mu1']mu_h73,979
+mu_h_bases = [1.0]mu_h_bases74,994
+health_model = ['steve']health_model76,1014
+health_model_bases = ['HealthDependentSteve']health_model_bases77,1039
+all_options = [max_shocks, size, alpha, beta, eta, gamma_c, gamma_h, fit_degen, fit_price, fitness_r, lambda_h, mu_h, p, k, c, discount, health_model, insures]all_options152,2520
+all_bases = [max_shocks_bases, size_bases, alpha_bases, beta_bases, eta_bases, gamma_c_bases, gamma_h_bases, fit_degen_bases, fit_price_bases, fitness_r_bases, lambda_h_bases, mu_h_bases, p_bases, k_bases, c_bases, discount_bases, health_model_bases, insures_bases]all_bases153,2680
+titles = ['NShocks', 'Size', 'Alpha', 'Beta', 'Eta', 'GammaC', 'GammaH', 'FitDegen', 'FitPrice', 'FitR', 'Lambda', 'Mu', 'P','K','C','Discount', 'HealthFunc', 'Ins']titles154,2946
+options_dict  = dict(zip(titles, all_options))options_dict155,3112
+bases_dict = dict(zip(titles, all_bases))bases_dict156,3159
+options_bases_dict = {key : dict(zip(options_dict[key], bases_dict[key])) for key in titles}options_bases_dict158,3202
+bases_options_dict = {key : dict(zip(bases_dict[key], options_dict[key])) for key in titles}bases_options_dict159,3295
+out = {}out161,3389
+def add_options(dicts, title, option_name, parent = '', sub_parent = ''): add_options174,3662
+def add_ins_options(dicts):add_ins_options196,4405
+dicts = [out]dicts216,5047
+dicts = add_options(dicts, 'NShocks', 'max_shocks')dicts217,5061
+dicts = add_options(dicts, 'Size', 'shock_income_size')dicts218,5113
+dicts = add_options(dicts, 'GammaC', 'gamma_consumption', 'joy')dicts219,5169
+dicts = add_options(dicts, 'GammaH', 'gamma_health', 'joy')dicts220,5234
+dicts = add_options(dicts, 'Alpha', 'alpha', 'probability')dicts221,5294
+dicts = add_options(dicts, 'Beta', 'beta', 'probability')dicts222,5354
+dicts = add_options(dicts, 'Eta', 'eta', 'probability')dicts223,5412
+dicts = add_options(dicts, 'FitDegen', 'rate', 'fitnesses', 0)dicts224,5468
+dicts = add_options(dicts, 'FitPrice', 'price', 'fitnesses', 1)dicts225,5531
+dicts = add_options(dicts, 'Discount', 'discount')dicts226,5595
+dicts = add_options(dicts, 'FitR', 'fitness_r', ['joy', 'probability'])dicts227,5646
+dicts = add_options(dicts, 'Lambda', 'lambda', ['joy', 'probability'])dicts228,5718
+dicts = add_options(dicts, 'Mu', 'mu', ['joy','probability'])dicts229,5789
+dicts = add_options(dicts, 'P', 'p', ['joy', 'probability'])dicts230,5851
+dicts = add_options(dicts, 'K', 'k', ['joy', 'probability'])dicts231,5912
+dicts = add_options(dicts, 'C', 'c', ['joy','probability'])dicts232,5973
+dicts = add_options(dicts, 'HealthFunc', 'type', ['joy', 'probability'])dicts233,6033
+dicts = add_ins_options(dicts)dicts234,6106
+    penalty = 0penalty239,6261
+        penalty = est_emp_insurance_price(s['shock_income_size'] * 3/4)penalty241,6319
+    options = [bases_options_dict[t][v] for t,v in out['treatments'].items()]options249,6519
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/configs/write_configs.py,334
+def generate_non_combos(config, variations):generate_non_combos14,212
+def generate_all_combos(config, variations):generate_all_combos24,501
+def vary_template(config, var):vary_template37,922
+def gen_name(sub_keys, val, i):gen_name73,2219
+def write_configs(configs, base_name):write_configs132,3861
+def main():main144,4272
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/decision.h,333
+#define HEALTHCARE_DECISION_H_HEALTHCARE_DECISION_H_2,32
+namespace healthcare {healthcare6,88
+struct Decision {Decision8,114
+  int fitness_spending = 0;fitness_spending9,133
+  int joy_spending = 0;joy_spending10,162
+  int insurance_spending = 0;insurance_spending11,187
+  bool buy_insurance = false;buy_insurance12,218
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/joy.h,141
+#define HEALTHCARE_JOY_H_HEALTHCARE_JOY_H_2,27
+namespace healthcare {healthcare4,56
+class Joy {Joy6,82
+  virtual ~Joy() {}~Joy10,216
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/probability/gompertz_shocks.h,582
+#define HEALTHCARE_PROBABILITY_GOMPERTZ_SHOCKS_H_HEALTHCARE_PROBABILITY_GOMPERTZ_SHOCKS_H_2,50
+namespace healthcare {healthcare8,156
+namespace probability {probability9,179
+class GompertzShocks : public Probability {GompertzShocks11,204
+  GompertzShocks(float age_coeff, float age_rate, float shock_coeff,GompertzShocks13,257
+  float age_coeff_;age_coeff_25,693
+  float age_rate_;age_rate_26,713
+  float shock_coeff_;shock_coeff_27,732
+  float shock_rate_;shock_rate_28,754
+  float max_fitness_mod_;max_fitness_mod_29,775
+  int max_fitness_;max_fitness_30,801
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/probability/health_dependent.h,520
+#define HEALTHCARE_PROBABILITY_HEALTH_DEPENDENT_H_HEALTHCARE_PROBABILITY_HEALTH_DEPENDENT_H_2,51
+namespace healthcare {healthcare9,179
+namespace probability {probability10,202
+class HealthDependent : public Probability {HealthDependent12,227
+  HealthDependent(float alpha, float beta, float eta, HealthDependent14,281
+  float alpha_;alpha_33,886
+  float beta_;beta_34,902
+  float fitness_r_;fitness_r_35,917
+  float eta_;eta_36,937
+  int max_age_;max_age_37,951
+  int max_shocks_;max_shocks_38,967
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/probability/health_dependent_fan.h,626
+#define HEALTHCARE_PROBABILITY_HEALTH_DEPENDENT_FAN_H_HEALTHCARE_PROBABILITY_HEALTH_DEPENDENT_FAN_H_2,55
+namespace healthcare {healthcare9,187
+namespace probability {probability10,210
+class HealthDependentFan : public Probability {HealthDependentFan12,235
+  HealthDependentFan(float alpha, float beta, float eta, HealthDependentFan14,292
+  float alpha_;alpha_37,1001
+  float beta_;beta_38,1017
+  float eta_;eta_39,1032
+  float p_;p_40,1046
+  float k_;k_41,1058
+  float c_;c_42,1070
+  double max_age_;max_age_43,1082
+  double max_shocks_;max_shocks_44,1101
+  double max_fitness_;max_fitness_45,1123
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/probability/gompertz_makeham.h,419
+#define HEALTHCARE_PROBABILITY_GOMPERTZ_MAKEHAM_H_HEALTHCARE_PROBABILITY_GOMPERTZ_MAKEHAM_H_2,52
+namespace healthcare {healthcare8,165
+namespace probability {probability9,189
+class GompertzMakeham : public Probability {GompertzMakeham11,216
+  GompertzMakeham(float lambda, float alpha, float beta)GompertzMakeham13,272
+  float lambda_;lambda_20,533
+  float alpha_;alpha_21,551
+  float beta_;beta_22,568
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/probability/health_dependent_dustin.h,618
+#define HEALTHCARE_PROBABILITY_HEALTH_DEPENDENT_DUSTIN_H_HEALTHCARE_PROBABILITY_HEALTH_DEPENDENT_DUSTIN_H_2,58
+namespace healthcare {healthcare9,193
+namespace probability {probability10,216
+class HealthDependentDustin : public Probability {HealthDependentDustin12,241
+  HealthDependentDustin(float alpha, float beta, float eta, HealthDependentDustin14,301
+  float alpha_;alpha_35,943
+  float beta_;beta_36,959
+  float eta_;eta_37,974
+  float fitness_r_;fitness_r_38,988
+  float mu_;mu_39,1008
+  float lambda_;lambda_40,1021
+  int max_age_;max_age_41,1038
+  int max_shocks_;max_shocks_42,1054
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/probability/mod_decorator.h,423
+#define HEALTHCARE_PROBABILITY_MOD_DECORATOR_H_HEALTHCARE_PROBABILITY_MOD_DECORATOR_H_2,48
+namespace healthcare {healthcare9,186
+namespace probability {probability10,209
+class ModDecorator : public Probability {ModDecorator12,234
+  ModDecorator(std::shared_ptr<const Probability> prob,ModDecorator14,285
+  std::shared_ptr<const Probability> prob_;prob_23,632
+  std::shared_ptr<const Modifier> mod_;mod_24,676
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/probability/health_dependent_steve.h,612
+#define HEALTHCARE_PROBABILITY_HEALTH_DEPENDENT_STEVE_H_HEALTHCARE_PROBABILITY_HEALTH_DEPENDENT_STEVE_H_2,57
+namespace healthcare {healthcare9,191
+namespace probability {probability10,214
+class HealthDependentSteve : public Probability {HealthDependentSteve12,239
+  HealthDependentSteve(float alpha, float beta, float eta, HealthDependentSteve14,298
+  float alpha_;alpha_35,941
+  float beta_;beta_36,957
+  float eta_;eta_37,972
+  float fitness_r_;fitness_r_38,986
+  float lambda_;lambda_39,1006
+  float mu_;mu_40,1023
+  int max_age_;max_age_41,1036
+  int max_shocks_;max_shocks_42,1052
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/shifter.h,164
+#define HEALTHCARE_SHIFTER_H_HEALTHCARE_SHIFTER_H_2,30
+namespace healthcare {healthcare4,61
+class Shifter {Shifter6,85
+  virtual ~Shifter() {}~Shifter9,180
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/modifier.h,678
+#define HEALTHCARE_MODIFIER_H_HEALTHCARE_MODIFIER_H_2,31
+namespace healthcare {healthcare6,83
+namespace modifier {modifier8,107
+enum class Param { AGE = 0, SHOCKS, FITNESS };Param9,128
+enum class Param { AGE = 0, SHOCKS, FITNESS };AGE9,128
+enum class Param { AGE = 0, SHOCKS, FITNESS };SHOCKS9,128
+enum class Func { ADD = 0, MULTIPLY };Func10,175
+enum class Func { ADD = 0, MULTIPLY };ADD10,175
+class Modifier {Modifier13,240
+  Modifier(modifier::Func func) : func_(func) {}Modifier15,266
+  virtual float Modify(float val, int age, int shocks, int fitness) const {Modify16,315
+  virtual ~Modifier() {}~Modifier27,693
+  modifier::Func func_;func_30,729
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/person_income.h,221
+#define HEALTHCARE_PERSON_INCOME_H_HEALTHCARE_PERSON_INCOME_H_2,37
+namespace healthcare {healthcare6,110
+struct PersonIncome : public Person {PersonIncome8,136
+  int budget;budget9,175
+  int income;income10,190
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/insurance.h,176
+#define HEALTHCARE_INSURANCE_H_HEALTHCARE_INSURANCE_H_2,33
+namespace healthcare {healthcare4,68
+class Insurance {Insurance6,94
+  virtual ~Insurance() {}~Insurance9,194
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/fitness.h,254
+#define HEALTHCARE_FITNESS_H_HEALTHCARE_FITNESS_H_2,31
+namespace healthcare {healthcare6,84
+class Fitness {Fitness8,110
+  virtual ~Fitness() {}~Fitness10,137
+  virtual int GetFitness(int fitness, int fitness_investment) const {GetFitness12,164
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/probability.h,188
+#define HEALTHCARE_PROBABILITY_H_HEALTHCARE_PROBABILITY_H_2,35
+namespace healthcare {healthcare4,72
+class Probability {Probability6,98
+  virtual ~Probability() {}~Probability9,206
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/period_result.h,348
+#define HEALTHCARE_PERIOD_RESULT_H_HEALTHCARE_PERIOD_RESULT_H_2,37
+namespace healthcare {healthcare8,132
+struct PeriodResult {PeriodResult10,158
+  Person person;person11,181
+  float joy;joy12,199
+  float probability;probability13,213
+  int spending;spending14,235
+  float future_value;future_value15,252
+  float value;value16,275
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/shifter/constant.h,445
+#define HEALTHCARE_SHIFTER_CONSTANT_H_HEALTHCARE_SHIFTER_CONSTANT_H_2,39
+namespace healthcare {healthcare6,112
+namespace shifter {shifter7,135
+class Constant : public Shifter {Constant9,156
+  explicit Constant(float shift, int max_shocks) : shift_(shift), max_shocks_(max_shocks) {}Constant11,199
+  static Constant NoShift() { return Constant(0, 0); }NoShift13,404
+  float shift_;shift_14,459
+  int max_shocks_;max_shocks_15,475
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/job.h,140
+#define HEALTHCARE_JOB_H_HEALTHCARE_JOB_H_2,27
+namespace healthcare {healthcare4,56
+class Job {Job6,82
+  virtual ~Job() {}~Job9,152
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/person.h,241
+#define HEALTHCARE_PERSON_H_HEALTHCARE_PERSON_H_2,30
+namespace healthcare {healthcare6,84
+struct Person {Person7,108
+  int age = 0;age8,125
+  int shocks = 0;shocks9,141
+  int fitness = 0;fitness10,160
+  int cash = 0;cash11,180
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/joy/fractional.h,273
+#define HEALTHCARE_JOY_FRACTIONAL_H_HEALTHCARE_JOY_FRACTIONAL_H_2,38
+namespace healthcare {healthcare6,109
+namespace joy {joy7,133
+class Fractional : public Joy {Fractional9,152
+                int investment) const override;override13,280
+  double j_;j_16,342
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/joy/health_dependent.h,484
+#define HEALTHCARE_JOY_HEALTH_DEPENDENT_H_HEALTHCARE_JOY_HEALTH_DEPENDENT_H_2,43
+namespace healthcare {healthcare9,155
+namespace joy {joy10,178
+class HealthDependent : public Joy {HealthDependent12,195
+  explicit HealthDependent(double gamma_health, double gamma_consumption,HealthDependent14,241
+  int max_shocks_;max_shocks_32,934
+  double gamma_health_;gamma_health_33,953
+  double gamma_consumption_;gamma_consumption_34,977
+  float fitness_r_;fitness_r_35,1006
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/joy/health_dependent_fan.h,584
+#define HEALTHCARE_JOY_HEALTH_DEPENDENT_FAN_H_HEALTHCARE_JOY_HEALTH_DEPENDENT_FAN_H_2,47
+namespace healthcare {healthcare9,163
+namespace joy {joy10,186
+class HealthDependentFan : public Joy {HealthDependentFan12,203
+  explicit HealthDependentFan(double gamma_health, double gamma_consumption,HealthDependentFan14,252
+  double gamma_health_;gamma_health_36,1043
+  double gamma_consumption_;gamma_consumption_37,1067
+  float p_;p_38,1096
+  float k_;k_39,1108
+  float c_;c_40,1120
+  double max_shocks_;max_shocks_41,1132
+  double max_fitness_;max_fitness_42,1154
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/joy/health_dependent_dustin.h,582
+#define HEALTHCARE_JOY_HEALTH_DEPENDENT_DUSTIN_H_HEALTHCARE_JOY_HEALTH_DEPENDENT_DUSTIN_H_2,50
+namespace healthcare {healthcare9,169
+namespace joy {joy10,192
+class HealthDependentDustin : public Joy {HealthDependentDustin12,209
+  explicit HealthDependentDustin(double gamma_health, double gamma_consumption,HealthDependentDustin14,261
+  int max_shocks_;max_shocks_34,990
+  double gamma_health_;gamma_health_35,1009
+  double gamma_consumption_;gamma_consumption_36,1033
+  float fitness_r_;fitness_r_37,1062
+  float lambda_;lambda_38,1082
+  float mu_;mu_39,1099
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/joy/mod_decorator.h,367
+#define HEALTHCARE_JOY_MOD_DECORATOR_H_HEALTHCARE_JOY_MOD_DECORATOR_H_2,40
+namespace healthcare {healthcare9,162
+namespace joy {joy10,185
+class ModDecorator : public Joy {ModDecorator12,202
+  ModDecorator(std::shared_ptr<const Joy> prob,ModDecorator14,245
+  std::shared_ptr<const Joy> prob_;prob_24,611
+  std::shared_ptr<const Modifier> mod_;mod_25,647
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/joy/shift_decorator.h,379
+#define HEALTHCARE_JOY_SHIFT_DECORATOR_H_HEALTHCARE_JOY_SHIFT_DECORATOR_H_2,42
+namespace healthcare {healthcare9,165
+namespace joy {joy10,188
+class ShiftDecorator : public Joy {ShiftDecorator12,205
+  ShiftDecorator(std::shared_ptr<const Joy> joy,ShiftDecorator14,250
+  std::shared_ptr<const Joy> joy_;joy_24,611
+  std::shared_ptr<const Shifter> shift_;shift_25,646
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/joy/health_dependent_steve.h,576
+#define HEALTHCARE_JOY_HEALTH_DEPENDENT_STEVE_H_HEALTHCARE_JOY_HEALTH_DEPENDENT_STEVE_H_2,49
+namespace healthcare {healthcare9,167
+namespace joy {joy10,190
+class HealthDependentSteve : public Joy {HealthDependentSteve12,207
+  explicit HealthDependentSteve(double gamma_health, double gamma_consumption,HealthDependentSteve14,258
+  int max_shocks_;max_shocks_34,988
+  double gamma_health_;gamma_health_35,1007
+  double gamma_consumption_;gamma_consumption_36,1031
+  float fitness_r_;fitness_r_37,1060
+  float lambda_;lambda_38,1080
+  float mu_;mu_39,1097
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/fitness/fixed_price.h,421
+#define HEALTHCARE_FITNESS_FIXED_PRICE_H_HEALTHCARE_FITNESS_FIXED_PRICE_H_2,43
+namespace healthcare {healthcare6,123
+namespace fitness {fitness7,147
+class FixedPrice : public Fitness {FixedPrice9,170
+  double GetDecimalFitness(double fitness, int fitness_investment) const override;override12,255
+  int GetFitnessCost(int fitness, int end_fitness) const override;override13,339
+  double price_;price_16,420
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/fitness/composite.h,530
+#define HEALTHCARE_FITNESS_COMPOSITE_H_HEALTHCARE_FITNESS_COMPOSITE_H_2,41
+namespace healthcare {healthcare9,159
+namespace fitness {fitness10,183
+class Composite : public Fitness {Composite12,206
+  int GetFitnessCost(int fitness, int end_fitness) const override;override16,357
+                           int fitness_investment) const override;override18,469
+  int max_fitness_;max_fitness_22,563
+  std::vector<std::shared_ptr<const Fitness>> fits_;fits_23,584
+  std::vector<std::vector<int>> costs_;costs_24,638
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/fitness/quadratic_cost.h,432
+#define HEALTHCARE_FITNESS_QUADRATIC_COST_H_HEALTHCARE_FITNESS_QUADRATIC_COST_H_2,45
+namespace healthcare {healthcare6,124
+namespace fitness {fitness7,147
+class QuadraticCost : public Fitness {QuadraticCost9,168
+  double GetDecimalFitness(double fitness, int fitness_investment) const override;override12,255
+  int GetFitnessCost(int fitness, int end_fitness) const override;override13,338
+  float coeff_;coeff_16,416
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/fitness/proportional_loss.h,345
+#define HEALTHCARE_FITNESS_PROPORTIONAL_LOSS_H_HEALTHCARE_FITNESS_PROPORTIONAL_LOSS_H_2,49
+namespace healthcare {healthcare9,177
+namespace fitness {fitness10,201
+class ProportionalLoss : public Fitness {ProportionalLoss12,224
+  explicit ProportionalLoss(double rate) : rate_(rate) {}ProportionalLoss14,277
+  double rate_;rate_23,621
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/fitness/flat_loss.h,295
+#define HEALTHCARE_FITNESS_FLAT_LOSS_H_HEALTHCARE_FITNESS_FLAT_LOSS_H_2,41
+namespace healthcare {healthcare8,143
+namespace fitness {fitness9,167
+class FlatLoss : public Fitness {FlatLoss11,190
+  explicit FlatLoss(int degen) : degen_(degen) {}FlatLoss13,235
+  int degen_;degen_22,571
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/decision_evaluator.h,506
+#define HEALTHCARE_DECISION_EVALUATOR_H_HEALTHCARE_DECISION_EVALUATOR_H_2,42
+namespace healthcare {healthcare13,317
+class DecisionEvaluator {DecisionEvaluator15,343
+  DecisionEvaluator(Configuration config, int age)DecisionEvaluator17,380
+  std::vector<std::vector<std::vector<float>>> joy_;joy_28,804
+  std::vector<std::vector<float>> shock_prob_;shock_prob_29,858
+  std::vector<std::vector<int>> fitness_;fitness_30,906
+  const Configuration config_;config_31,949
+  int age_;age_32,981
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/decision_results.h,314
+#define HEALTHCARE_DECISION_RESULTS_H_HEALTHCARE_DECISION_RESULTS_H_2,40
+namespace healthcare {healthcare8,189
+struct DecisionResults {DecisionResults10,215
+  Decision decision;decision11,241
+  PeriodResult result;result12,263
+  PeriodResult result_shock;result_shock13,287
+  float value;value14,317
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/modifier/fractional.h,375
+#define HEALTHCARE_MODIFIER_FRACTIONAL_H_HEALTHCARE_MODIFIER_FRACTIONAL_H_2,42
+namespace healthcare {healthcare6,131
+namespace modifier {modifier7,154
+class Fractional : public SingleType {Fractional9,176
+  Fractional(Param param, Func func, float max_modification, float j,Fractional11,224
+  float j_;j_21,619
+  float max_modification_;max_modification_22,631
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/modifier/sqrt_cosine.h,398
+#define HEALTHCARE_MODIFIER_SQRT_COSINE_H_HEALTHCARE_MODIFIER_SQRT_COSINE_H_2,43
+namespace healthcare {healthcare8,196
+namespace modifier {modifier9,219
+class SqrtCosine : public SingleType {SqrtCosine11,241
+  SqrtCosine(Param param, Func func, float max_modification, int max_param,SqrtCosine13,289
+  int max_param_;max_param_25,812
+  float max_modification_;max_modification_26,830
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/modifier/single_type.h,426
+#define HEALTHCARE_MODIFIER_SINGLE_TYPE_H_HEALTHCARE_MODIFIER_SINGLE_TYPE_H_2,43
+namespace healthcare {healthcare4,87
+namespace modifier {modifier5,110
+class SingleType : public Modifier {SingleType7,132
+  SingleType(modifier::Param param, modifier::Func func,SingleType9,178
+  virtual ~SingleType() {}~SingleType34,869
+  Param param_;param_37,907
+  std::shared_ptr<const Modifier> param_mod_;param_mod_38,923
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/modifier/composite.h,356
+#define HEALTHCARE_MODIFIER_COMPOSITE_H_HEALTHCARE_MODIFIER_COMPOSITE_H_2,41
+namespace healthcare {healthcare9,154
+namespace modifier {modifier10,177
+class Composite : public Modifier {Composite12,199
+  Composite(std::vector<std::shared_ptr<const Modifier>> mods)Composite14,244
+  std::vector<std::shared_ptr<const Modifier>> mods_;mods_25,631
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/modifier/linear.h,371
+#define HEALTHCARE_MODIFIER_LINEAR_H_HEALTHCARE_MODIFIER_LINEAR_H_2,38
+namespace healthcare {healthcare6,123
+namespace modifier {modifier7,146
+class Linear : public SingleType {Linear9,168
+  Linear(Param param, Func func, float max_modification, int max_param,Linear11,212
+  int max_param_;max_param_21,628
+  float max_modification_;max_modification_22,646
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/modifier/param_modulator.h,442
+#define HEALTHCARE_MODIFIER_PARAM_MODULATOR_H_HEALTHCARE_MODIFIER_PARAM_MODULATOR_H_2,47
+namespace healthcare {healthcare9,193
+namespace modifier {modifier10,216
+class ParamModulator : public Modifier {ParamModulator12,238
+  ParamModulator(std::shared_ptr<const SingleType> base_mod,ParamModulator14,288
+  std::shared_ptr<const SingleType> base_mod_;base_mod_26,764
+  std::shared_ptr<const Modifier> param_mod_;param_mod_27,811
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/modifier/constant.h,407
+#define HEALTHCARE_MODIFIER_CONSTANT_H_HEALTHCARE_MODIFIER_CONSTANT_H_2,40
+namespace healthcare {healthcare7,116
+namespace modifier {modifier8,139
+class Constant : public Modifier {Constant10,161
+  explicit Constant(Func func, float modification)Constant12,205
+  static Constant NoModification() { return Constant(Func::ADD, 0); }NoModification16,383
+  float modification_;modification_17,453
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/modifier/double_type.h,400
+#define HEALTHCARE_MODIFIER_DOUBLE_TYPE_H_HEALTHCARE_MODIFIER_DOUBLE_TYPE_H_2,43
+namespace healthcare {healthcare8,139
+namespace modifier {modifier9,162
+class DoubleType : public Modifier {DoubleType11,184
+  DoubleType(Param param1, Param param2, modifier::Func func)DoubleType13,230
+  virtual ~Modifier() {}~Modifier23,628
+  Param param1_;param1_26,664
+  Param param2_;param2_27,681
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/modifier/cosine.h,372
+#define HEALTHCARE_MODIFIER_COSINE_H_HEALTHCARE_MODIFIER_COSINE_H_2,38
+namespace healthcare {healthcare7,169
+namespace modifier {modifier8,192
+class Cosine : public SingleType {Cosine10,214
+  Cosine(Param param, Func func, float max_modification, int max_param,Cosine12,258
+  int max_param_;max_param_23,747
+  float max_modification_;max_modification_24,765
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/configuration.h,889
+#define HEALTHCARE_CONFIGURATION_H_HEALTHCARE_CONFIGURATION_H_2,37
+namespace healthcare {healthcare14,315
+struct Configuration {Configuration16,341
+  int max_age;max_age17,365
+  int max_fitness;max_fitness18,381
+  int max_shocks;max_shocks19,401
+  int max_savings;max_savings20,420
+  int min_savings;min_savings21,440
+  int max_budget;max_budget22,460
+  float min_debt_payment;min_debt_payment23,479
+  float discount;discount24,506
+  std::shared_ptr<const healthcare::Job> job;job25,525
+  std::shared_ptr<const healthcare::Fitness> fitness;fitness26,572
+  std::shared_ptr<const healthcare::Joy> joy;joy27,627
+  std::shared_ptr<const healthcare::Probability> shock_prob;shock_prob28,674
+  std::shared_ptr<const healthcare::Insurance> insurance;insurance29,736
+  int shock_income_size;shock_income_size30,795
+  int shock_count_size;shock_count_size31,821
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/insurance/actuarial.h,477
+#define HEALTHCARE_INSURANCE_ACTUARIAL_H_HEALTHCARE_INSURANCE_ACTUARIAL_H_2,43
+namespace healthcare {healthcare10,201
+namespace insurance {insurance11,225
+class Actuarial : public Insurance {Actuarial13,250
+  Actuarial(float scale, float admin_cost, int shock_income_size,Actuarial15,298
+  float scale_;scale_24,744
+  float admin_cost_;admin_cost_25,761
+  int shock_income_size_;shock_income_size_26,783
+  std::shared_ptr<const Probability> prob_;prob_27,810
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/insurance/fixed.h,279
+#define HEALTHCARE_INSURANCE_FIXED_H_HEALTHCARE_INSURANCE_FIXED_H_2,39
+namespace healthcare {healthcare6,117
+namespace insurance {insurance7,141
+class Fixed : public Insurance {Fixed9,166
+  explicit Fixed(int cost) : cost_(cost) {}Fixed11,210
+  int cost_;cost_17,361
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/job/flat.h,242
+#define HEALTHCARE_JOB_FLAT_H_HEALTHCARE_JOB_FLAT_H_2,32
+namespace healthcare {healthcare6,97
+namespace job {job7,121
+class Flat : public Job {Flat9,140
+  explicit Flat(int rate) : rate_(rate) {}Flat11,177
+  int rate_;rate_15,296
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/job/defined.h,308
+#define HEALTHCARE_JOB_DEFINED_H_HEALTHCARE_JOB_DEFINED_H_2,34
+namespace healthcare {healthcare8,117
+namespace job {job9,140
+class Defined : public Job {Defined11,157
+  explicit Defined(std::vector<int> earnings) : earnings_(earnings) {}Defined13,195
+  std::vector<int> earnings_;earnings_19,387
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/healthcare/job/age_linear.h,327
+#define HEALTHCARE_JOB_AGE_LINEAR_H_HEALTHCARE_JOB_AGE_LINEAR_H_2,38
+namespace healthcare {healthcare8,129
+namespace job {job9,153
+class AgeLinear : public Job {AgeLinear11,172
+  explicit AgeLinear(float intercept, float slope) : b_(intercept), m_(slope) {}AgeLinear13,214
+  float b_;b_17,391
+  float m_;m_18,404
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/dp/storage.h,587
+#define DP_STORAGE_H_DP_STORAGE_H_2,23
+namespace dp {dp14,280
+class Storage {Storage15,296
+  void StoreResult(const healthcare::Person& state,StoreResult19,387
+  inline float GetValue(const healthcare::Person& state) const {GetValue27,693
+  inline healthcare::DecisionResults GetResult(GetResult32,870
+  std::vector<std::vector<std::vector<healthcare::DecisionResults>>> results_;results_43,1283
+  std::vector<std::vector<std::vector<float>>> values_;values_44,1363
+  const healthcare::Configuration& config_;config_46,1422
+  const int n_elements_;n_elements_47,1467
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/include/dp/decision_cache.h,431
+#define DP_DECISION_CACHE_H_DP_DECISION_CACHE_H_2,30
+namespace dp {dp13,288
+class DecisionCache {DecisionCache15,306
+  const healthcare::Configuration config_;config_26,786
+  const healthcare::DecisionEvaluator eval_;eval_27,830
+  int age_;age_28,876
+  std::vector<std::vector<std::vector<int>>> counts_;counts_29,889
+  std::vector<std::vector<std::vector<healthcare::DecisionResults>>> decisions_;decisions_30,944
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/output/output_reader.py,2703
+def parse_line(line):parse_line8,100
+def get_min_max(stream, index, init_offset, offset_increment):get_min_max12,163
+def get_data_features(filename):get_data_features28,643
+def process_line(raw_line):process_line70,1876
+def get_index(state):get_index75,1984
+def select_state(fstream, state):select_state84,2170
+def next_state(row):next_state91,2389
+def get_life_random(fstream, start_state, max_age):get_life_random100,2555
+def get_life_with_draws(fstream, start_state, draws):get_life_with_draws105,2731
+def generate_fair_draws(max_age, n_lives):generate_fair_draws126,3364
+def stratified_sample(segment, n_segments):stratified_sample152,4361
+filenames = sys.argv[1:]filenames157,4517
+    filename = filename_base + ".csv"filename160,4600
+    max_age = config["max_age"]max_age163,4699
+    max_shocks = config["max_shocks"]max_shocks164,4731
+    max_fitness = config["max_fitness"]max_fitness165,4769
+    max_cash = config["max_cash"]max_cash166,4809
+    min_cash = config["min_cash"]min_cash167,4843
+    row_size = max_cash - min_cash + 1row_size168,4877
+    grid_size = (max_fitness + 1) * row_sizegrid_size169,4916
+    meta_grid_size = (max_shocks + 1) * grid_sizemeta_grid_size170,4961
+    header_indices = {header[i]: i for i in range(len(header))}header_indices172,5029
+    n_lives = 10000n_lives173,5093
+    lives_digits = len(str(abs(n_lives - 1)))lives_digits174,5113
+    start_state = [1, 0, 20, 0]start_state175,5159
+    fstream = open(filename)fstream176,5191
+    rand_lives = [get_life_random(fstream, start_state, max_age) for i in range(n_lives)]rand_lives177,5220
+    f = open(filename_base + "_rand_lives.csv", "w+")f180,5449
+    json_config = json.load(open(filename_base + ".json", "r"))json_config185,5704
+    shock_size = json_config["shock_income_size"]shock_size186,5768
+        tot_enjoyment = 0.0tot_enjoyment188,5850
+        total_insurance_spending = 0total_insurance_spending189,5878
+        total_payout = 0total_payout190,5915
+        prev_at_max_shocks = 0prev_at_max_shocks191,5940
+        total_insurer_profit = 0total_insurer_profit192,5971
+            shocked = int(period[-1])shocked194,6044
+            buy_ins = int(period[header_indices["BuyIns"]])buy_ins197,6243
+            shock_prob = shocked * (float(period[header_indices["Probability"]])) + (shock_prob198,6303
+            payout = buy_ins * shocked * shock_sizepayout201,6484
+            at_max_shocks = int(int(period[header_indices["Shocks"]]) == max_shocks)at_max_shocks204,6665
+            died = at_max_shocks - prev_at_max_shocksdied205,6750
+            prev_at_max_shocks = at_max_shocksprev_at_max_shocks206,6804
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/output/health_plot_maker.py,4582
+max_shocks_short = ['ms6']max_shocks_short10,210
+max_shocks = ['6']max_shocks11,237
+size_short = ['s105']size_short13,257
+size = ['105']size14,279
+alpha_short = ['a020']alpha_short16,295
+alpha = ['0.20']alpha17,318
+beta_short = ['b025']beta_short19,336
+beta = ['0.025']beta20,358
+eta_short = ['e80']eta_short22,376
+eta = ['0.80']eta23,396
+gamma_c_short = ['gc8']gamma_c_short25,412
+gamma_c = ['8']gamma_c26,436
+gamma_h_short = ['gh8']gamma_h_short28,453
+gamma_h = ['8']gamma_h29,477
+fit_degen_short = ['d15']fit_degen_short31,494
+fit_degen = ['0.15']fit_degen32,520
+fit_price_short = ['fp6']fit_price_short34,542
+fit_price = ['6.0']fit_price35,568
+fitness_r_short = []fitness_r_short37,589
+fitness_r = []fitness_r38,610
+lambda_h_short = []lambda_h_short40,626
+lambda_h = []lambda_h41,646
+mu_h = []mu_h43,661
+mu_h_bases = []mu_h_bases44,671
+p_short = []p_short46,688
+p = []p47,701
+k_short = []k_short49,709
+k = []k50,722
+c_short = []c_short52,730
+c = []c53,743
+discount_short = ['d100']discount_short57,753
+discount = ['1.00']discount58,779
+insures_short = ['act', 'emp']insures_short60,800
+insures = ['Act', 'Emp']insures61,831
+fitness_r_short = ['fr1.0',]fitness_r_short66,934
+lambda_h_short = ['lam10']lambda_h_short69,990
+lambda_h = ['10']lambda_h70,1017
+mu_h_short = ['mu1']mu_h_short72,1036
+mu_h = ['1.0']mu_h73,1057
+health_model_short = ['steve']health_model_short75,1073
+health_model = ['HealthDependentSteve']health_model76,1104
+all_longs = [insures, max_shocks, size, alpha, beta, eta, gamma_c, gamma_h, fit_degen, fit_price, discount, fitness_r, lambda_h, mu_h, p, k, c, health_model]all_longs136,2267
+all_shorts = [insures_short, max_shocks_short, size_short, alpha_short, beta_short, eta_short, gamma_c_short, gamma_h_short, fit_degen_short, fit_price_short, discount_short, fitness_r_short, lambda_h_short, mu_h_short, p_short, k_short, c_short, health_model_short]all_shorts138,2426
+titles = ['Ins', 'MaxShocks', 'ShockSize', 'Alpha', 'Beta', 'Eta', 'GammaC', 'GammaH', 'DegenRate', 'FitPrice', 'Discount', 'FitR', 'Lambda', 'Mu', 'P','K','C','HealthFunc']titles142,2851
+file_titles = ['MaxShocks', 'ShockSize', 'GammaC', 'GammaH', 'Alpha', 'Beta', 'Eta', 'DegenRate', 'FitPrice', 'Discount', 'FitR', 'Lambda', 'Mu', 'P','K','C','HealthFunc', 'Ins']file_titles145,3065
+long_dict = dict(zip(titles, all_longs))long_dict150,3292
+short_dict = dict(zip(titles, all_shorts))short_dict151,3333
+keys = list(long_dict.keys())keys155,3379
+long_short_dict = {key : dict(zip(long_dict[key], short_dict[key])) for key in keys}long_short_dict156,3409
+short_long_dict = {key : dict(zip(short_dict[key], long_dict[key])) for key in keys}short_long_dict157,3494
+def add_treats(treats, title, vals):add_treats159,3580
+def get_file_name(plot_set):get_file_name171,3877
+def get_legends(plot_set):get_legends182,4160
+def get_treatment_names(plot_set):get_treatment_names198,4689
+def get_fixed_title(plot_set):get_fixed_title215,5126
+def gen_all_poss(cur_set, fixed_keys):gen_all_poss225,5378
+keys = list(long_dict.keys())keys237,5737
+fixed_keys = []fixed_keys238,5767
+flex_keys = []flex_keys239,5783
+        fixed = keys[:]fixed242,5848
+        fixed = [fix for fix in fixed if long_dict[fix]]fixed244,5898
+plot_treats = []plot_treats248,6021
+    fixed_treats = gen_all_poss([{}], fixed)fixed_treats250,6085
+    flex_treats = {title : short_dict[title] for title in flex}flex_treats251,6130
+    plot_treats = plot_treats + fixed_treatsplot_treats254,6259
+treat_names = [get_treatment_names(t) for t in plot_treats]treat_names256,6305
+fixed_titles = [get_fixed_title(t) for t in plot_treats]fixed_titles257,6365
+file_names = [get_file_name(t) for t in plot_treats]file_names258,6422
+legends = [get_legends(t) for t in plot_treats]legends259,6475
+metadata = []metadata261,6524
+ages = range(1,31)ages268,6803
+all_treatments = set()all_treatments270,6823
+all_treatments = list(all_treatments)all_treatments274,6924
+def get_file_means(filebase):get_file_means276,6963
+treatment_means = {treat : get_file_means(treat) for treat in all_treatments}treatment_means282,7136
+display_cols =  ['Cash', 'Shocks', 'ShockProb', 'AtMaxShocks', 'NextFitness',display_cols285,7249
+colors=['blue', 'red', 'green', 'orange']colors289,7480
+ages = treatment_means[all_treatments[0]]['Age'].tolist()ages290,7522
+    treatments = data['Treatments']treatments292,7602
+    n_ins = int(len(treatments)/2)n_ins293,7638
+        d = pdf.infodict()d307,8313
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/output/payout_table_maker.py,1500
+def parse_line(line):parse_line8,100
+def get_min_max(stream, index, init_offset, offset_increment):get_min_max12,163
+def get_data_features(filename):get_data_features28,643
+def process_line(raw_line):process_line70,1876
+def get_index(state):get_index75,1984
+def select_state(fstream, state):select_state84,2170
+filename_base = sys.argv[1]filename_base91,2389
+filename = filename_base + ".csv"filename93,2439
+max_age = config["max_age"]max_age96,2530
+max_shocks = config["max_shocks"]max_shocks97,2558
+max_fitness = config["max_fitness"]max_fitness98,2592
+max_cash = config["max_cash"]max_cash99,2628
+min_cash = config["min_cash"]min_cash100,2658
+json_config = json.load(open(sys.argv[2], "r"))json_config101,2688
+decision_periods = json_config.get('decision_periods', max_age)decision_periods102,2736
+row_size = max_cash - min_cash + 1row_size105,2843
+grid_size = (max_fitness + 1) * row_sizegrid_size106,2878
+meta_grid_size = (max_shocks + 1) * grid_sizemeta_grid_size107,2919
+header_indices = {header[i]: i for i in range(len(header))}header_indices108,2965
+fstream = open(filename)fstream109,3025
+f = open(filename_base + "_payout_table.csv", "w+")f110,3050
+payout_age = decision_periods + 1payout_age114,3222
+      state = select_state(fstream, [payout_age, shocks, fitness, cash])state119,3438
+      exp_value = float(state[0]['Value']) * float(state[0]['Probability']) + float(state[1]['Value']) * float(state[1]['Probability'])exp_value120,3511
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/output/plot_maker.py,145
+display_cols = [display_cols14,241
+def main():main35,584
+def get_file_means(dir_name, filebase, condition_on_alive):get_file_means107,3120
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/output/mingw_output_reader.py,1979
+def parse_line(line):parse_line13,193
+def get_min_max(stream, index, init_offset, offset_increment):get_min_max16,255
+def get_data_features(filename):get_data_features30,714
+def process_line(raw_line):process_line57,1880
+def get_index(state) :get_index61,1986
+def select_state(fstream, state):select_state64,2134
+def next_state(row):next_state70,2352
+def get_life_random(fstream, start_state):get_life_random73,2478
+filenames = sys.argv[1:]filenames93,3102
+    filename = filename_base + ".csv"filename96,3185
+    max_age = config["max_age"]max_age99,3288
+    max_shocks = config["max_shocks"]max_shocks100,3320
+    max_fitness = config["max_fitness"]max_fitness101,3358
+    max_cash = config["max_cash"]max_cash102,3398
+    min_cash = config["min_cash"]min_cash103,3432
+    row_size = max_cash - min_cash + 1row_size104,3466
+    grid_size = (max_fitness + 1) * row_sizegrid_size105,3505
+    meta_grid_size = (max_shocks + 1) * grid_sizemeta_grid_size106,3550
+    header_indices = {header[i] : i for i in range(len(header))}header_indices108,3618
+    n_lives = 1000n_lives109,3683
+    lives_digits = len(str(abs(n_lives-1)))lives_digits110,3702
+    start_state = [1,0,20,0]start_state111,3746
+    fstream = open(filename)fstream112,3775
+    rand_lives = [get_life_random(fstream, start_state) for i in range(n_lives)]rand_lives113,3804
+    f= open(filename_base + "_rand_lives.csv","w+")f115,3890
+        tot_enjoyment = 0;tot_enjoyment118,4085
+            shocked = int(period[-1])shocked120,4152
+            buy_ins = int(int(period[header_indices["InsuranceSpending"]])>0)buy_ins122,4262
+            shock_prob = shocked * (float(period[header_indices["Probability"]])) + (1-shocked) * (1 - float(period[header_indices["Probability"]]))shock_prob123,4340
+            payout = buy_ins * shockedpayout124,4489
+            at_max_shocks = int(int(period[header_indices["Shocks"]]) == max_shocks)at_max_shocks125,4528
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/tests_main.cc,44
+int main(int argc, char **argv) {main3,28
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/health_dp_main.cc,523
+auto util = [](float joy) -> float { return joy; };util40,1310
+float ExpectedUtility(const DecisionResults& res) {ExpectedUtility42,1365
+int main(int argc, char** argv) {main47,1542
+std::pair<boost::filesystem::path, boost::filesystem::path> GetPaths(GetPaths64,2094
+void RunOptimization(const Configuration& config, std::string out_dir,RunOptimization104,3347
+std::vector<PersonIncome> CreateTemplateStates(int age,CreateTemplateStates143,4867
+void StoreAgeOptimals(Storage& storage,StoreAgeOptimals164,5709
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/health/quadratic_decline_tests.cc,191
+class QuadraticDeclineTest : public::testing::Test {QuadraticDeclineTest4,78
+    QuadraticDeclineTest() {}QuadraticDeclineTest6,141
+TEST_F(QuadraticDeclineTest, equaltest) {TEST_F9,215
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/health/aged_quadratic_decline_tests.cc,211
+class AgedQuadraticDeclineTest : public::testing::Test {AgedQuadraticDeclineTest4,83
+    AgedQuadraticDeclineTest() {}AgedQuadraticDeclineTest6,150
+TEST_F(AgedQuadraticDeclineTest, equaltest) {TEST_F9,220
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/probability/linear_interpolation_tests.cc,206
+class LinearInterpolationTest : public::testing::Test {LinearInterpolationTest4,86
+    LinearInterpolationTest() {}LinearInterpolationTest6,152
+TEST_F(LinearInterpolationTest, equaltest) {TEST_F9,192
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/probability/aged_linear_interpolation_tests.cc,226
+class AgedLinearInterpolationTest : public::testing::Test {AgedLinearInterpolationTest4,91
+    AgedLinearInterpolationTest() {}AgedLinearInterpolationTest6,161
+TEST_F(AgedLinearInterpolationTest, equaltest) {TEST_F9,205
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/t_person_tests.cc,145
+class TPersonTest : public ::testing::Test {TPersonTest4,60
+  TPersonTest() {}TPersonTest6,115
+TEST_F(TPersonTest, equaltest) {TEST_F9,141
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/decision_test.cc,151
+class DecisionTest : public::testing::Test {DecisionTest4,62
+    DecisionTest() {}DecisionTest6,117
+TEST_F(DecisionTest, equaltest) {TEST_F9,146
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/enjoyment/shocks_frational.cc,191
+class ShocksFractionalTest : public::testing::Test {ShocksFractionalTest4,81
+    ShocksFractionalTest() {}ShocksFractionalTest6,144
+TEST_F(ShocksFractionalTest, equaltest) {TEST_F9,211
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/enjoyment/increasing_decay_tests.cc,435
+class EnjoymentIncreasingDecayTest : public ::testing::Test {EnjoymentIncreasingDecayTest7,97
+  EnjoymentIncreasingDecayTest()EnjoymentIncreasingDecayTest9,168
+  virtual void SetUp() {SetUp13,271
+  int health_;health_20,445
+  int life_investment_;life_investment_21,460
+  std::unique_ptr<healthcare::enjoyment::IncreasingDecay> enjoyment_;enjoyment_22,484
+TEST_F(EnjoymentIncreasingDecayTest, GetEnjoyment) {TEST_F25,558
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/enjoyment/frational.cc,161
+class FractionalTest : public::testing::Test {FractionalTest4,74
+    FractionalTest() {}FractionalTest6,131
+TEST_F(FractionalTest, equaltest) {TEST_F9,192
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/enjoyment/fractional_tests.cc,454
+namespace enjoymenttests {enjoymenttests7,91
+class EnjoymentFractionalTest : public ::testing::Test {EnjoymentFractionalTest9,119
+  EnjoymentFractionalTest()EnjoymentFractionalTest11,185
+  virtual void SetUp() {SetUp15,283
+  int health_;health_21,432
+  int life_investment_;life_investment_22,447
+  std::unique_ptr<healthcare::enjoyment::Fractional> enjoyment_;enjoyment_23,471
+TEST_F(EnjoymentFractionalTest, GetEnjoyment) {TEST_F26,540
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/enjoyment/logistic_tests.cc,493
+namespace enjoymenttests {enjoymenttests7,89
+class EnjoymentLogisticTest : public ::testing::Test {EnjoymentLogisticTest9,117
+  EnjoymentLogisticTest() : health_(0), life_investment_(0), enjoyment_() {}EnjoymentLogisticTest11,181
+  virtual void SetUp() {SetUp14,271
+  int health_;health_20,420
+  int life_investment_;life_investment_21,435
+  std::unique_ptr<healthcare::enjoyment::Logistic> enjoyment_;enjoyment_22,459
+TEST_F(EnjoymentLogisticTest, GetEnjoyment) {TEST_F25,526
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/joy/frational.cc,160
+class FractionalTest : public ::testing::Test {FractionalTest4,68
+  FractionalTest() {}FractionalTest6,127
+TEST_F(FractionalTest, equaltest) {TEST_F9,186
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/person_tests.cc,140
+class PersonTest : public ::testing::Test {PersonTest4,60
+  PersonTest() {}PersonTest6,114
+TEST_F(PersonTest, equaltest) {TEST_F9,139
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/fitness/flat_loss_tests.cc,151
+class FlatLossTest : public::testing::Test {FlatLossTest4,71
+    FlatLossTest() {}FlatLossTest6,126
+TEST_F(FlatLossTest, equaltest) {TEST_F9,155
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/fitness/proportional_loss.cc,192
+class ProportionalLossTest : public::testing::Test {ProportionalLossTest4,79
+    ProportionalLossTest() {}ProportionalLossTest6,142
+TEST_F(ProportionalLossTest, equaltest) {TEST_F10,199
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/fitness/composite_tests.cc,159
+class CompositeTest : public::testing::Test {CompositeTest8,176
+    CompositeTest() {}CompositeTest10,232
+TEST_F(CompositeTest, equaltest) {TEST_F13,292
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/fitness/fixed_price_tests.cc,161
+class FixedPriceTest : public::testing::Test {FixedPriceTest4,73
+    FixedPriceTest() {}FixedPriceTest6,130
+TEST_F(FixedPriceTest, equaltest) {TEST_F9,161
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/regeneration/shifted_logistic_tests.cc,508
+namespace regenerationtests {regenerationtests7,100
+class RegenerationShiftedLogisticTest : public ::testing::Test {RegenerationShiftedLogisticTest9,131
+  RegenerationShiftedLogisticTest()RegenerationShiftedLogisticTest11,205
+  virtual void SetUp() {SetUp15,309
+  int health_;health_21,466
+  int health_investment_;health_investment_22,481
+  std::unique_ptr<healthcare::regeneration::ShiftedLogistic> regen_;regen_23,507
+TEST_F(RegenerationShiftedLogisticTest, GetRegeneration) {TEST_F26,580
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/regeneration/logistic_tests.cc,514
+namespace regenerationtests {regenerationtests7,92
+class RegenerationLogisticTest : public ::testing::Test {RegenerationLogisticTest9,123
+  RegenerationLogisticTest() : health_(0), health_investment_(0), regen_() {}RegenerationLogisticTest11,190
+  virtual void SetUp() {SetUp14,281
+  int health_;health_20,439
+  int health_investment_;health_investment_21,454
+  std::unique_ptr<healthcare::regeneration::Logistic> regen_;regen_22,480
+TEST_F(RegenerationLogisticTest, GetRegeneration) {TEST_F25,546
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/degeneration/linear_tests.cc,409
+namespace degenerationtests {degenerationtests7,90
+class DegenerationLinearTest : public ::testing::Test {DegenerationLinearTest9,121
+  DegenerationLinearTest() : degen_() {}DegenerationLinearTest11,186
+  virtual void SetUp() {SetUp14,240
+  int age_;age_18,342
+  std::unique_ptr<healthcare::degeneration::Linear> degen_;degen_19,354
+TEST_F(DegenerationLinearTest, GetDegeneration) {TEST_F22,418
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/insurance/fixed_tests.cc,136
+class FixedTest : public::testing::Test {FixedTest4,69
+    FixedTest() {}FixedTest6,121
+TEST_F(FixedTest, equaltest) {TEST_F9,147
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/insurance/actuarial_tests.cc,223
+class ActuarialTest : public ::testing::Test {ActuarialTest5,126
+  ActuarialTest() {}ActuarialTest7,184
+class FlatProb : public healthcare::Probability {FlatProb10,212
+TEST_F(ActuarialTest, equaltest) {TEST_F17,376
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/job/linear_tests.cc,303
+namespace jobtests {jobtests7,81
+class JobLinearTest : public ::testing::Test {JobLinearTest9,103
+  JobLinearTest() : job_() {}JobLinearTest11,159
+  virtual void SetUp() {SetUp14,202
+  std::unique_ptr<healthcare::job::Linear> job_;job_18,292
+TEST_F(JobLinearTest, GetEarnings) {TEST_F21,345
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/job/flat_tests.cc,131
+class FlatTest : public::testing::Test {FlatTest4,62
+    FlatTest() {}FlatTest6,113
+TEST_F(FlatTest, equaltest) {TEST_F9,138
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/job/composite_tests.cc,307
+namespace jobtests {jobtests12,235
+class JobCompositeTest : public ::testing::Test {JobCompositeTest14,257
+  JobCompositeTest() : job_() {}JobCompositeTest16,316
+  virtual void SetUp() {SetUp19,362
+  healthcare::job::Composite job_;job_28,771
+TEST_F(JobCompositeTest, GetEarnings) {TEST_F31,810
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/healthcare/job/age_linear_tests.cc,156
+class AgeLinearTest : public::testing::Test {AgeLinearTest4,68
+    AgeLinearTest() {}AgeLinearTest6,124
+TEST_F(AgeLinearTest, equaltest) {TEST_F9,154
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/dp/health_decision_iterator_tests.cc,558
+class HealthDecisionIteratorTest : public ::testing::Test {HealthDecisionIteratorTest9,166
+  HealthDecisionIteratorTest() {}HealthDecisionIteratorTest11,235
+  virtual void SetUp() {SetUp14,282
+  int max_remaining_cash_;max_remaining_cash_28,841
+  genericdp::DPState<healthcare::HealthState> state_, state2_;state_29,868
+  genericdp::DPState<healthcare::HealthState> state_, state2_;state2_29,868
+      end_it_, end_it2_;end_it_31,1012
+      end_it_, end_it2_;end_it2_31,1012
+TEST_F(HealthDecisionIteratorTest, CorrectNumIts) {TEST_F34,1041
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/dp/health_dp_storage_tests.cc,1468
+class HealthDPStorageTest : public ::testing::Test {HealthDPStorageTest11,193
+  HealthDPStorageTest() {}HealthDPStorageTest13,254
+  virtual void SetUp() {SetUp16,293
+  int max_remaining_cash_;max_remaining_cash_28,898
+  healthcaredp::DPHealthState state, state2, state_bad, state_dead, state_end, state_invalid;state29,925
+  healthcaredp::DPHealthState state, state2, state_bad, state_dead, state_end, state_invalid;state229,925
+  healthcaredp::DPHealthState state, state2, state_bad, state_dead, state_end, state_invalid;state_bad29,925
+  healthcaredp::DPHealthState state, state2, state_bad, state_dead, state_end, state_invalid;state_dead29,925
+  healthcaredp::DPHealthState state, state2, state_bad, state_dead, state_end, state_invalid;state_end29,925
+  healthcaredp::DPHealthState state, state2, state_bad, state_dead, state_end, state_invalid;state_invalid29,925
+  std::unique_ptr<healthcaredp::HealthDPStorage> storage;storage30,1019
+  genericdp::DPResult<healthcaredp::DPHealthState> res;res31,1077
+TEST_F(HealthDPStorageTest, StoreAndCheckTest) {TEST_F34,1137
+TEST_F(HealthDPStorageTest, StoreAndRetrieveValueTest) {TEST_F40,1325
+TEST_F(HealthDPStorageTest, StoreAndRetrieveStateTest) {TEST_F45,1485
+TEST_F(HealthDPStorageTest, IsTerminalStateTest) {TEST_F51,1688
+TEST_F(HealthDPStorageTest, ThrowsForInvalidRetrievalTest) {TEST_F58,1953
+TEST_F(HealthDPStorageTest, ReturnsDefaultConstructedIfUnstoredTest) {TEST_F62,2101
+
+/home/kajames/Dropbox/org/projects/health_care/healthcare_chronic/test/dp/health_state_iterator_tests.cc,425
+class HealthStateIteratorTest : public ::testing::Test {HealthStateIteratorTest9,144
+  HealthStateIteratorTest() {}HealthStateIteratorTest11,209
+  virtual void SetUp() {SetUp14,252
+  int max_periods_;max_periods_20,439
+  int max_remaining_cash_;max_remaining_cash_21,459
+  std::unique_ptr<healthcaredp::HealthStateIterator> state_it_;state_it_22,486
+TEST_F(HealthStateIteratorTest, CorrectNumIts) {TEST_F25,554

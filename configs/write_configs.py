@@ -54,8 +54,9 @@ def vary_template(config, var):
             val = var[key][i]
             subkeys = key.split(':')
             sub_name = gen_name(subkeys, val, i)
-            names[i] += '_' + sub_name
-            name += '_' + sub_name
+            if subkeys[-1] != 'function':
+                names[i] += '_' + sub_name
+                name += '_' + sub_name
             subkeys = [int(val) if val.isdigit() else val for val in subkeys]
             for j in range(len(subkeys) - 1):
                 conf_mod = conf_mod[subkeys[j]]
@@ -66,6 +67,7 @@ def vary_template(config, var):
             else:
                 conf_mod[subkeys[-1]] = val
         out_templates.append({"name": name, "config": conf})
+    names = [name for name in names if name]
     names = [name.strip('_') for name in names]
     return out_templates, names
 
@@ -79,7 +81,7 @@ def gen_name(sub_keys, val, i):
         'job': 'job',
         'joy': 'joy',
         'probability': 'prob',
-        'fitnesses': 'fit',
+        'fitness': 'fit',
         'max_shocks': 'maxs',
         'shock_income_size': 'ssizei',
         'discount': 'beta',
@@ -112,7 +114,9 @@ def gen_name(sub_keys, val, i):
         'Cosine': 'Cos',
         'Age': 'A',
         'Shocks': 'S',
-        'Fitness': 'F'
+        'Fitness': 'F',
+        'function': '',
+        'function_name' : ''
     }
     name = shortened_keys.get(sub_keys[0], sub_keys[0])
     if (len(sub_keys) > 1):

@@ -39,9 +39,9 @@ std::unique_ptr<const Insurance> ReadActuarialInsurance(
     ptree insure_config, const Configuration& config) {
   float scale = insure_config.get<float>("scale");
   float admin_cost = insure_config.get<float>("admin_cost");
-  std::shared_ptr<const Probability> prob = config.shock_prob;
-  return std::make_unique<insurance::Actuarial>(scale, admin_cost, config.shock_income_size,
-                                                prob);
+  std::function<double(int, int, int)> prob = config.shock_prob;
+  return std::make_unique<insurance::Actuarial>(scale, admin_cost,
+                                                config.shock_income_size, prob);
 }
 
 std::unique_ptr<const Insurance> ReadFixedInsurance(ptree insure_config) {

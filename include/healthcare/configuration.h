@@ -1,15 +1,12 @@
 #ifndef HEALTHCARE_CONFIGURATION_H_
 #define HEALTHCARE_CONFIGURATION_H_
 
+#include <functional>
 #include <memory>
 #include <string>
 
-#include "healthcare/fitness.h"
 #include "healthcare/insurance.h"
 #include "healthcare/job.h"
-#include "healthcare/joy.h"
-#include "healthcare/modifier.h"
-#include "healthcare/probability.h"
 
 namespace healthcare {
 
@@ -23,9 +20,9 @@ struct Configuration {
   float min_debt_payment;
   float discount;
   std::shared_ptr<const healthcare::Job> job;
-  std::shared_ptr<const healthcare::Fitness> fitness;
-  std::shared_ptr<const healthcare::Joy> joy;
-  std::shared_ptr<const healthcare::Probability> shock_prob;
+  std::function<int(int age, int shocks, int fitness, int investments)> fitness;
+  std::function<double(int age, int shocks, int fitness, int investments)> joy;
+  std::function<float(int age, int shocks, int fitness)> shock_prob;
   std::shared_ptr<const healthcare::Insurance> insurance;
   int shock_income_size;
   int shock_count_size;

@@ -5,12 +5,11 @@
 #include <string>
 
 #include <boost/property_tree/ptree.hpp>
-#include "healthcare/joy.h"
 
 namespace healthcare {
 namespace configuration {
 
-std::unique_ptr<const healthcare::Joy> ReadJoy(
+std::function<double(int, int, int, int)> ReadJoy(
     boost::property_tree::ptree joy_config, int max_age, int max_shocks,
     int max_fitness);
 

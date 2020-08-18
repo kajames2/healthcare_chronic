@@ -100,7 +100,7 @@ max_cash = config["max_cash"]
 min_cash = config["min_cash"]
 json_config = json.load(open(sys.argv[2], "r"))
 decision_periods = json_config.get('decision_periods', max_age)
-if decision_periods == max_age:
+if decision_periods >= max_age:
     exit()
 row_size = max_cash - min_cash + 1
 grid_size = (max_fitness + 1) * row_size

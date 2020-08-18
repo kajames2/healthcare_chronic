@@ -15,7 +15,7 @@ DecisionResults DecisionEvaluator::GetDecisionResults(
 
 PeriodResult DecisionEvaluator::ApplyDecision(Person state,
                                               const Decision& dec) const {
-  state.fitness = fitness_[state.fitness][dec.fitness_spending];
+  state.fitness = fitness_[state.shocks][state.fitness][dec.fitness_spending];
   PeriodResult res;
   res.person = state;
   res.joy = joy_[state.shocks][state.fitness][dec.joy_spending];
@@ -48,25 +48,23 @@ void DecisionEvaluator::Precalculate() {
   for (int shocks = 0; shocks <= config_.max_shocks; ++shocks) {
     std::vector<std::vector<float>> sub_joy;
     std::vector<float> sub_prob;
+    std::vector<std::vector<int>> sub_fit;
     for (int fitness = 0; fitness <= config_.max_fitness; ++fitness) {
       std::vector<float> sub_sub_joy;
       for (int joy_spend = 0; joy_spend <= config_.max_budget; ++joy_spend) {
-        sub_sub_joy.push_back(
-            config_.joy->GetJoy(age_, shocks, fitness, joy_spend));
+        sub_sub_joy.push_back(config_.joy(age_, shocks, fitness, joy_spend));
       }
       sub_joy.push_back(sub_sub_joy);
-      sub_prob.push_back(std::clamp(
-          config_.shock_prob->GetProbability(age_, shocks, fitness), 0.f, 1.f));
+      std::vector<int> sub_sub_fit;
+      for (int fit_spend = 0; fit_spend <= config_.max_budget; ++fit_spend) {
+        sub_sub_fit.push_back(
+            config_.fitness(age_, shocks, fitness, fit_spend));
+      }
+      sub_fit.push_back(sub_sub_fit);
+      sub_prob.push_back(config_.shock_prob(age_, shocks, fitness));
     }
     joy_.push_back(sub_joy);
     shock_prob_.push_back(sub_prob);
-  }
-
-  for (int fitness = 0; fitness <= config_.max_fitness; ++fitness) {
-    std::vector<int> sub_fit;
-    for (int fit_spend = 0; fit_spend <= config_.max_budget; ++fit_spend) {
-      sub_fit.push_back(config_.fitness->GetFitness(fitness, fit_spend));
-    }
     fitness_.push_back(sub_fit);
   }
 }

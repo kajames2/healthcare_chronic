@@ -18,16 +18,11 @@ set(SOURCES
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/joy_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/job_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/fitness_reader.cc
-  ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/modifier_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/prob_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/insurance_reader.cc
-  ${PROJECT_SOURCE_DIR}/src/healthcare/joy/fractional.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/decision.cc
-  ${PROJECT_SOURCE_DIR}/src/healthcare/fitness/composite.cc
-  ${PROJECT_SOURCE_DIR}/src/healthcare/fitness/fixed_price.cc
-  ${PROJECT_SOURCE_DIR}/src/healthcare/fitness/quadratic_cost.cc
   ${PROJECT_SOURCE_DIR}/src/dp/decision_cache.cc
-  ${PROJECT_SOURCE_DIR}/src/dp/storage.cc  
+  ${PROJECT_SOURCE_DIR}/src/dp/storage.cc
   )
 
 if (MSYS)
@@ -92,12 +87,7 @@ endif()
 
 set(TEST_SOURCES
   ${PROJECT_SOURCE_DIR}/test/healthcare/decision_test.cc
-  ${PROJECT_SOURCE_DIR}/test/healthcare/joy/frational.cc
   ${PROJECT_SOURCE_DIR}/test/healthcare/person_tests.cc
-  ${PROJECT_SOURCE_DIR}/test/healthcare/fitness/flat_loss_tests.cc
-  ${PROJECT_SOURCE_DIR}/test/healthcare/fitness/proportional_loss.cc
-  ${PROJECT_SOURCE_DIR}/test/healthcare/fitness/composite_tests.cc
-  ${PROJECT_SOURCE_DIR}/test/healthcare/fitness/fixed_price_tests.cc
   ${PROJECT_SOURCE_DIR}/test/healthcare/insurance/fixed_tests.cc
   ${PROJECT_SOURCE_DIR}/test/healthcare/insurance/actuarial_tests.cc
   ${PROJECT_SOURCE_DIR}/test/healthcare/job/flat_tests.cc

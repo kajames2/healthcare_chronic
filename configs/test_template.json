@@ -10,53 +10,24 @@
         "slope": 0
     },
     "joy": {
-        "type": "Fractional",
-        "j": 20,
-        "mods": [
-            {
-                "func": "Multiply",
-                "type": "Linear",
-                "param": "Shocks",
-                "max_modification": 1
-            },
-            {
-                "func": "Add",
-                "type": "Constant",
-                "value": 0
-            }
-        ]
+	"name" : "Base",
+	"function" : "(1 - shocks/max_shocks) * (x / (x + j)) + 0.2",
+        "j": 20
     },
     "probability": {
-        "type": "GompertzShocks",
-        "age_coeff": 1,
-        "shock_coeff": 1,
+	"function_name" : "Base",
+        "function" : "(1 * exp(age_rate * age) + 1 * exp(shock_rate * shocks) - 1.95) * (1 - max_effect * (fitness / (fitness + j)))",
         "age_rate": 0.02,
         "shock_rate": 0.05,
-        "mods": [
-	    {
-		"func": "Add",
-		"type": "Constant",
-		"value": -1.95
-            },
-            {
-                "func": "Multiply",
-                "type": "Fractional",
-                "param": "Fitness",
-                "max_modification": 1.2,
-                "j": 40
-            }
-        ]
+        "max_effect": 1.2,
+        "j": 40
     },
-    "fitnesses": [
-        {
-            "type": "ProportionalLoss",
-            "rate": 0.333
-        },
-        {
-            "type": "FixedPrice",
-            "price": 3
-        }
-    ],
+    "fitness": {
+	"name" : "Base",
+        "function" : "(1-p) * fitness + x / price",
+        "p" : 0.333,
+        "price" : 3
+    },
     "max_shocks": 6,
     "shock_income_size": 10,
     "discount": 1.0,

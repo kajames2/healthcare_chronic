@@ -2,108 +2,83 @@
 
 #include <cassert>
 #include <memory>
+#include <optional>
+#include <sstream>
 #include <string>
 
+#include <boost/optional.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include "healthcare/joy.h"
-#include "healthcare/joy/fractional.h"
-#include "healthcare/joy/health_dependent.h"
-#include "healthcare/joy/health_dependent_dustin.h"
-#include "healthcare/joy/health_dependent_fan.h"
-#include "healthcare/joy/health_dependent_steve.h"
-#include "healthcare/joy/mod_decorator.h"
-#include "healthcare/joy/shift_decorator.h"
-#include "modifier_reader.h"
+#include "exprtk.hpp"
 
 namespace healthcare {
 namespace configuration {
 
 using ::boost::property_tree::ptree;
 
-std::unique_ptr<const Joy> ReadFractionalJoy(ptree joy_config);
-std::unique_ptr<const Joy> ReadHealthDependentJoy(ptree joy_config,
-                                                  int max_shocks);
-std::unique_ptr<const Joy> ReadHealthDependentJoySteve(ptree joy_config,
-                                                       int max_shocks);
-std::unique_ptr<const Joy> ReadHealthDependentJoyDustin(ptree joy_config,
-                                                        int max_shocks);
-std::unique_ptr<const Joy> ReadHealthDependentJoyFan(ptree joy_config,
-                                                     int max_shocks,
-                                                     int max_fitness);
-
-std::unique_ptr<const Joy> ReadJoy(ptree joy_config, int max_age,
-                                   int max_shocks, int max_fitness) {
-  std::string type = joy_config.get<std::string>("type");
-  std::unique_ptr<const Joy> joy;
-  if (type == "Fractional") {
-    joy = ReadFractionalJoy(joy_config);
-  } else if (type == "HealthDependent") {
-    joy = ReadHealthDependentJoy(joy_config, max_shocks);
-  } else if (type == "HealthDependentSteve") {
-    joy = ReadHealthDependentJoySteve(joy_config, max_shocks);
-  } else if (type == "HealthDependentDustin") {
-    joy = ReadHealthDependentJoyDustin(joy_config, max_shocks);
-  } else if (type == "HealthDependentFan") {
-    joy = ReadHealthDependentJoyFan(joy_config, max_shocks, max_fitness);
-  } else {
-    assert(false && "Unsupported Joy type");
-    joy = std::unique_ptr<const Joy>();
+std::function<double(int, int, int, int)> MakeJoyFunc(
+    std::string func_str, std::unordered_map<std::string, double> joy_consts,
+    int max_age, int max_shocks, int max_fitness) {
+  std::string expression_str = func_str;
+  exprtk::symbol_table<double> symbol_table;
+  for (const auto& [key, value] : joy_consts) {
+    symbol_table.add_constant(key, value);
   }
-  if (joy_config.count("mods")) {
-    std::unique_ptr<const Modifier> mod = ReadModifiers(
-        joy_config.get_child("mods"), max_age, max_shocks, max_fitness);
-    joy = std::make_unique<joy::ModDecorator>(std::move(joy), std::move(mod));
+  symbol_table.add_constant("max_age", max_age);
+  symbol_table.add_constant("max_shocks", max_shocks);
+  symbol_table.add_constant("max_fitness", max_fitness);
+  symbol_table.add_constants();
+
+  double age = 1;
+  double shocks = 0;
+  double fitness = 0;
+  double x = 0;
+  symbol_table.add_variable("age", age);
+  symbol_table.add_variable("shocks", shocks);
+  symbol_table.add_variable("fitness", fitness);
+  symbol_table.add_variable("x", x);
+
+  exprtk::expression<double> expression;
+  expression.register_symbol_table(symbol_table);
+  exprtk::parser<double> parser;
+  if (!parser.compile(expression_str, expression)) {
+    printf("Error: %s\tExpression: %s\n", parser.error().c_str(),
+           expression_str.c_str());
+    for (std::size_t i = 0; i < parser.error_count(); ++i) {
+      exprtk::parser_error::type error = parser.get_error(i);
+      printf(
+          "Error: %02d Position: %02d "
+          "Type: [%s] "
+          "Message: %s "
+          "Expression: %s\n",
+          static_cast<int>(i), static_cast<int>(error.token.position),
+          exprtk::parser_error::to_str(error.mode).c_str(),
+          error.diagnostic.c_str(), expression_str.c_str());
+    }
+    exit(1);
   }
-  return joy;
+  return [expression, &age, &shocks, &fitness, &x](
+             int age_in, int shocks_in, int fitness_in, int investment_in) {
+    age = static_cast<double>(age_in);
+    shocks = static_cast<double>(shocks_in);
+    fitness = static_cast<double>(fitness_in);
+    x = static_cast<double>(investment_in);
+    return expression.value();
+  };
 }
 
-std::unique_ptr<const Joy> ReadFractionalJoy(ptree joy_config) {
-  float j = joy_config.get<float>("j");
-  return std::make_unique<joy::Fractional>(j);
-}
-
-std::unique_ptr<const Joy> ReadHealthDependentJoy(ptree joy_config,
-                                                  int max_shocks) {
-  double gamma_health = joy_config.get<float>("gamma_health");
-  double gamma_consumption = joy_config.get<float>("gamma_consumption");
-  float fitness_r = joy_config.get<float>("fitness_r");
-  return std::make_unique<joy::HealthDependent>(gamma_health, gamma_consumption,
-                                                max_shocks, fitness_r);
-}
-
-std::unique_ptr<const Joy> ReadHealthDependentJoySteve(ptree joy_config,
-                                                       int max_shocks) {
-  double gamma_health = joy_config.get<float>("gamma_health");
-  double gamma_consumption = joy_config.get<float>("gamma_consumption");
-  float fitness_r = joy_config.get<float>("fitness_r");
-  float lambda = joy_config.get<float>("lambda");
-  float mu = joy_config.get<float>("mu");
-  return std::make_unique<joy::HealthDependentSteve>(
-      gamma_health, gamma_consumption, max_shocks, fitness_r, lambda, mu);
-}
-
-std::unique_ptr<const Joy> ReadHealthDependentJoyDustin(ptree joy_config,
-                                                        int max_shocks) {
-  double gamma_health = joy_config.get<float>("gamma_health");
-  double gamma_consumption = joy_config.get<float>("gamma_consumption");
-  float fitness_r = joy_config.get<float>("fitness_r");
-  float lambda = joy_config.get<float>("lambda");
-  float mu = joy_config.get<float>("mu");
-  return std::make_unique<joy::HealthDependentDustin>(
-      gamma_health, gamma_consumption, max_shocks, fitness_r, lambda, mu);
-}
-
-std::unique_ptr<const Joy> ReadHealthDependentJoyFan(ptree joy_config,
-                                                     int max_shocks,
-                                                     int max_fitness) {
-  double gamma_health = joy_config.get<float>("gamma_health");
-  double gamma_consumption = joy_config.get<float>("gamma_consumption");
-  float p = joy_config.get<float>("p");
-  float k = joy_config.get<float>("k");
-  float c = joy_config.get<float>("c");
-  return std::make_unique<joy::HealthDependentFan>(
-      gamma_health, gamma_consumption, p, k, c, max_shocks, max_fitness);
+std::function<double(int, int, int, int)> ReadJoy(ptree joy_config, int max_age,
+                                                  int max_shocks,
+                                                  int max_fitness) {
+  std::string func_str = joy_config.get<std::string>("function");
+  std::unordered_map<std::string, double> const_map;
+  for (auto it : joy_config) {
+    boost::optional<float> f = it.second.get_value_optional<float>();
+    if (f) {
+      const_map[it.first] = f.value();
+    }
+  }
+  return MakeJoyFunc(func_str, const_map, max_age, max_shocks, max_fitness);
 }
 
 }  // namespace configuration
