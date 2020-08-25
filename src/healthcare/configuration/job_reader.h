@@ -5,13 +5,13 @@
 #include <string>
 
 #include <boost/property_tree/ptree.hpp>
-#include "healthcare/job.h"
 
 namespace healthcare {
 namespace configuration {
 
-std::unique_ptr<const healthcare::Job> ReadJob(
-    boost::property_tree::ptree job_config);
+std::function<int(int, int, int)> ReadJob(
+    boost::property_tree::ptree job_config, int max_age, int max_shocks,
+    int max_fitness);
 
 }  // namespace configuration
 }  // namespace healthcare

@@ -702,60 +702,6 @@ test/healthcare/insurance/fixed_tests.cc.s:
 	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/insurance/fixed_tests.cc.s
 .PHONY : test/healthcare/insurance/fixed_tests.cc.s
 
-test/healthcare/job/age_linear_tests.o: test/healthcare/job/age_linear_tests.cc.o
-
-.PHONY : test/healthcare/job/age_linear_tests.o
-
-# target to build an object file
-test/healthcare/job/age_linear_tests.cc.o:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/job/age_linear_tests.cc.o
-.PHONY : test/healthcare/job/age_linear_tests.cc.o
-
-test/healthcare/job/age_linear_tests.i: test/healthcare/job/age_linear_tests.cc.i
-
-.PHONY : test/healthcare/job/age_linear_tests.i
-
-# target to preprocess a source file
-test/healthcare/job/age_linear_tests.cc.i:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/job/age_linear_tests.cc.i
-.PHONY : test/healthcare/job/age_linear_tests.cc.i
-
-test/healthcare/job/age_linear_tests.s: test/healthcare/job/age_linear_tests.cc.s
-
-.PHONY : test/healthcare/job/age_linear_tests.s
-
-# target to generate assembly for a file
-test/healthcare/job/age_linear_tests.cc.s:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/job/age_linear_tests.cc.s
-.PHONY : test/healthcare/job/age_linear_tests.cc.s
-
-test/healthcare/job/flat_tests.o: test/healthcare/job/flat_tests.cc.o
-
-.PHONY : test/healthcare/job/flat_tests.o
-
-# target to build an object file
-test/healthcare/job/flat_tests.cc.o:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/job/flat_tests.cc.o
-.PHONY : test/healthcare/job/flat_tests.cc.o
-
-test/healthcare/job/flat_tests.i: test/healthcare/job/flat_tests.cc.i
-
-.PHONY : test/healthcare/job/flat_tests.i
-
-# target to preprocess a source file
-test/healthcare/job/flat_tests.cc.i:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/job/flat_tests.cc.i
-.PHONY : test/healthcare/job/flat_tests.cc.i
-
-test/healthcare/job/flat_tests.s: test/healthcare/job/flat_tests.cc.s
-
-.PHONY : test/healthcare/job/flat_tests.s
-
-# target to generate assembly for a file
-test/healthcare/job/flat_tests.cc.s:
-	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/test/healthcare/job/flat_tests.cc.s
-.PHONY : test/healthcare/job/flat_tests.cc.s
-
 test/healthcare/person_tests.o: test/healthcare/person_tests.cc.o
 
 .PHONY : test/healthcare/person_tests.o
@@ -876,12 +822,6 @@ help:
 	@echo "... test/healthcare/insurance/fixed_tests.o"
 	@echo "... test/healthcare/insurance/fixed_tests.i"
 	@echo "... test/healthcare/insurance/fixed_tests.s"
-	@echo "... test/healthcare/job/age_linear_tests.o"
-	@echo "... test/healthcare/job/age_linear_tests.i"
-	@echo "... test/healthcare/job/age_linear_tests.s"
-	@echo "... test/healthcare/job/flat_tests.o"
-	@echo "... test/healthcare/job/flat_tests.i"
-	@echo "... test/healthcare/job/flat_tests.s"
 	@echo "... test/healthcare/person_tests.o"
 	@echo "... test/healthcare/person_tests.i"
 	@echo "... test/healthcare/person_tests.s"

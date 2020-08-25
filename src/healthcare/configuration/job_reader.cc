@@ -1,59 +1,77 @@
 #include "job_reader.h"
 
 #include <cassert>
-#include <iostream>
 #include <memory>
 #include <string>
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
-#include "healthcare/job.h"
-#include "healthcare/job/age_linear.h"
-#include "healthcare/job/defined.h"
-#include "healthcare/job/flat.h"
+#include "exprtk.hpp"
 
 namespace healthcare {
 namespace configuration {
 
 using ::boost::property_tree::ptree;
 
-std::unique_ptr<const Job> ReadFlatJob(ptree job_config);
-std::unique_ptr<const Job> ReadAgeLinearJob(ptree job_config);
-std::unique_ptr<const Job> ReadDefinedJob(ptree job_config);
-
-std::unique_ptr<const Job> ReadJob(ptree job_config) {
-  std::string type = job_config.get<std::string>("type");
-  std::unique_ptr<const Job> job;
-  if (type == "Flat") {
-    job = ReadFlatJob(job_config);
-  } else if (type == "AgeLinear") {
-    job = ReadAgeLinearJob(job_config);
-  } else if (type == "Defined") {
-    job = ReadDefinedJob(job_config);
-  } else {
-    assert(false && "Unsupported job type");
-    job = std::unique_ptr<const Job>();
+std::function<int(int, int, int)> MakeJobFunc(
+    std::string func_str, std::unordered_map<std::string, double> job_consts,
+    int max_age, int max_shocks, int max_fitness) {
+  std::string expression_str = func_str;
+  exprtk::symbol_table<double> symbol_table;
+  for (const auto& [key, value] : job_consts) {
+    symbol_table.add_constant(key, value);
   }
-  return job;
-}
+  symbol_table.add_constant("max_age", max_age);
+  symbol_table.add_constant("max_shocks", max_shocks);
+  symbol_table.add_constant("max_fitness", max_fitness);
+  symbol_table.add_constants();
 
-std::unique_ptr<const Job> ReadFlatJob(ptree job_config) {
-  int rate = job_config.get<int>("rate");
-  return std::make_unique<job::Flat>(rate);
-}
+  double age = 1;
+  double shocks = 0;
+  double fitness = 0;
+  symbol_table.add_variable("age", age);
+  symbol_table.add_variable("shocks", shocks);
+  symbol_table.add_variable("fitness", fitness);
 
-std::unique_ptr<const Job> ReadAgeLinearJob(ptree job_config) {
-  float intercept = job_config.get<float>("intercept");
-  float slope = job_config.get<float>("slope");
-  return std::make_unique<job::AgeLinear>(intercept, slope);
-}
-
-std::unique_ptr<const Job> ReadDefinedJob(ptree job_config) {
-  std::vector<int> incomes;
-  for (auto& cell : job_config.get_child("incomes")) {
-    incomes.emplace_back(cell.second.get_value<int>());
+  exprtk::expression<double> expression;
+  expression.register_symbol_table(symbol_table);
+  exprtk::parser<double> parser;
+  if (!parser.compile(expression_str, expression)) {
+    printf("Error: %s\tExpression: %s\n", parser.error().c_str(),
+           expression_str.c_str());
+    for (std::size_t i = 0; i < parser.error_count(); ++i) {
+      exprtk::parser_error::type error = parser.get_error(i);
+      printf(
+          "Error: %02d Position: %02d "
+          "Type: [%s] "
+          "Message: %s "
+          "Expression: %s\n",
+          static_cast<int>(i), static_cast<int>(error.token.position),
+          exprtk::parser_error::to_str(error.mode).c_str(),
+          error.diagnostic.c_str(), expression_str.c_str());
+    }
+    exit(1);
   }
-  return std::make_unique<job::Defined>(incomes);
+  return [expression, &age, &shocks, &fitness](int age_in, int shocks_in,
+                                               int fitness_in) {
+    age = static_cast<double>(age_in);
+    shocks = static_cast<double>(shocks_in);
+    fitness = static_cast<double>(fitness_in);
+    return std::max(0, static_cast<int>(expression.value()));
+  };
+}
+
+std::function<int(int, int, int)> ReadJob(ptree job_config, int max_age,
+                                          int max_shocks, int max_fitness) {
+  std::string func_str = job_config.get<std::string>("function");
+  std::unordered_map<std::string, double> const_map;
+  for (auto it : job_config) {
+    boost::optional<float> f = it.second.get_value_optional<float>();
+    if (f) {
+      const_map[it.first] = f.value();
+    }
+  }
+  return MakeJobFunc(func_str, const_map, max_age, max_shocks, max_fitness);
 }
 
 }  // namespace configuration

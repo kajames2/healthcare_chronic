@@ -90,8 +90,6 @@ set(TEST_SOURCES
   ${PROJECT_SOURCE_DIR}/test/healthcare/person_tests.cc
   ${PROJECT_SOURCE_DIR}/test/healthcare/insurance/fixed_tests.cc
   ${PROJECT_SOURCE_DIR}/test/healthcare/insurance/actuarial_tests.cc
-  ${PROJECT_SOURCE_DIR}/test/healthcare/job/flat_tests.cc
-  ${PROJECT_SOURCE_DIR}/test/healthcare/job/age_linear_tests.cc
   )
 
 add_executable(tests_main tests_main.cc ${SOURCES} ${TEST_SOURCES})

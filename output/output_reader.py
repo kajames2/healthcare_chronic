@@ -160,6 +160,10 @@ for filename_base in filenames:
     filename = filename_base + ".csv"
     (offsets, config, header) = get_data_features(filename)
 
+    json_config = json.load(open(filename_base + ".json", "r"))
+    shock_size = json_config["shock_income_size"]
+    init_fitness = json_config.get('initial_fitness', 0)
+
     max_age = config["max_age"]
     max_shocks = config["max_shocks"]
     max_fitness = config["max_fitness"]
@@ -172,7 +176,7 @@ for filename_base in filenames:
     header_indices = {header[i]: i for i in range(len(header))}
     n_lives = 10000
     lives_digits = len(str(abs(n_lives - 1)))
-    start_state = [1, 0, 20, 0]
+    start_state = [1, 0, init_fitness, 0]
     fstream = open(filename)
     rand_lives = [get_life_random(fstream, start_state, max_age) for i in range(n_lives)]
     #rands = generate_fair_draws(max_age, n_lives)
@@ -182,8 +186,6 @@ for filename_base in filenames:
         ",".join(header)
         + ",RandDraw,Shocked,TotalJoy,BuyIns,TotalInsuranceSpending,InsurancePayout,TotalInsurancePayout,NetInsurerProfit,ShockProb,AtMaxShocks,Dies,Life\n"
     )
-    json_config = json.load(open(filename_base + ".json", "r"))
-    shock_size = json_config["shock_income_size"]
     for life in range(n_lives):
         tot_enjoyment = 0.0
         total_insurance_spending = 0

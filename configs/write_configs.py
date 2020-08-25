@@ -104,19 +104,9 @@ def gen_name(sub_keys, val, i):
         'price': 'p',
         'scale': 's',
         'admin_cost': 'acost',
-        'FlatLoss': 'FL',
-        'ProportionalLoss': 'PL',
-        'Multiply': 'Mul',
-        'Add': 'Add',
-        'Linear': 'Lin',
-        'Fractional': 'Fr ac',
-        'Constant': 'Con',
-        'Cosine': 'Cos',
-        'Age': 'A',
-        'Shocks': 'S',
-        'Fitness': 'F',
         'function': '',
-        'function_name' : ''
+        'function_name' : '',
+        'initial_fitness' : 'inifit'
     }
     name = shortened_keys.get(sub_keys[0], sub_keys[0])
     if (len(sub_keys) > 1):

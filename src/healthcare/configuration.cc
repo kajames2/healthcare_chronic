@@ -35,8 +35,8 @@ Configuration ReadConfigurationFile(std::string filename) {
   config.max_savings = root.get<int>("max_savings");
   config.min_savings = root.get<int>("min_savings");
   config.min_debt_payment = root.get<float>("min_debt_payment");
-  config.job = configuration::ReadJob(root.get_child("job"));
-  config.max_budget = CalculateMaxBudget(config);
+  config.job = configuration::ReadJob(root.get_child("job"), config.max_age,
+                                      config.max_shocks, config.max_fitness);
   config.fitness =
       configuration::ReadFitness(root.get_child("fitness"), config.max_age,
                                  config.max_shocks, config.max_fitness);
@@ -50,6 +50,7 @@ Configuration ReadConfigurationFile(std::string filename) {
   config.insurance =
       configuration::ReadInsurance(root.get_child("insurance"), config);
 
+  config.max_budget = CalculateMaxBudget(config);
   if (root.count("discount") == 0) {
     config.discount = 1;
   } else {
@@ -61,9 +62,13 @@ Configuration ReadConfigurationFile(std::string filename) {
 
 int CalculateMaxBudget(const Configuration& config) {
   int max_income = -1;
-  for (int age = config.max_age; age >= 1; --age) {
-    if (config.job->GetEarnings(age) > max_income) {
-      max_income = config.job->GetEarnings(age);
+  for (int age = 0; age <= config.max_age; ++age) {
+    for (int shocks = 0; shocks <= config.max_shocks; ++shocks) {
+      for (int fitness = 0; fitness <= config.max_fitness; ++fitness) {
+        if (config.job(age, shocks, fitness) > max_income) {
+          max_income = config.job(age, shocks, fitness);
+        }
+      }
     }
   }
   return max_income + config.max_savings;

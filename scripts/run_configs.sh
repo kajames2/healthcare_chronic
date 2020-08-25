@@ -28,5 +28,5 @@ do
     rmdir "$dir"
     cd "$DESTINATION"
     python3 "plot_maker.py" "$shortdir"
-    cd "$CURRENT"
+    cd ..
 done

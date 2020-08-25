@@ -145,16 +145,19 @@ std::vector<PersonIncome> CreateTemplateStates(int age,
   std::vector<PersonIncome> init_states;
   init_states.reserve((config.max_shocks + 1) * (config.max_fitness + 1) *
                       (config.max_savings - config.min_savings + 1));
-  for (int s = 0; s <= config.max_shocks; ++s) {
-    for (int f = 0; f <= config.max_fitness; ++f) {
-      int i = config.job->GetEarnings(age);
-      for (int c = config.min_savings; c <= config.max_savings; ++c) {
-        int b =
-            c >= 0
-                ? i + c
+  for (int shocks = 0; shocks <= config.max_shocks; ++shocks) {
+    for (int fitness = 0; fitness <= config.max_fitness; ++fitness) {
+      int income = config.job(age, shocks, fitness);
+      for (int savings = config.min_savings; savings <= config.max_savings;
+           ++savings) {
+        int budget =
+            savings >= 0
+                ? income + savings
                 : std::max(0, static_cast<int>(
-                                  i + std::ceil(c * config.min_debt_payment)));
-        init_states.push_back({{age, s, f, c}, b, i});
+                                  income + std::ceil(savings *
+                                                     config.min_debt_payment)));
+        init_states.push_back(
+            {{age, shocks, fitness, savings}, budget, income});
       }
     }
   }

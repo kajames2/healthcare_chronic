@@ -6,7 +6,6 @@
 #include <string>
 
 #include "healthcare/insurance.h"
-#include "healthcare/job.h"
 
 namespace healthcare {
 
@@ -19,7 +18,7 @@ struct Configuration {
   int max_budget;
   float min_debt_payment;
   float discount;
-  std::shared_ptr<const healthcare::Job> job;
+  std::function<int(int age, int shocks, int fitness)> job;
   std::function<int(int age, int shocks, int fitness, int investments)> fitness;
   std::function<double(int age, int shocks, int fitness, int investments)> joy;
   std::function<float(int age, int shocks, int fitness)> shock_prob;
