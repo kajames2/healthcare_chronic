@@ -19,9 +19,11 @@ PeriodResult DecisionEvaluator::ApplyDecision(Person state,
   PeriodResult res;
   res.person = state;
   res.joy = joy_[state.shocks][state.fitness][dec.joy_spending];
+  res.immediate_utility =
+      utility_[state.shocks][state.fitness][dec.joy_spending];
   res.spending = TotalSpending(dec);
-  res.future_value = 0;
-  res.value = 0;
+  res.future_utility = 0;
+  res.utility = 0;
   ++res.person.age;
   return res;
 }
@@ -46,15 +48,20 @@ PeriodResult DecisionEvaluator::ApplyShock(PeriodResult res,
 
 void DecisionEvaluator::Precalculate() {
   for (int shocks = 0; shocks <= config_.max_shocks; ++shocks) {
+    std::vector<std::vector<float>> sub_util;
     std::vector<std::vector<float>> sub_joy;
     std::vector<float> sub_prob;
     std::vector<std::vector<int>> sub_fit;
     for (int fitness = 0; fitness <= config_.max_fitness; ++fitness) {
+      std::vector<float> sub_sub_util;
       std::vector<float> sub_sub_joy;
       for (int joy_spend = 0; joy_spend <= config_.max_budget; ++joy_spend) {
-        sub_sub_joy.push_back(config_.joy(age_, shocks, fitness, joy_spend));
+        float joy = config_.joy(age_, shocks, fitness, joy_spend);
+        sub_sub_joy.push_back(joy);
+        sub_sub_util.push_back(config_.utility(age_, shocks, fitness, joy));
       }
       sub_joy.push_back(sub_sub_joy);
+      sub_util.push_back(sub_sub_util);
       std::vector<int> sub_sub_fit;
       for (int fit_spend = 0; fit_spend <= config_.max_budget; ++fit_spend) {
         sub_sub_fit.push_back(
@@ -64,6 +71,7 @@ void DecisionEvaluator::Precalculate() {
       sub_prob.push_back(config_.shock_prob(age_, shocks, fitness));
     }
     joy_.push_back(sub_joy);
+    utility_.push_back(sub_util);
     shock_prob_.push_back(sub_prob);
     fitness_.push_back(sub_fit);
   }

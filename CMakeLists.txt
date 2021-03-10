@@ -16,6 +16,7 @@ set(SOURCES
   ${PROJECT_SOURCE_DIR}/src/healthcare/decision_evaluator.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/joy_reader.cc
+  ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/utility_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/job_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/fitness_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/prob_reader.cc

@@ -12,8 +12,9 @@ struct PeriodResult {
   float joy;
   float probability;
   int spending;
-  float future_value;
-  float value;
+  float immediate_utility;
+  float future_utility;
+  float utility;
 };
 
 std::ostream& operator<<(std::ostream& os, const PeriodResult& pr);

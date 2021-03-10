@@ -4,7 +4,6 @@ import sys
 from array import array
 from itertools import chain
 import json
-import math
 
 def parse_line(line):
     return line.strip("\n").split(",")
@@ -185,11 +184,10 @@ for filename_base in filenames:
     f = open(filename_base + "_rand_lives.csv", "w+")
     f.write(
         ",".join(header)
-        + ",RandDraw,Shocked,TotalJoy,TotalUtility,BuyIns,TotalInsuranceSpending,InsurancePayout,TotalInsurancePayout,NetInsurerProfit,ShockProb,AtMaxShocks,Dies,Life\n"
+        + ",RandDraw,Shocked,TotalJoy,BuyIns,TotalInsuranceSpending,InsurancePayout,TotalInsurancePayout,NetInsurerProfit,ShockProb,AtMaxShocks,Dies,Life\n"
     )
     for life in range(n_lives):
         tot_enjoyment = 0.0
-        tot_utility = 0.0
         total_insurance_spending = 0
         total_payout = 0
         prev_at_max_shocks = 0
@@ -197,7 +195,6 @@ for filename_base in filenames:
         for period in rand_lives[life]:
             shocked = int(period[-1])
             tot_enjoyment += float(period[header_indices["Enjoyment"]])
-            tot_utility += float(period[header_indices['ImmediateUtility']])
             total_insurance_spending += int(period[header_indices["InsuranceSpending"]])
             buy_ins = int(period[header_indices["BuyIns"]])
             shock_prob = shocked * (float(period[header_indices["Probability"]])) + (
@@ -210,7 +207,6 @@ for filename_base in filenames:
             died = at_max_shocks - prev_at_max_shocks
             prev_at_max_shocks = at_max_shocks
             period.append("{0:8.4f}".format(tot_enjoyment))
-            period.append("{0:8.4f}".format(tot_utility))
             period.append("{0:1}".format(buy_ins))
             period.append("{0:4}".format(total_insurance_spending))
             period.append("{0:4f}".format(payout))

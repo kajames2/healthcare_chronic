@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from matplotlib.backends.backend_pdf import PdfPages
 
+import numpy as np
+
 # These can be changed easily
 display_cols = [
     "Cash",
@@ -22,13 +24,15 @@ display_cols = [
     "BuyIns",
     "Enjoyment",
     "TotalJoy",
+    "ImmediateUtility",
+    "TotalUtility",
     "JoySpending",
     "FitnessSpending",
     "InsuranceSpending",
     "NextCash",
     "TotalInsurancePayout",
     "TotalInsuranceSpending",
-    "NetInsurerProfit"
+    "NetInsurerProfit",
 ]
 
 

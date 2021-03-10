@@ -25,6 +25,7 @@ class DecisionEvaluator {
   PeriodResult ApplyShock(PeriodResult, const Decision& dec) const;
   PeriodResult ApplyNoShock(PeriodResult) const;
   void Precalculate();
+  std::vector<std::vector<std::vector<float>>> utility_;
   std::vector<std::vector<std::vector<float>>> joy_;
   std::vector<std::vector<float>> shock_prob_;
   std::vector<std::vector<std::vector<int>>> fitness_;

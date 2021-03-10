@@ -80,6 +80,7 @@ def gen_name(sub_keys, val, i):
         'shock_count_size': 'ssizec',
         'job': 'job',
         'joy': 'joy',
+        'utility': 'util',
         'probability': 'prob',
         'fitness': 'fit',
         'max_shocks': 'maxs',

@@ -4,7 +4,8 @@ namespace healthcare {
 
 std::ostream& operator<<(std::ostream& os, const PeriodResult& pr) {
   return os << pr.joy << "," << pr.person << "," << pr.probability << ","
-            << pr.future_value << "," << pr.value;
+            << pr.immediate_utility << "," << pr.future_utility << ","
+            << pr.utility;
 }
 
 };  // namespace healthcare

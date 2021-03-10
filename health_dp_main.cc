@@ -40,8 +40,8 @@ std::vector<T> JoinVectors(std::vector<T> v1, std::vector<T> v2);
 auto util = [](float joy) -> float { return joy; };
 
 float ExpectedUtility(const DecisionResults& res) {
-  return res.result.value * res.result.probability +
-         res.result_shock.value * res.result_shock.probability;
+  return res.result.utility * res.result.probability +
+         res.result_shock.utility * res.result_shock.probability;
 }
 
 int main(int argc, char** argv) {
@@ -106,10 +106,11 @@ void RunOptimization(const Configuration& config, std::string out_dir,
   std::string max_filename = out_dir + '/' + basename + ".csv";
   std::ofstream max_stream(max_filename, std::ofstream::out);
 
-  max_stream << "Age,Shocks,Fitness,Cash,"
-                "FitnessSpending,JoySpending,InsuranceSpending,BuyIns,"
-                "NextAge,NextShocks,NextFitness,NextCash,"
-                "Probability,Enjoyment,FutureValue,Value\n";
+  max_stream
+      << "Age,Shocks,Fitness,Cash,"
+         "FitnessSpending,JoySpending,InsuranceSpending,BuyIns,"
+         "NextAge,NextShocks,NextFitness,NextCash,"
+         "Probability,Enjoyment,ImmediateUtility,FutureUtility,Utility\n";
 
   Storage opt(config);
 
@@ -123,8 +124,8 @@ void RunOptimization(const Configuration& config, std::string out_dir,
     std::cerr << "calculating_optimals..." << std::flush;
     std::vector<PersonIncome> init_states = CreateTemplateStates(age, config);
     if (age == config.max_age) {
-      StoreAgeOptimals(opt, [](const Person&) { return 0; }, dec_cache,
-                       init_states, config);
+      StoreAgeOptimals(
+          opt, [](const Person&) { return 0; }, dec_cache, init_states, config);
     } else {
       Storage opt_cpy = opt;
       StoreAgeOptimals(
@@ -196,22 +197,24 @@ void StoreAgeOptimals(Storage& storage,
         res.person.cash = cur_state.cash + cur_state.income - res.spending;
         res.person.cash =
             std::clamp(res.person.cash, config.min_savings, config.max_savings);
-        res.future_value = opt_lookup(res.person);
-        res.value += res.joy + config.discount * res.future_value;
 
+        res.future_utility = opt_lookup(res.person);
+        res.utility +=
+            res.immediate_utility + config.discount * res.future_utility;
         res_shock.person.cash =
             cur_state.cash + cur_state.income - res_shock.spending;
         res_shock.person.cash = std::clamp(
             res_shock.person.cash, config.min_savings, config.max_savings);
-        res_shock.future_value = opt_lookup(res_shock.person);
-        res_shock.value +=
-            res_shock.joy + config.discount * res_shock.future_value;
-        pair.value = ExpectedUtility(pair);
+        res_shock.future_utility = opt_lookup(res_shock.person);
+        res_shock.utility += res_shock.immediate_utility +
+                             config.discount * res_shock.future_utility;
+
+        pair.utility = ExpectedUtility(pair);
       };
       auto opts = std::max_element(
           dec_states.begin(), dec_states.end(),
           [](const DecisionResults& p1, const DecisionResults& p2) -> bool {
-            return p1.value < p2.value;
+            return p1.utility < p2.utility;
           });
 
       storage.StoreResult(init_states[cur], *opts);

@@ -10,6 +10,7 @@
 #include "configuration/job_reader.h"
 #include "configuration/joy_reader.h"
 #include "configuration/prob_reader.h"
+#include "configuration/utility_reader.h"
 #include "exprtk.hpp"
 
 using ::boost::property_tree::ptree;
@@ -51,6 +52,13 @@ Configuration ReadConfigurationFile(std::string filename) {
       configuration::ReadInsurance(root.get_child("insurance"), config);
 
   config.max_budget = CalculateMaxBudget(config);
+  if (root.count("utility") == 0) {
+    config.utility = [](int, int, int, float joy) { return joy; };
+  } else {
+    config.utility =
+        configuration::ReadUtility(root.get_child("utility"), config.max_age,
+                                   config.max_shocks, config.max_fitness);
+  }
   if (root.count("discount") == 0) {
     config.discount = 1;
   } else {

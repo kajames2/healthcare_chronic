@@ -117,7 +117,7 @@ for shocks in range(0, max_shocks + 1):
     f.write(','.join([str(shocks), str(fitness)]))
     for cash in range(min_cash, max_cash + 1):
       state = select_state(fstream, [payout_age, shocks, fitness, cash])
-      exp_value = float(state[0]['Value']) * float(state[0]['Probability']) + float(state[1]['Value']) * float(state[1]['Probability'])
+      exp_value = float(state[0]['Utility']) * float(state[0]['Probability']) + float(state[1]['Utility']) * float(state[1]['Probability'])
       f.write(',' + str(int(exp_value)))
     f.write('\n')
 

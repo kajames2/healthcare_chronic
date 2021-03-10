@@ -21,7 +21,7 @@ class Storage {
     results_[state.shocks][state.fitness][state.cash - config_.min_savings] =
         res;
     values_[state.shocks][state.fitness][state.cash - config_.min_savings] =
-        res.value;
+        res.utility;
   }
 
   inline float GetValue(const healthcare::Person& state) const {
