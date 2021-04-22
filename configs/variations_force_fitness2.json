@@ -1,0 +1,18 @@
+{
+    "_COMMENT": "The filename (without extension) of the configuration file to be varied.",
+    "template": "template4",
+    "_COMMENT": "name is optional.  Gives the name of the folder the configs will go.  Uses template value by default",
+    "name": "LogisticStartSteeperFit75p25AddConstDegen",
+    "_COMMENT": "all_combos is optional. Defaults true.  If false, it will generate each variation alone, not every permutation of variations",
+    "all_combos" : true,
+    "variations" : [
+	{
+		"_COMMENT" : "optimal | leave at 50 | Don't buy fitness",
+		"fitness:function_name" : ["Base", "Force50", "NotBuy"],
+        	"fitness:function" : ["(1-p-r*age) * fitness + x / price", 
+			"if(x == 50, (1-p-r*age) * fitness + x / price, 0)", 
+			"(1-p-r*age) * fitness + x / price"],
+		"fitness:price": [2.5, 2.5, 3000]
+	}
+    ]
+}

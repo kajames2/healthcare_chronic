@@ -1,0 +1,50 @@
+{
+    "max_age": 50,
+    "decision_periods": 30,
+    "max_fitness": 80,
+    "min_debt_payment": 1,
+    "shock_count_size": 1,
+    "initial_fitness": 50,
+    "job": {
+	"function_name" : "Base",
+	"function" : "slope * age + intercept",
+	"slope" : 0,
+	"intercept" : 100
+    },
+    "joy": {
+	"function_name" : "Base",
+	"function" : "(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (MinJ + MaxJ  / (1 + exp((x_0 - x) * Spread)))",
+        "MinJ": 10,
+        "MaxJ": 90,
+	"Spread": 0.08333,
+	"x_0": 60,
+        "max_effect": 1.8,
+        "k": 80,
+	"f": 50
+    },
+    "probability": {
+	"function_name" : "Base",
+        "function" : "((exp(age_rate * (s + age))-.9 + exp(shock_rate * shocks)) - 1) * (1 - max_effect * (fitness / (fitness + j)))",
+        "age_rate": 0.0125,
+        "shock_rate": 0.025,
+        "max_effect": 1.8,
+        "j": 80,
+	"s": 20
+    },
+    "fitness": {
+	"function_name" : "AgeLinear",
+        "function" : "(1-p-r*age) * fitness + x / price",
+        "p" : 0.0,
+        "r" : 0.02,
+        "price" : 3
+    },
+    "max_shocks": 10,
+    "shock_income_size": 10,
+    "discount": 1.0,
+    "insurance": {
+        "type": "Fixed",
+        "premium": 100
+    },
+    "max_savings": 0,
+    "min_savings": -50
+}

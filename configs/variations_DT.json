@@ -1,0 +1,16 @@
+{
+    "_COMMENT": "The filename (without extension) of the configuration file to be varied.",
+    "template": "template5",
+    "_COMMENT": "name is optional.  Gives the name of the folder the configs will go.  Uses template value by default",
+    "name": "Pilot_100K_TF",
+    "_COMMENT": "all_combos is optional. Defaults true.  If false, it will generate each variation alone, not every permutation of variations",
+    "all_combos" : true,
+    "variations" : [
+	      {
+   		"n_samples": [10000, 100000]
+        },
+	{
+		"fair_draws": [true, false]
+	}
+    ]
+}

@@ -164,6 +164,8 @@ for filename_base in filenames:
     json_config = json.load(open(filename_base + ".json", "r"))
     shock_size = json_config["shock_income_size"]
     init_fitness = json_config.get('initial_fitness', 0)
+    fair_draws = json_config.get('fair_draws', False)
+    n_samples = json_config.get('n_samples', 10000)
 
     max_age = config["max_age"]
     max_shocks = config["max_shocks"]
@@ -175,13 +177,15 @@ for filename_base in filenames:
     meta_grid_size = (max_shocks + 1) * grid_size
     print(config)
     header_indices = {header[i]: i for i in range(len(header))}
-    n_lives = 10000
+    n_lives = n_samples
     lives_digits = len(str(abs(n_lives - 1)))
     start_state = [1, 0, init_fitness, 0]
     fstream = open(filename)
-    rand_lives = [get_life_random(fstream, start_state, max_age) for i in range(n_lives)]
-    #rands = generate_fair_draws(max_age, n_lives)
-    #rand_lives = [get_life_with_draws(fstream, start_state, draws) for draws in rands]
+    if fair_draws:
+        rands = generate_fair_draws(max_age, n_lives)
+        rand_lives = [get_life_with_draws(fstream, start_state, draws) for draws in rands]
+    else:
+        rand_lives = [get_life_random(fstream, start_state, max_age) for i in range(n_lives)]
     f = open(filename_base + "_rand_lives.csv", "w+")
     f.write(
         ",".join(header)

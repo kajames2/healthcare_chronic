@@ -9,7 +9,7 @@
 namespace healthcare {
 namespace configuration {
 
-std::function<double(int, int, int, int)> ReadUtility(
+std::function<double(int, int, int, double)> ReadUtility(
     boost::property_tree::ptree util_config, int max_age, int max_shocks,
     int max_fitness);
 

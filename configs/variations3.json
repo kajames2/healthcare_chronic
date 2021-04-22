@@ -1,0 +1,13 @@
+{
+    "_COMMENT": "The filename (without extension) of the configuration file to be varied.",
+    "template": "template2",
+    "_COMMENT": "name is optional.  Gives the name of the folder the configs will go.  Uses template value by default",
+    "name": "insurance",
+    "_COMMENT": "all_combos is optional. Defaults true.  If false, it will generate each variation alone, not every permutation of variations",
+    "all_combos" : true,
+    "variations" : [
+	{
+	    "fitness:price": [3, 3000]
+	}
+    ]
+}

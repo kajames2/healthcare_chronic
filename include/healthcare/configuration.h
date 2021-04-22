@@ -21,7 +21,7 @@ struct Configuration {
   std::function<int(int age, int shocks, int fitness)> job;
   std::function<int(int age, int shocks, int fitness, int investments)> fitness;
   std::function<double(int age, int shocks, int fitness, int investments)> joy;
-  std::function<double(int age, int shocks, int fitness, float joy)> utility;
+  std::function<double(int age, int shocks, int fitness, double joy)> utility;
   std::function<float(int age, int shocks, int fitness)> shock_prob;
   std::shared_ptr<const healthcare::Insurance> insurance;
   int shock_income_size;

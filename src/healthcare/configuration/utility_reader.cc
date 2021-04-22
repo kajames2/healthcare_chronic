@@ -16,7 +16,7 @@ namespace configuration {
 
 using ::boost::property_tree::ptree;
 
-std::function<double(int, int, int, int)> MakeUtilityFunc(
+std::function<double(int, int, int, double)> MakeUtilityFunc(
     std::string func_str, std::unordered_map<std::string, double> util_consts,
     int max_age, int max_shocks, int max_fitness) {
   std::string expression_str = func_str;
@@ -58,16 +58,16 @@ std::function<double(int, int, int, int)> MakeUtilityFunc(
     exit(1);
   }
   return [expression, &age, &shocks, &fitness, &joy](
-             int age_in, int shocks_in, int fitness_in, int joy_in) {
+             int age_in, int shocks_in, int fitness_in, double joy_in) {
     age = static_cast<double>(age_in);
     shocks = static_cast<double>(shocks_in);
     fitness = static_cast<double>(fitness_in);
-    joy = static_cast<double>(joy_in);
+    joy = joy_in;
     return expression.value();
   };
 }
 
-std::function<double(int, int, int, int)> ReadUtility(ptree util_config,
+std::function<double(int, int, int, double)> ReadUtility(ptree util_config,
                                                       int max_age,
                                                       int max_shocks,
                                                       int max_fitness) {
