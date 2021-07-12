@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/kajames/healthcare_chronic
+CMAKE_SOURCE_DIR = /home/kajames/projects/health_care/healthcare_chronic
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/kajames/healthcare_chronic
+CMAKE_BINARY_DIR = /home/kajames/projects/health_care/healthcare_chronic
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -82,8 +82,8 @@ install/local/fast: preinstall/fast
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/opt/cmake-3.15.4-Linux-x86_64/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -126,9 +126,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/kajames/healthcare_chronic/CMakeFiles /home/kajames/healthcare_chronic/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kajames/projects/health_care/healthcare_chronic/CMakeFiles /home/kajames/projects/health_care/healthcare_chronic/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/kajames/healthcare_chronic/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kajames/projects/health_care/healthcare_chronic/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -501,6 +501,36 @@ src/healthcare/configuration/prob_reader.cc.s:
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/prob_reader.cc.s
 .PHONY : src/healthcare/configuration/prob_reader.cc.s
 
+src/healthcare/configuration/subjective_probability_reader.o: src/healthcare/configuration/subjective_probability_reader.cc.o
+
+.PHONY : src/healthcare/configuration/subjective_probability_reader.o
+
+# target to build an object file
+src/healthcare/configuration/subjective_probability_reader.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/subjective_probability_reader.cc.o
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/subjective_probability_reader.cc.o
+.PHONY : src/healthcare/configuration/subjective_probability_reader.cc.o
+
+src/healthcare/configuration/subjective_probability_reader.i: src/healthcare/configuration/subjective_probability_reader.cc.i
+
+.PHONY : src/healthcare/configuration/subjective_probability_reader.i
+
+# target to preprocess a source file
+src/healthcare/configuration/subjective_probability_reader.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/subjective_probability_reader.cc.i
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/subjective_probability_reader.cc.i
+.PHONY : src/healthcare/configuration/subjective_probability_reader.cc.i
+
+src/healthcare/configuration/subjective_probability_reader.s: src/healthcare/configuration/subjective_probability_reader.cc.s
+
+.PHONY : src/healthcare/configuration/subjective_probability_reader.s
+
+# target to generate assembly for a file
+src/healthcare/configuration/subjective_probability_reader.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/configuration/subjective_probability_reader.cc.s
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/configuration/subjective_probability_reader.cc.s
+.PHONY : src/healthcare/configuration/subjective_probability_reader.cc.s
+
 src/healthcare/configuration/utility_reader.o: src/healthcare/configuration/utility_reader.cc.o
 
 .PHONY : src/healthcare/configuration/utility_reader.o
@@ -831,6 +861,9 @@ help:
 	@echo "... src/healthcare/configuration/prob_reader.o"
 	@echo "... src/healthcare/configuration/prob_reader.i"
 	@echo "... src/healthcare/configuration/prob_reader.s"
+	@echo "... src/healthcare/configuration/subjective_probability_reader.o"
+	@echo "... src/healthcare/configuration/subjective_probability_reader.i"
+	@echo "... src/healthcare/configuration/subjective_probability_reader.s"
 	@echo "... src/healthcare/configuration/utility_reader.o"
 	@echo "... src/healthcare/configuration/utility_reader.i"
 	@echo "... src/healthcare/configuration/utility_reader.s"

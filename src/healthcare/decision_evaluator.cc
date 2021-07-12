@@ -22,6 +22,9 @@ PeriodResult DecisionEvaluator::ApplyDecision(Person state,
   res.immediate_utility =
       utility_[state.shocks][state.fitness][dec.joy_spending];
   res.spending = TotalSpending(dec);
+  res.shock_prob = shock_prob_[res.person.shocks][res.person.fitness];
+  res.subj_shock_prob = shock_prob_subj_[res.person.shocks][res.person.fitness];
+  res.subj_no_shock_prob = no_shock_prob_subj_[res.person.shocks][res.person.fitness];
   res.future_utility = 0;
   res.utility = 0;
   ++res.person.age;
@@ -29,14 +32,16 @@ PeriodResult DecisionEvaluator::ApplyDecision(Person state,
 }
 
 PeriodResult DecisionEvaluator::ApplyNoShock(PeriodResult res) const {
-  res.probability = 1 - shock_prob_[res.person.shocks][res.person.fitness];
+  res.probability = 1 - res.shock_prob;
+  res.subj_prob = res.subj_no_shock_prob;
   res.person.cash -= res.spending;
   return res;
 }
 
 PeriodResult DecisionEvaluator::ApplyShock(PeriodResult res,
                                            const Decision& dec) const {
-  res.probability = shock_prob_[res.person.shocks][res.person.fitness];
+  res.probability = res.shock_prob;
+  res.subj_prob = res.subj_shock_prob;
   res.person.shocks += config_.shock_count_size;
   res.person.shocks = std::min(config_.max_shocks, res.person.shocks);
   if (!dec.buy_insurance) {
@@ -51,6 +56,8 @@ void DecisionEvaluator::Precalculate() {
     std::vector<std::vector<float>> sub_util;
     std::vector<std::vector<float>> sub_joy;
     std::vector<float> sub_prob;
+    std::vector<float> sub_prob_shock_subj;
+    std::vector<float> sub_prob_noshock_subj;
     std::vector<std::vector<int>> sub_fit;
     for (int fitness = 0; fitness <= config_.max_fitness; ++fitness) {
       std::vector<float> sub_sub_util;
@@ -68,11 +75,17 @@ void DecisionEvaluator::Precalculate() {
             config_.fitness(age_, shocks, fitness, fit_spend));
       }
       sub_fit.push_back(sub_sub_fit);
-      sub_prob.push_back(config_.shock_prob(age_, shocks, fitness));
+      float shock_prob = config_.shock_prob(age_, shocks, fitness);
+      sub_prob.push_back(shock_prob);
+      sub_prob_shock_subj.push_back(config_.subj_prob(age_, shocks, fitness, shock_prob));
+      sub_prob_noshock_subj.push_back(
+          config_.subj_prob(age_, shocks, fitness, 1 - shock_prob));
     }
     joy_.push_back(sub_joy);
     utility_.push_back(sub_util);
     shock_prob_.push_back(sub_prob);
+    shock_prob_subj_.push_back(sub_prob_shock_subj);
+    no_shock_prob_subj_.push_back(sub_prob_noshock_subj);
     fitness_.push_back(sub_fit);
   }
 }

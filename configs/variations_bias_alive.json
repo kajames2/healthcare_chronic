@@ -7,13 +7,17 @@
     "all_combos" : true,
     "variations" : [
 	      {
-            "utility:function_name": ["Base", "Alive10", "Alive30", "Alive50", "Alive70"],
+            "utility:function_name": ["Base", "Alive50"],
             "utility:function": [
                 "joy",
-                "if(shocks < max_shocks, joy+10, 0)",
-                "if(shocks < max_shocks, joy+30, 0)",
-                "if(shocks < max_shocks, joy+50, 0)",
-                "if(shocks < max_shocks, joy+70, 0)"
+                "if(shocks < max_shocks, joy+50, 0)"
+            ]
+        },
+        {
+            "subjective_probability:function_name": ["Base", "Underweight"],
+            "subjective_probability:function": [
+                "prob",
+                "prob/2"
             ]
         }
     ]

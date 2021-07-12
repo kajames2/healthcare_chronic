@@ -23,6 +23,7 @@ struct Configuration {
   std::function<double(int age, int shocks, int fitness, int investments)> joy;
   std::function<double(int age, int shocks, int fitness, float joy)> utility;
   std::function<float(int age, int shocks, int fitness)> shock_prob;
+  std::function<float(int age, int shocks, int fitness, float prob)> subj_prob;
   std::shared_ptr<const healthcare::Insurance> insurance;
   int shock_income_size;
   int shock_count_size;

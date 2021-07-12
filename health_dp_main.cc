@@ -36,12 +36,9 @@ void StoreAgeOptimals(Storage& storage,
 template <class T>
 std::vector<T> JoinVectors(std::vector<T> v1, std::vector<T> v2);
 
-//  Risk aversion ex:  Take sqrt of LE function.
-auto util = [](float joy) -> float { return joy; };
-
 float ExpectedUtility(const DecisionResults& res) {
-  return res.result.utility * res.result.probability +
-         res.result_shock.utility * res.result_shock.probability;
+  return res.result.utility * res.result.subj_prob +
+         res.result_shock.utility * res.result_shock.subj_prob;
 }
 
 int main(int argc, char** argv) {
@@ -110,7 +107,7 @@ void RunOptimization(const Configuration& config, std::string out_dir,
       << "Age,Shocks,Fitness,Cash,"
          "FitnessSpending,JoySpending,InsuranceSpending,BuyIns,"
          "NextAge,NextShocks,NextFitness,NextCash,"
-         "Probability,Enjoyment,ImmediateUtility,FutureUtility,Utility\n";
+         "Probability,ProbabilitySubj,ShockProbability,ShockProbabilitySubj,NoShockProbabilitySubj,Enjoyment,ImmediateUtility,FutureUtility,Utility\n";
 
   Storage opt(config);
 

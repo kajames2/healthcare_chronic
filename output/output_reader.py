@@ -185,7 +185,7 @@ for filename_base in filenames:
     f = open(filename_base + "_rand_lives.csv", "w+")
     f.write(
         ",".join(header)
-        + ",RandDraw,Shocked,TotalJoy,TotalUtility,BuyIns,TotalInsuranceSpending,InsurancePayout,TotalInsurancePayout,NetInsurerProfit,ShockProb,AtMaxShocks,Dies,Life\n"
+        + ",RandDraw,Shocked,TotalJoy,TotalUtility,BuyIns,TotalInsuranceSpending,InsurancePayout,TotalInsurancePayout,NetInsurerProfit,AtMaxShocks,Dies,Life\n"
     )
     for life in range(n_lives):
         tot_enjoyment = 0.0
@@ -200,9 +200,6 @@ for filename_base in filenames:
             tot_utility += float(period[header_indices['ImmediateUtility']])
             total_insurance_spending += int(period[header_indices["InsuranceSpending"]])
             buy_ins = int(period[header_indices["BuyIns"]])
-            shock_prob = shocked * (float(period[header_indices["Probability"]])) + (
-                1 - shocked
-            ) * (1 - float(period[header_indices["Probability"]]))
             payout = buy_ins * shocked * shock_size
             total_payout += payout
             total_insurer_profit += int(period[header_indices["InsuranceSpending"]]) - payout
@@ -216,7 +213,6 @@ for filename_base in filenames:
             period.append("{0:4f}".format(payout))
             period.append("{0:4f}".format(total_payout))
             period.append("{0:4f}".format(total_insurer_profit))
-            period.append("{0:8.6f}".format(shock_prob))
             period.append("{0:1}".format(at_max_shocks))
             period.append("{0:1}".format(died))
             period.append("{0:3}".format(life))

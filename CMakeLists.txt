@@ -21,6 +21,7 @@ set(SOURCES
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/fitness_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/prob_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/insurance_reader.cc
+  ${PROJECT_SOURCE_DIR}/src/healthcare/configuration/subjective_probability_reader.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/decision.cc
   ${PROJECT_SOURCE_DIR}/src/dp/decision_cache.cc
   ${PROJECT_SOURCE_DIR}/src/dp/storage.cc

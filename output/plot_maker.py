@@ -16,7 +16,9 @@ import numpy as np
 display_cols = [
     "Cash",
     "Shocks",
-    "ShockProb",
+    "ShockProbability",
+    "ShockProbabilitySubj",
+    "NoShockProbabilitySubj",
     "Shocked",
     "AtMaxShocks",
     "DieFrac",

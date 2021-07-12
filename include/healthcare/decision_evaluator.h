@@ -28,6 +28,8 @@ class DecisionEvaluator {
   std::vector<std::vector<std::vector<float>>> utility_;
   std::vector<std::vector<std::vector<float>>> joy_;
   std::vector<std::vector<float>> shock_prob_;
+  std::vector<std::vector<float>> shock_prob_subj_;
+  std::vector<std::vector<float>> no_shock_prob_subj_;
   std::vector<std::vector<std::vector<int>>> fitness_;
   const Configuration config_;
   int age_;

@@ -42,6 +42,10 @@
         "function_name" : "Base",
         "function" : "joy"
     },
+    "subjective_probability": {
+        "function_name" : "Base",
+        "function" : "prob"
+    },
     "max_shocks": 10,
     "shock_income_size": 10,
     "discount": 1.0,
