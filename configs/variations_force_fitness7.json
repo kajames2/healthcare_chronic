@@ -1,0 +1,27 @@
+{
+    "_COMMENT": "The filename (without extension) of the configuration file to be varied.",
+    "template": "template5",
+    "_COMMENT": "name is optional.  Gives the name of the folder the configs will go.  Uses template value by default",
+    "name": "FitSpend",
+    "_COMMENT": "all_combos is optional. Defaults true.  If false, it will generate each variation alone, not every permutation of variations",
+    "all_combos" : true,
+    "variations" : [
+	{
+		"_COMMENT" : "optimal | leave at 50 | Don't buy fitness",
+		"fitness:function_name" : ["Base", "Force25", "Force50", "Force75", "NotBuy"],
+        	"fitness:function" : [
+			"(1-p-r*age) * fitness + x / (price * (.33 + age/30))",
+			"if(x == 25, (1-p-r*age) * fitness + x / (price * (.33 + age/30)), 0)", 
+			"if(x == 50, (1-p-r*age) * fitness + x / (price * (.33 + age/30)), 0)", 
+			"if(x == 75, (1-p-r*age) * fitness + x / (price * (.33 + age/30)), 0)", 
+			"(1-p-r*age) * fitness + x / (price * (.33 + age/30))"],
+        	"utility:function": [
+			"joy", 
+			"joy-10*abs(x - 25)", 
+			"joy-10*abs(x - 50)", 
+			"joy-10*abs(x - 75)", 
+			"joy"],
+		"fitness:price": [3, 3, 3, 3, 3000]
+	}
+    ]
+}

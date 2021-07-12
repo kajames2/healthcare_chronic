@@ -1,0 +1,19 @@
+{
+    "_COMMENT": "The filename (without extension) of the configuration file to be varied.",
+    "template": "template8",
+    "_COMMENT": "name is optional.  Gives the name of the folder the configs will go.  Uses template value by default",
+    "name": "FitStart120",
+    "_COMMENT": "all_combos is optional. Defaults true.  If false, it will generate each variation alone, not every permutation of variations",
+    "all_combos" : true,
+    "variations" : [
+	      {
+            "utility:function_name": ["Base", "Target40", "Target80", "Target120"],
+            "utility:function": [
+                "joy",
+                "joy-10*abs(fitness - 40)",
+                "joy-10*abs(fitness - 80)",
+                "joy-10*abs(fitness - 120)"
+            ]
+        }
+    ]
+}

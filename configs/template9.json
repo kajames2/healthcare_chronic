@@ -5,7 +5,7 @@
     "min_debt_payment": 1,
     "shock_count_size": 1,
     "initial_fitness": 75,
-    "fair_draws": false,
+    "fair_draws": true,
     "n_samples": 10000,
     "job": {
 	      "function_name" : "Base",
@@ -15,10 +15,11 @@
     },
     "joy": {
 	      "function_name" : "Base",
-	      "function" : "100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (jmin + (jmax - jmin) /(1 + exp((x_0 - x) * alpha)))",
+	      "function" : "100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (jmin + (jmax - jmin) /(1 + beta * exp((x_0 - x) * alpha)))",
         "jmax": 1,
         "jmin": 0,
 	      "alpha": 0.125,
+		"beta": 0.2,
 	      "x_0": 60,
         "j": 20,
         "max_effect": 1.8,
@@ -36,17 +37,13 @@
     "fitness": {
 	      "function_name" : "AgeLinear",
          "function" : "(1-p-r*age) * fitness + x / (price * (.33 + age/30))",
-        "p" : 0.075,
+        "p" : 0.09,
         "r" : 0.005,
-        "price" : 3
+        "price" : 6
     },
     "utility": {
         "function_name" : "Base",
         "function" : "joy"
-    },
-    "subjective_probability": {
-        "function_name" : "Base",
-        "function" : "prob"
     },
     "max_shocks": 10,
     "shock_income_size": 10,
@@ -55,6 +52,6 @@
         "type": "Fixed",
         "premium": 100
     },
-    "max_savings": 50,
+    "max_savings": 0,
     "min_savings": -10
 }

@@ -1,0 +1,25 @@
+{
+    "template": "sample_template",
+    "name": "test",
+    "all_combos" : true,
+    "variations" : [
+        {
+            "_COMMENT" : "Vary a top-level parameter",
+            "max_age" : [10, 20, 30]
+        },
+        {
+            "_COMMENT" : "Vary a nested parameter",
+            "probability:j" : [30, 40]
+        },
+        {
+            "_COMMENT" : "Vary multiple parameters together.",
+            "job:intercept": [100,68],
+            "job:slope": [0, 2]
+        },
+        {
+            "_COMMENT" : "Vary a function.  Vary the name as well for title purposes",
+            "fitness:function_name" : ["Base", "AgeDegen"],
+            "fitness:function" : ["0.666 * fitness + x / 3",  "(1 - age / max_age) * fitness + x / 3" ]
+        }
+    ]
+}

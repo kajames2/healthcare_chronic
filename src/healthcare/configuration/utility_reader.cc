@@ -62,7 +62,7 @@ using ::boost::property_tree::ptree;
     age = static_cast<double>(age_in);
     shocks = static_cast<double>(shocks_in);
     fitness = static_cast<double>(fitness_in);
-    joy = static_cast<double>(joy_in);
+    joy = joy_in;
     return expression.value();
   };
 }
