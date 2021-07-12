@@ -106,10 +106,7 @@ std::ostream& operator<<(std::ostream& out, const Storage& s) {
             << opt.result_shock.subj_shock_prob << ','
             << opt.result_shock.subj_no_shock_prob << ','
             << std::setprecision(2) << std::setw(6) << opt.result_shock.joy
-            << "," << std::setprecision(2) << std::setw(6)
-            << opt.result_shock.immediate_utility << "," << std::setprecision(2)
-            << std::setw(10) << opt.result_shock.future_utility << ","
-            << std::setprecision(2) << std::setw(10)
+            << "," << std::setprecision(2) << std::setw(10)
             << opt.result_shock.immediate_utility << "," << std::setprecision(2)
             << std::setw(14) << opt.result_shock.future_utility << ","
             << std::setprecision(2) << std::setw(14)
