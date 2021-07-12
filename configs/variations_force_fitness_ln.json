@@ -1,0 +1,29 @@
+{
+    "_COMMENT": "The filename (without extension) of the configuration file to be varied.",
+    "template": "template12",
+    "_COMMENT": "name is optional.  Gives the name of the folder the configs will go.  Uses template value by default",
+    "name": "MaxAge40_BR8_Degen2_MaxShocks8_FitP3->12_ForceSpend",
+    "_COMMENT": "all_combos is optional. Defaults true.  If false, it will generate each variation alone, not every permutation of variations",
+    "all_combos" : true,
+    "variations" : [
+	{
+		"_COMMENT" : "optimal | leave at 50 | Don't buy fitness",
+		"fitness:function_name" : ["Optimal", "ForceSpend25", "ForceSpend35", "ForceSpend50", "ForceSpend75", "NotBuy"],
+        	"fitness:function" : [
+			"(1-p-r*age) * fitness + x / (price * (.25 + age/53.33))",
+			"if(x == 25, (1-p-r*age) * fitness + x / (price * (.25 + age/53.33)), 0)", 
+			"if(x == 35, (1-p-r*age) * fitness + x / (price * (.25 + age/53.33)), 0)", 
+			"if(x == 50, (1-p-r*age) * fitness + x / (price * (.25 + age/53.33)), 0)", 
+			"if(x == 75, (1-p-r*age) * fitness + x / (price * (.25 + age/53.33)), 0)", 
+			"(1-p-r*age) * fitness + x / (price * (.25 + age/53.33))"],
+        	"joy:function" : [
+			"100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (log(x)/log(100))", 
+			"if(x == 75, 100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (log(x)/log(100)), -1)", 
+			"if(x == 65, 100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (log(x)/log(100)), -1)", 
+			"if(x == 50, 100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (log(x)/log(100)), -1)", 
+			"if(x == 25, 100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (log(x)/log(100)), -1)", 
+			"100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (log(x)/log(100))"],
+		"fitness:price": [12, 12, 12, 12, 12, 3000]
+	}
+    ]
+}

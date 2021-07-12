@@ -1,20 +1,18 @@
 {
     "_COMMENT": "The filename (without extension) of the configuration file to be varied.",
-    "template": "template12",
+    "template": "template8",
     "_COMMENT": "name is optional.  Gives the name of the folder the configs will go.  Uses template value by default",
-    "name": "MaxAge40_BR8_Degen2_MaxShocks8_FitP3->12_target",
+    "name": "FitStart120",
     "_COMMENT": "all_combos is optional. Defaults true.  If false, it will generate each variation alone, not every permutation of variations",
     "all_combos" : true,
     "variations" : [
 	      {
-            "utility:function_name": ["Base", "Target25", "Target50", "Target63", "Target75"],
-            "utility:function": ["Target75"],
+            "utility:function_name": ["Base", "Target40", "Target80", "Target120"],
             "utility:function": [
                 "joy",
-                "joy-10*abs(fitness - 25)",
-                "joy-10*abs(fitness - 50)",
-                "joy-10*abs(fitness - 63)",
-                "joy-10*abs(fitness - 75)"
+                "joy-10*abs(fitness - 40)",
+                "joy-10*abs(fitness - 80)",
+                "joy-10*abs(fitness - 120)"
             ]
         }
     ]

@@ -1,6 +1,6 @@
 {
     "_COMMENT": "The filename (without extension) of the configuration file to be varied.",
-    "template": "template7",
+    "template": "template5",
     "_COMMENT": "name is optional.  Gives the name of the folder the configs will go.  Uses template value by default",
     "name": "FitSpend",
     "_COMMENT": "all_combos is optional. Defaults true.  If false, it will generate each variation alone, not every permutation of variations",
@@ -15,12 +15,12 @@
 			"if(x == 50, (1-p-r*age) * fitness + x / (price * (.33 + age/30)), 0)", 
 			"if(x == 75, (1-p-r*age) * fitness + x / (price * (.33 + age/30)), 0)", 
 			"(1-p-r*age) * fitness + x / (price * (.33 + age/30))"],
-        	"joy:function" : [
-			"100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (jmin + (jmax - jmin) /(1 + exp((x_0 - x) * alpha)))", 
-			"if(x == 75, 100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (jmin + (jmax - jmin) /(1 + exp((x_0 - x) * alpha))), -1)", 
-			"if(x == 50, 100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (jmin + (jmax - jmin) /(1 + exp((x_0 - x) * alpha))), -1)", 
-			"if(x == 25, 100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (jmin + (jmax - jmin) /(1 + exp((x_0 - x) * alpha))), -1)", 
-			"100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (jmin + (jmax - jmin) /(1 + exp((x_0 - x) * alpha)))"],
+        	"utility:function": [
+			"joy", 
+			"joy-10*abs(x - 25)", 
+			"joy-10*abs(x - 50)", 
+			"joy-10*abs(x - 75)", 
+			"joy"],
 		"fitness:price": [3, 3, 3, 3, 3000]
 	}
     ]
