@@ -1,8 +1,8 @@
 #include "healthcare/configuration.h"
+#include <iostream>
 #include <memory>
 #include <string>
 #include <unordered_map>
-#include <iostream>
 
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -11,8 +11,8 @@
 #include "configuration/job_reader.h"
 #include "configuration/joy_reader.h"
 #include "configuration/prob_reader.h"
-#include "configuration/utility_reader.h"
 #include "configuration/subjective_probability_reader.h"
+#include "configuration/utility_reader.h"
 #include "exprtk.hpp"
 
 using ::boost::property_tree::ptree;
@@ -62,10 +62,12 @@ Configuration ReadConfigurationFile(std::string filename) {
                                    config.max_shocks, config.max_fitness);
   }
   if (root.count("subjective_probability") == 0) {
-    config.subj_prob = [](int, int, int, float prob) {return prob; };
-    
+    config.subj_prob = [](int, int, int, float prob) { return prob; };
+
   } else {
-    config.subj_prob = configuration::ReadSubjectiveProbability(root.get_child("subjective_probability"), config.max_age, config.max_shocks, config.max_fitness);
+    config.subj_prob = configuration::ReadSubjectiveProbability(
+        root.get_child("subjective_probability"), config.max_age,
+        config.max_shocks, config.max_fitness);
   }
   if (root.count("discount") == 0) {
     config.discount = 1;
@@ -73,6 +75,11 @@ Configuration ReadConfigurationFile(std::string filename) {
     config.discount = root.get<float>("discount");
   }
 
+  if (root.count("save_pessimal") == 0) {
+    config.save_pessimal = false;
+  } else {
+    config.save_pessimal = root.get<bool>("save_pessimal");
+  }
   return config;
 }
 

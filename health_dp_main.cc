@@ -27,7 +27,7 @@ void RunOptimization(const Configuration& config, std::string out_dir,
 std::vector<PersonIncome> CreateTemplateStates(int age,
                                                const Configuration& config);
 
-void StoreAgeOptimals(Storage& storage,
+void StoreAgeOptimals(Storage& storage, Storage& pess_storage,
                       std::function<float(const Person&)> opt_lookup,
                       const DecisionCache& dec_cache,
                       const std::vector<PersonIncome>& init_states,
@@ -102,14 +102,27 @@ void RunOptimization(const Configuration& config, std::string out_dir,
                      std::string basename) {
   std::string max_filename = out_dir + '/' + basename + ".csv";
   std::ofstream max_stream(max_filename, std::ofstream::out);
-
-  max_stream
-      << "Age,Shocks,Fitness,Cash,"
-         "FitnessSpending,JoySpending,InsuranceSpending,BuyIns,"
-         "NextAge,NextShocks,NextFitness,NextCash,"
-         "Probability,ProbabilitySubj,ShockProbability,ShockProbabilitySubj,NoShockProbabilitySubj,Enjoyment,ImmediateUtility,FutureUtility,Utility\n";
-
+  max_stream << "Age,Shocks,Fitness,Cash,"
+                "FitnessSpending,JoySpending,InsuranceSpending,BuyIns,"
+                "NextAge,NextShocks,NextFitness,NextCash,"
+                "Probability,ProbabilitySubj,ShockProbability,"
+                "ShockProbabilitySubj,NoShockProbabilitySubj,Enjoyment,"
+                "ImmediateUtility,FutureUtility,Utility\n";
   Storage opt(config);
+
+  std::ofstream min_stream;
+  if (config.save_pessimal) {
+    std::string min_filename = out_dir + '/' + basename + "_min.csv";
+    min_stream = std::ofstream(min_filename, std::ofstream::out);
+    min_stream << "Age,Shocks,Fitness,Cash,"
+                  "FitnessSpending,JoySpending,InsuranceSpending,BuyIns,"
+                  "NextAge,NextShocks,NextFitness,NextCash,"
+                  "Probability,ProbabilitySubj,ShockProbability,"
+                  "ShockProbabilitySubj,NoShockProbabilitySubj,Enjoyment,"
+                  "ImmediateUtility,FutureUtility,Utility\n";
+  }
+
+  Storage pess(config);
 
   for (int age = config.max_age; age >= 1; --age) {
     std::cerr << std::string(80, ' ') << std::flush << '\r';
@@ -122,20 +135,27 @@ void RunOptimization(const Configuration& config, std::string out_dir,
     std::vector<PersonIncome> init_states = CreateTemplateStates(age, config);
     if (age == config.max_age) {
       StoreAgeOptimals(
-          opt, [](const Person&) { return 0; }, dec_cache, init_states, config);
+          opt, pess, [](const Person&) { return 0; }, dec_cache, init_states,
+          config);
     } else {
       Storage opt_cpy = opt;
       StoreAgeOptimals(
-          opt, [&opt_cpy](const Person& p) { return opt_cpy.GetValue(p); },
+          opt, pess,
+          [&opt_cpy](const Person& p) { return opt_cpy.GetValue(p); },
           dec_cache, init_states, config);
     }
     std::cerr << "writing_to_file..." << std::flush;
+    if (config.save_pessimal) {
+      min_stream << pess << std::endl;
+    }
     max_stream << opt << std::endl;
     std::cerr << "done!" << std::flush << '\r';
   }
 
   max_stream.close();
-  // min_stream.close();
+  if (config.save_pessimal) {
+    min_stream.close();
+  }
 }
 
 std::vector<PersonIncome> CreateTemplateStates(int age,
@@ -162,7 +182,7 @@ std::vector<PersonIncome> CreateTemplateStates(int age,
   return init_states;
 }
 
-void StoreAgeOptimals(Storage& storage,
+void StoreAgeOptimals(Storage& storage, Storage& pess_storage,
                       std::function<float(const Person&)> opt_lookup,
                       const DecisionCache& dec_cache,
                       const std::vector<PersonIncome>& init_states,
@@ -180,6 +200,7 @@ void StoreAgeOptimals(Storage& storage,
       opt.result.person = next_person;
       opt.result_shock.person = next_person;
       storage.StoreResult(init_states[cur], opt);
+      pess_storage.StoreResult(init_states[cur], opt);
     } else {
       auto start_it = dec_cache.begin(cur_state.shocks, cur_state.fitness,
                                       cur_state.budget);
@@ -215,6 +236,13 @@ void StoreAgeOptimals(Storage& storage,
           });
 
       storage.StoreResult(init_states[cur], *opts);
+
+      auto pesses = std::min_element(
+          dec_states.begin(), dec_states.end(),
+          [](const DecisionResults& p1, const DecisionResults& p2) -> bool {
+            return p1.utility < p2.utility;
+          });
+      pess_storage.StoreResult(init_states[cur], *pesses);
     }
   }
 }

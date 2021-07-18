@@ -16,6 +16,7 @@ struct Configuration {
   int max_savings;
   int min_savings;
   int max_budget;
+  bool save_pessimal;
   float min_debt_payment;
   float discount;
   std::function<int(int age, int shocks, int fitness)> job;
