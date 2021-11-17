@@ -218,16 +218,17 @@ void StoreAgeOptimals(Storage& storage, Storage& pess_storage,
 
         res.future_utility = opt_lookup(res.person);
         res.utility += res.immediate_utility + config.discount *
-                                                   res.subj_no_death_prob *
+                                                   // res.subj_no_death_prob *
                                                    res.future_utility;
         res_shock.person.cash =
             cur_state.cash + cur_state.income - res_shock.spending;
         res_shock.person.cash = std::clamp(
             res_shock.person.cash, config.min_savings, config.max_savings);
         res_shock.future_utility = opt_lookup(res_shock.person);
-        res_shock.utility += res_shock.immediate_utility +
-                             config.discount * res_shock.subj_no_death_prob *
-                                 res_shock.future_utility;
+        res_shock.utility +=
+            res_shock.immediate_utility +
+            config.discount *  // res_shock.subj_no_death_prob *
+                res_shock.future_utility;
 
         pair.utility = ExpectedUtility(pair);
       };

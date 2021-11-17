@@ -27,9 +27,9 @@ PeriodResult DecisionEvaluator::ApplyDecision(Person state,
   res.subj_shock_prob = shock_prob_subj_[res.person.shocks][res.person.fitness];
   res.subj_no_shock_prob =
       no_shock_prob_subj_[res.person.shocks][res.person.fitness];
-  res.death_prob = death_prob_[res.person.shocks][res.person.fitness];
-  res.subj_no_death_prob =
-      no_death_prob_subj_[res.person.shocks][res.person.fitness];
+  // res.death_prob = death_prob_[res.person.shocks][res.person.fitness];
+  // res.subj_no_death_prob =
+  //     no_death_prob_subj_[res.person.shocks][res.person.fitness];
   res.future_utility = 0;
   res.utility = 0;
   ++res.person.age;
@@ -63,8 +63,8 @@ void DecisionEvaluator::Precalculate() {
     std::vector<float> sub_prob;
     std::vector<float> sub_prob_shock_subj;
     std::vector<float> sub_prob_noshock_subj;
-    std::vector<float> sub_prob_death;
-    std::vector<float> sub_prob_no_death_subj;
+    // std::vector<float> sub_prob_death;
+    // std::vector<float> sub_prob_no_death_subj;
     std::vector<std::vector<int>> sub_fit;
     for (int fitness = 0; fitness <= config_.max_fitness; ++fitness) {
       std::vector<float> sub_sub_util;
@@ -89,18 +89,18 @@ void DecisionEvaluator::Precalculate() {
       sub_prob_noshock_subj.push_back(
           config_.subj_prob(age_, shocks, fitness, 1 - shock_prob));
 
-      float death_prob = config_.death_prob(age_, shocks, fitness, shock_prob);
-      sub_prob_death.push_back(death_prob);
-      sub_prob_no_death_subj.push_back(
-          config_.subj_prob(age_, shocks, fitness, 1 - death_prob));
+      // float death_prob = config_.death_prob(age_, shocks, fitness,
+      // shock_prob); sub_prob_death.push_back(death_prob);
+      // sub_prob_no_death_subj.push_back(
+      //     config_.subj_prob(age_, shocks, fitness, 1 - death_prob));
     }
     joy_.push_back(sub_joy);
     utility_.push_back(sub_util);
     shock_prob_.push_back(sub_prob);
     shock_prob_subj_.push_back(sub_prob_shock_subj);
     no_shock_prob_subj_.push_back(sub_prob_noshock_subj);
-    death_prob_.push_back(sub_prob_death);
-    no_death_prob_subj_.push_back(sub_prob_no_death_subj);
+    // death_prob_.push_back(sub_prob_death);
+    // no_death_prob_subj_.push_back(sub_prob_no_death_subj);
     fitness_.push_back(sub_fit);
   }
 }
