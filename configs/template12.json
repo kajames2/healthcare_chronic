@@ -16,7 +16,7 @@
     },
     "joy": {
 	      "function_name" : "Base",
-	      "function" : "if(x==0, 0, 100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (log(x)/log(100)))",
+	      "function" : "if(x==0, 0, round(100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (log(x)/log(100))))",
         "jmax": 1,
         "jmin": 0,
 	      "alpha": 0.125,

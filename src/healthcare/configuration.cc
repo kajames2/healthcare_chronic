@@ -54,6 +54,7 @@ Configuration ReadConfigurationFile(std::string filename) {
       configuration::ReadInsurance(root.get_child("insurance"), config);
 
   config.max_budget = CalculateMaxBudget(config);
+
   if (root.count("utility") == 0) {
     config.utility = [](int, int, int, float joy) { return joy; };
   } else {
@@ -61,14 +62,23 @@ Configuration ReadConfigurationFile(std::string filename) {
         configuration::ReadUtility(root.get_child("utility"), config.max_age,
                                    config.max_shocks, config.max_fitness);
   }
+
   if (root.count("subjective_probability") == 0) {
     config.subj_prob = [](int, int, int, float prob) { return prob; };
-
   } else {
     config.subj_prob = configuration::ReadSubjectiveProbability(
         root.get_child("subjective_probability"), config.max_age,
         config.max_shocks, config.max_fitness);
   }
+
+  if (root.count("death_prob") == 0) {
+    config.death_prob = [](int, int, int, float) { return 0; };
+  } else {
+    config.death_prob = configuration::ReadSubjectiveProbability(
+        root.get_child("death_probability"), config.max_age, config.max_shocks,
+        config.max_fitness);
+  }
+
   if (root.count("discount") == 0) {
     config.discount = 1;
   } else {

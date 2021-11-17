@@ -1,6 +1,9 @@
 # Ignore configuration files
 configs/*/*
 
+# Ignore .ccls
+.ccls-cache/*
+
 # Ignore output files
 output/*/*
 

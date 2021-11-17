@@ -15,6 +15,8 @@ struct PeriodResult {
   float shock_prob;
   float subj_shock_prob;
   float subj_no_shock_prob;
+  float death_prob;
+  float subj_no_death_prob;
   int spending;
   float immediate_utility;
   float future_utility;
