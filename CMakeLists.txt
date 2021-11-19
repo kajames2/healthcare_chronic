@@ -9,7 +9,7 @@ set(CMAKE_CURRENT_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
- 
+
 set(SOURCES
   ${PROJECT_SOURCE_DIR}/src/healthcare/person.cc
   ${PROJECT_SOURCE_DIR}/src/healthcare/period_result.cc
@@ -97,5 +97,5 @@ set(TEST_SOURCES
 add_executable(tests_main tests_main.cc ${SOURCES} ${TEST_SOURCES})
 
 target_link_libraries(tests_main gtest_main)
-add_test(NAME    tests_main 
+add_test(NAME    tests_main
          COMMAND tests_main)

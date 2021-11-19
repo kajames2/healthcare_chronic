@@ -14,7 +14,7 @@ namespace dp {
 class DecisionCache {
  public:
   DecisionCache(healthcare::Configuration config,
-                healthcare::DecisionEvaluator eval, int age);
+                const healthcare::DecisionEvaluator& eval, int age);
   typename std::vector<healthcare::DecisionResults>::const_iterator begin(
       int shocks, int fitness, int budget) const;
   typename std::vector<healthcare::DecisionResults>::const_iterator end(
@@ -22,14 +22,14 @@ class DecisionCache {
   int GetDecisionCount(int shocks, int fitness, int budget) const;
 
  private:
-  const healthcare::Configuration config_;
-  const healthcare::DecisionEvaluator eval_;
+  healthcare::Configuration config_;
   int age_;
   std::vector<std::vector<std::vector<int>>> counts_;
   std::vector<std::vector<std::vector<healthcare::DecisionResults>>> decisions_;
 
-  void BuildCache();
-  void BuildShockFitnessCache(int shocks, int fitness);
+  void BuildCache(const healthcare::DecisionEvaluator& eval);
+  void BuildShockFitnessCache(int shocks, int fitness,
+                              const healthcare::DecisionEvaluator& eval);
 };
 
 }  // namespace dp

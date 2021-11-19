@@ -13,13 +13,12 @@ namespace dp {
 using ::healthcare::Decision;
 
 DecisionCache::DecisionCache(healthcare::Configuration config,
-                             healthcare::DecisionEvaluator eval, int age)
-    : config_(std::move(config)),
-      eval_(std::move(eval)),
+                             const healthcare::DecisionEvaluator& eval, int age)
+    : config_(config),
       age_(age),
       counts_(config_.max_shocks + 1),
       decisions_(config_.max_shocks + 1) {
-  BuildCache();
+  BuildCache(eval);
 }
 
 typename std::vector<healthcare::DecisionResults>::const_iterator
@@ -44,15 +43,16 @@ int DecisionCache::GetDecisionCount(int shocks, int fitness, int budget) const {
   return counts_[shocks][fitness][budget];
 }
 
-void DecisionCache::BuildCache() {
+void DecisionCache::BuildCache(const healthcare::DecisionEvaluator& eval) {
   for (int shocks = 0; shocks <= config_.max_shocks; ++shocks) {
     for (int fit = 0; fit <= config_.max_fitness; ++fit) {
-      BuildShockFitnessCache(shocks, fit);
+      BuildShockFitnessCache(shocks, fit, eval);
     }
   }
 }
 
-void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
+void DecisionCache::BuildShockFitnessCache(
+    int shocks, int fitness, const healthcare::DecisionEvaluator& eval) {
   std::vector<Decision> decs;
 
   // // You can always purchase insurance (and nothing else)
@@ -98,7 +98,7 @@ void DecisionCache::BuildShockFitnessCache(int shocks, int fitness) {
   std::vector<healthcare::DecisionResults> res(decs.size());
   //  #pragma omp parallel for
   for (int i = 0; i < decs.size(); ++i) {
-    res[i] = eval_.GetDecisionResults({age_, shocks, fitness, 0}, decs[i]);
+    res[i] = eval.GetDecisionResults({age_, shocks, fitness, 0}, decs[i]);
   }
   //  std::vector<healthcare::DecisionResults> res;
   //  std::transform(

@@ -80,9 +80,8 @@ std::ostream& operator<<(std::ostream& out, const Storage& s) {
             << std::setprecision(6) << std::setw(8) << std::fixed
             << opt.result.probability << ',' << opt.result.subj_prob << ','
             << opt.result.shock_prob << ',' << opt.result.subj_shock_prob << ','
-            << opt.result.subj_no_shock_prob
-            << ','  //<< opt.result.death_prob
-                    //<< ',' << opt.result.subj_no_death_prob << ','
+            << opt.result.subj_no_shock_prob << ',' << opt.result.death_prob
+            << ',' << opt.result.subj_no_death_prob << ','
             << std::setprecision(2) << std::setw(6) << opt.result.joy << ","
             << std::setprecision(2) << std::setw(10)
             << opt.result.immediate_utility << "," << std::setprecision(2)
@@ -106,10 +105,9 @@ std::ostream& operator<<(std::ostream& out, const Storage& s) {
             << opt.result_shock.probability << ',' << opt.result_shock.subj_prob
             << ',' << opt.result_shock.shock_prob << ','
             << opt.result_shock.subj_shock_prob << ','
-            << opt.result_shock.subj_no_shock_prob
-            << ','
-            //<< opt.result_shock.death_prob << ','
-            //<< opt.result_shock.subj_no_death_prob << ','
+            << opt.result_shock.subj_no_shock_prob << ','
+            << opt.result_shock.death_prob << ','
+            << opt.result_shock.subj_no_death_prob << ','
             << std::setprecision(2) << std::setw(6) << opt.result_shock.joy
             << "," << std::setprecision(2) << std::setw(10)
             << opt.result_shock.immediate_utility << "," << std::setprecision(2)

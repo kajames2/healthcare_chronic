@@ -106,7 +106,8 @@ void RunOptimization(const Configuration& config, std::string out_dir,
                 "FitnessSpending,JoySpending,InsuranceSpending,BuyIns,"
                 "NextAge,NextShocks,NextFitness,NextCash,"
                 "Probability,ProbabilitySubj,ShockProbability,"
-                "ShockProbabilitySubj,NoShockProbabilitySubj,Enjoyment,"
+                "ShockProbabilitySubj,NoShockProbabilitySubj,DeathProb,"
+                "NoDeathProbSubj,Enjoyment,"
                 "ImmediateUtility,FutureUtility,Utility\n";
   Storage opt(config);
 
@@ -118,7 +119,8 @@ void RunOptimization(const Configuration& config, std::string out_dir,
                   "FitnessSpending,JoySpending,InsuranceSpending,BuyIns,"
                   "NextAge,NextShocks,NextFitness,NextCash,"
                   "Probability,ProbabilitySubj,ShockProbability,"
-                  "ShockProbabilitySubj,NoShockProbabilitySubj,Enjoyment,"
+                  "ShockProbabilitySubj,NoShockProbabilitySubj,DeathProb,"
+                  "NoDeathProbSubj,Enjoyment,"
                   "ImmediateUtility,FutureUtility,Utility\n";
   }
 
@@ -128,21 +130,20 @@ void RunOptimization(const Configuration& config, std::string out_dir,
     std::cerr << std::string(80, ' ') << std::flush << '\r';
     std::cerr << age << "..." << std::flush;
     std::cerr << "making_cache..." << std::flush;
-    DecisionEvaluator evaluator(config, age);
-    DecisionCache dec_cache(config, evaluator, age);
-
+    auto evaluator = std::make_unique<DecisionEvaluator>(config, age);
+    auto dec_cache = std::make_unique<DecisionCache>(config, *evaluator, age);
     std::cerr << "calculating_optimals..." << std::flush;
     std::vector<PersonIncome> init_states = CreateTemplateStates(age, config);
     if (age == config.max_age) {
       StoreAgeOptimals(
-          opt, pess, [](const Person&) { return 0; }, dec_cache, init_states,
+          opt, pess, [](const Person&) { return 0; }, *dec_cache, init_states,
           config);
     } else {
       Storage opt_cpy = opt;
       StoreAgeOptimals(
           opt, pess,
           [&opt_cpy](const Person& p) { return opt_cpy.GetValue(p); },
-          dec_cache, init_states, config);
+          *dec_cache, init_states, config);
     }
     std::cerr << "writing_to_file..." << std::flush;
     if (config.save_pessimal) {
@@ -218,17 +219,16 @@ void StoreAgeOptimals(Storage& storage, Storage& pess_storage,
 
         res.future_utility = opt_lookup(res.person);
         res.utility += res.immediate_utility + config.discount *
-                                                   // res.subj_no_death_prob *
+                                                   res.subj_no_death_prob *
                                                    res.future_utility;
         res_shock.person.cash =
             cur_state.cash + cur_state.income - res_shock.spending;
         res_shock.person.cash = std::clamp(
             res_shock.person.cash, config.min_savings, config.max_savings);
         res_shock.future_utility = opt_lookup(res_shock.person);
-        res_shock.utility +=
-            res_shock.immediate_utility +
-            config.discount *  // res_shock.subj_no_death_prob *
-                res_shock.future_utility;
+        res_shock.utility += res_shock.immediate_utility +
+                             config.discount * res_shock.subj_no_death_prob *
+                                 res_shock.future_utility;
 
         pair.utility = ExpectedUtility(pair);
       };

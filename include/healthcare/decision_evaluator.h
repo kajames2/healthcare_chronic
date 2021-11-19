@@ -34,7 +34,7 @@ class DecisionEvaluator {
   std::vector<std::vector<float>> death_prob_;
   std::vector<std::vector<float>> no_death_prob_subj_;
   std::vector<std::vector<std::vector<int>>> fitness_;
-  const Configuration config_;
+  Configuration config_;
   int age_;
 };
 
