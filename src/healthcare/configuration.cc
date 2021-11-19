@@ -48,6 +48,7 @@ Configuration ReadConfigurationFile(std::string filename) {
   config.shock_prob =
       configuration::ReadProb(root.get_child("probability"), config.max_age,
                               config.max_shocks, config.max_fitness);
+  std::cout << config.shock_prob(1, 0, 75) << std::endl;
   config.shock_income_size = root.get<int>("shock_income_size");
   config.shock_count_size = root.get<int>("shock_count_size");
   config.insurance =

@@ -19,6 +19,8 @@ display_cols = [
     "ShockProbability",
     "ShockProbabilitySubj",
     "NoShockProbabilitySubj",
+    "SuddenDeathProb",
+    "NoSuddenDeathProbSubj",
     "Shocked",
     "AtMaxShocks",
     "DieFrac",

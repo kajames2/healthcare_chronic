@@ -106,8 +106,8 @@ void RunOptimization(const Configuration& config, std::string out_dir,
                 "FitnessSpending,JoySpending,InsuranceSpending,BuyIns,"
                 "NextAge,NextShocks,NextFitness,NextCash,"
                 "Probability,ProbabilitySubj,ShockProbability,"
-                "ShockProbabilitySubj,NoShockProbabilitySubj,DeathProb,"
-                "NoDeathProbSubj,Enjoyment,"
+                "ShockProbabilitySubj,NoShockProbabilitySubj,SuddenDeathProb,"
+                "NoSuddenDeathProbSubj,Enjoyment,"
                 "ImmediateUtility,FutureUtility,Utility\n";
   Storage opt(config);
 
@@ -119,8 +119,8 @@ void RunOptimization(const Configuration& config, std::string out_dir,
                   "FitnessSpending,JoySpending,InsuranceSpending,BuyIns,"
                   "NextAge,NextShocks,NextFitness,NextCash,"
                   "Probability,ProbabilitySubj,ShockProbability,"
-                  "ShockProbabilitySubj,NoShockProbabilitySubj,DeathProb,"
-                  "NoDeathProbSubj,Enjoyment,"
+                  "ShockProbabilitySubj,NoShockProbabilitySubj,SuddenDeathProb,"
+                  "NoSuddenDeathProbSubj,Enjoyment,"
                   "ImmediateUtility,FutureUtility,Utility\n";
   }
 
@@ -130,8 +130,12 @@ void RunOptimization(const Configuration& config, std::string out_dir,
     std::cerr << std::string(80, ' ') << std::flush << '\r';
     std::cerr << age << "..." << std::flush;
     std::cerr << "making_cache..." << std::flush;
+    std::cout << config.shock_prob(1, 0, 75) << std::endl;
     auto evaluator = std::make_unique<DecisionEvaluator>(config, age);
+    std::cout << "here" << std::endl;
+    std::cout << config.shock_prob(1, 0, 75) << std::endl;
     auto dec_cache = std::make_unique<DecisionCache>(config, *evaluator, age);
+    std::cout << config.shock_prob(1, 0, 75) << std::endl;
     std::cerr << "calculating_optimals..." << std::flush;
     std::vector<PersonIncome> init_states = CreateTemplateStates(age, config);
     if (age == config.max_age) {

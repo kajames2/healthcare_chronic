@@ -57,6 +57,7 @@ PeriodResult DecisionEvaluator::ApplyShock(PeriodResult res,
 }
 
 void DecisionEvaluator::Precalculate() {
+  std::cout << config_.shock_prob(1, 0, 75) << std::endl;
   for (int shocks = 0; shocks <= config_.max_shocks; ++shocks) {
     std::vector<std::vector<float>> sub_util;
     std::vector<std::vector<float>> sub_joy;
@@ -83,6 +84,11 @@ void DecisionEvaluator::Precalculate() {
       }
       sub_fit.push_back(sub_sub_fit);
       float shock_prob = config_.shock_prob(age_, shocks, fitness);
+      if (age_ == 1 && shocks == 0 && fitness == 75) {
+        std::cout << shock_prob << std::endl;
+        std::cout << config_.shock_prob(age_, shocks, fitness) << std::endl;
+        std::cout << config_.shock_prob(1, 0, 75) << std::endl;
+      }
       sub_prob.push_back(shock_prob);
       sub_prob_shock_subj.push_back(
           config_.subj_prob(age_, shocks, fitness, shock_prob));

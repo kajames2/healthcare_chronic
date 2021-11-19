@@ -14,7 +14,7 @@ using ::healthcare::Decision;
 
 DecisionCache::DecisionCache(healthcare::Configuration config,
                              const healthcare::DecisionEvaluator& eval, int age)
-    : config_(config),
+    : config_(std::move(config)),
       age_(age),
       counts_(config_.max_shocks + 1),
       decisions_(config_.max_shocks + 1) {

@@ -17,7 +17,9 @@ class DecisionEvaluator {
  public:
   DecisionEvaluator(Configuration config, int age)
       : config_(config), age_(age) {
+    std::cout << config_.shock_prob(1, 0, 75) << std::endl;
     Precalculate();
+    std::cout << config_.shock_prob(1, 0, 75) << std::endl;
   }
   DecisionResults GetDecisionResults(Person state, const Decision& dec) const;
 

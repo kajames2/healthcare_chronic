@@ -22,7 +22,7 @@ class DecisionCache {
   int GetDecisionCount(int shocks, int fitness, int budget) const;
 
  private:
-  healthcare::Configuration config_;
+  const healthcare::Configuration config_;
   int age_;
   std::vector<std::vector<std::vector<int>>> counts_;
   std::vector<std::vector<std::vector<healthcare::DecisionResults>>> decisions_;
