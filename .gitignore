@@ -12,7 +12,7 @@ output/*/*
 
 # Ignore the build and lib dirs
 build
-lib/*
+lib/*.a
 .mypy_cache/*
 
 # Ignore any executables
