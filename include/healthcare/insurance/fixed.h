@@ -8,13 +8,14 @@ namespace insurance {
 
 class Fixed : public Insurance {
  public:
-  explicit Fixed(int cost) : cost_(cost) {}
-  float GetPrice(int age, int shocks, int fitness) const override {
-    return cost_;
+  explicit Fixed(unsigned int cost) : cost_(cost) {}
+  float GetPrice(unsigned int age, unsigned int shocks,
+                 unsigned int fitness) const override {
+    return static_cast<float>(cost_);
   }
 
  private:
-  int cost_;
+  unsigned int cost_;
 };
 
 }  // namespace insurance

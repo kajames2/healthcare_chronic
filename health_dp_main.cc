@@ -22,9 +22,9 @@ using namespace dp;
 
 std::pair<boost::filesystem::path, boost::filesystem::path> GetPaths(
     int argc, char** argv);
-void RunOptimization(const Configuration& config, std::string out_dir,
-                     std::string basename);
-std::vector<PersonIncome> CreateTemplateStates(int age,
+void RunOptimization(std::unique_ptr<const Configuration> config,
+                     std::string out_dir, std::string basename);
+std::vector<PersonIncome> CreateTemplateStates(unsigned int age,
                                                const Configuration& config);
 
 void StoreAgeOptimals(Storage& storage, Storage& pess_storage,
@@ -47,8 +47,8 @@ int main(int argc, char** argv) {
     std::pair<path, path> paths = GetPaths(argc, argv);
     path input = paths.first;
     path out_dir = paths.second;
-    const Configuration config = ReadConfigurationFile(input.string());
-    RunOptimization(config, out_dir.string(), input.stem().string());
+    auto config = std::make_unique<Configuration>(input.string());
+    RunOptimization(std::move(config), out_dir.string(), input.stem().string());
   } catch (const char* msg) {
     std::cerr << msg << std::endl;
     return 1;
@@ -98,8 +98,9 @@ std::pair<boost::filesystem::path, boost::filesystem::path> GetPaths(
   return std::pair<path, path>(input, out_dir);
 }
 
-void RunOptimization(const Configuration& config, std::string out_dir,
-                     std::string basename) {
+void RunOptimization(std::unique_ptr<const Configuration> config_uniq,
+                     std::string out_dir, std::string basename) {
+  std::shared_ptr<const Configuration> config = std::move(config_uniq);
   std::string max_filename = out_dir + '/' + basename + ".csv";
   std::ofstream max_stream(max_filename, std::ofstream::out);
   max_stream << "Age,Shocks,Fitness,Cash,"
@@ -112,7 +113,7 @@ void RunOptimization(const Configuration& config, std::string out_dir,
   Storage opt(config);
 
   std::ofstream min_stream;
-  if (config.save_pessimal) {
+  if (config->save_pessimal) {
     std::string min_filename = out_dir + '/' + basename + "_min.csv";
     min_stream = std::ofstream(min_filename, std::ofstream::out);
     min_stream << "Age,Shocks,Fitness,Cash,"
@@ -126,31 +127,27 @@ void RunOptimization(const Configuration& config, std::string out_dir,
 
   Storage pess(config);
 
-  for (int age = config.max_age; age >= 1; --age) {
+  for (unsigned int age = config->max_age; age >= 1; --age) {
     std::cerr << std::string(80, ' ') << std::flush << '\r';
     std::cerr << age << "..." << std::flush;
     std::cerr << "making_cache..." << std::flush;
-    std::cout << config.shock_prob(1, 0, 75) << std::endl;
-    auto evaluator = std::make_unique<DecisionEvaluator>(config, age);
-    std::cout << "here" << std::endl;
-    std::cout << config.shock_prob(1, 0, 75) << std::endl;
-    auto dec_cache = std::make_unique<DecisionCache>(config, *evaluator, age);
-    std::cout << config.shock_prob(1, 0, 75) << std::endl;
+    DecisionEvaluator evaluator(config, age);
+    auto dec_cache = std::make_unique<DecisionCache>(config, evaluator, age);
     std::cerr << "calculating_optimals..." << std::flush;
-    std::vector<PersonIncome> init_states = CreateTemplateStates(age, config);
-    if (age == config.max_age) {
+    std::vector<PersonIncome> init_states = CreateTemplateStates(age, *config);
+    if (age == config->max_age) {
       StoreAgeOptimals(
           opt, pess, [](const Person&) { return 0; }, *dec_cache, init_states,
-          config);
+          *config);
     } else {
       Storage opt_cpy = opt;
       StoreAgeOptimals(
           opt, pess,
           [&opt_cpy](const Person& p) { return opt_cpy.GetValue(p); },
-          *dec_cache, init_states, config);
+          *dec_cache, init_states, *config);
     }
     std::cerr << "writing_to_file..." << std::flush;
-    if (config.save_pessimal) {
+    if (config->save_pessimal) {
       min_stream << pess << std::endl;
     }
     max_stream << opt << std::endl;
@@ -158,22 +155,22 @@ void RunOptimization(const Configuration& config, std::string out_dir,
   }
 
   max_stream.close();
-  if (config.save_pessimal) {
+  if (config->save_pessimal) {
     min_stream.close();
   }
 }
 
-std::vector<PersonIncome> CreateTemplateStates(int age,
+std::vector<PersonIncome> CreateTemplateStates(unsigned int age,
                                                const Configuration& config) {
   std::vector<PersonIncome> init_states;
   init_states.reserve((config.max_shocks + 1) * (config.max_fitness + 1) *
                       (config.max_savings - config.min_savings + 1));
-  for (int shocks = 0; shocks <= config.max_shocks; ++shocks) {
-    for (int fitness = 0; fitness <= config.max_fitness; ++fitness) {
+  for (unsigned int shocks = 0; shocks <= config.max_shocks; ++shocks) {
+    for (unsigned int fitness = 0; fitness <= config.max_fitness; ++fitness) {
       int income = config.job(age, shocks, fitness);
-      for (int savings = config.min_savings; savings <= config.max_savings;
-           ++savings) {
-        int budget =
+      for (int savings = config.min_savings;
+           savings <= static_cast<int>(config.max_savings); ++savings) {
+        unsigned int budget =
             savings >= 0
                 ? income + savings
                 : std::max(0, static_cast<int>(
@@ -218,8 +215,8 @@ void StoreAgeOptimals(Storage& storage, Storage& pess_storage,
         auto& res = pair.result;
         auto& res_shock = pair.result_shock;
         res.person.cash = cur_state.cash + cur_state.income - res.spending;
-        res.person.cash =
-            std::clamp(res.person.cash, config.min_savings, config.max_savings);
+        res.person.cash = std::clamp(res.person.cash, config.min_savings,
+                                     static_cast<int>(config.max_savings));
 
         res.future_utility = opt_lookup(res.person);
         res.utility += res.immediate_utility + config.discount *
@@ -227,8 +224,9 @@ void StoreAgeOptimals(Storage& storage, Storage& pess_storage,
                                                    res.future_utility;
         res_shock.person.cash =
             cur_state.cash + cur_state.income - res_shock.spending;
-        res_shock.person.cash = std::clamp(
-            res_shock.person.cash, config.min_savings, config.max_savings);
+        res_shock.person.cash =
+            std::clamp(res_shock.person.cash, config.min_savings,
+                       static_cast<int>(config.max_savings));
         res_shock.future_utility = opt_lookup(res_shock.person);
         res_shock.utility += res_shock.immediate_utility +
                              config.discount * res_shock.subj_no_death_prob *

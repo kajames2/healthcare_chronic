@@ -17,7 +17,7 @@ struct PeriodResult {
   float subj_no_shock_prob;
   float death_prob;
   float subj_no_death_prob;
-  int spending;
+  unsigned int spending;
   float immediate_utility;
   float future_utility;
   float utility;

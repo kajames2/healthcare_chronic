@@ -13,22 +13,23 @@ namespace dp {
 
 class DecisionCache {
  public:
-  DecisionCache(healthcare::Configuration config,
-                const healthcare::DecisionEvaluator& eval, int age);
+  DecisionCache(std::shared_ptr<const healthcare::Configuration> config,
+                const healthcare::DecisionEvaluator& eval, unsigned int age);
   typename std::vector<healthcare::DecisionResults>::const_iterator begin(
-      int shocks, int fitness, int budget) const;
+      unsigned int shocks, unsigned int fitness, unsigned int budget) const;
   typename std::vector<healthcare::DecisionResults>::const_iterator end(
-      int shocks, int fitness, int budget) const;
-  int GetDecisionCount(int shocks, int fitness, int budget) const;
+      unsigned int shocks, unsigned int fitness, unsigned int budget) const;
+  unsigned int GetDecisionCount(unsigned int shocks, unsigned int fitness,
+                                unsigned int budget) const;
 
  private:
-  const healthcare::Configuration config_;
-  int age_;
-  std::vector<std::vector<std::vector<int>>> counts_;
+  std::shared_ptr<const healthcare::Configuration> config_;
+  unsigned int age_;
+  std::vector<std::vector<std::vector<unsigned int>>> counts_;
   std::vector<std::vector<std::vector<healthcare::DecisionResults>>> decisions_;
 
   void BuildCache(const healthcare::DecisionEvaluator& eval);
-  void BuildShockFitnessCache(int shocks, int fitness,
+  void BuildShockFitnessCache(unsigned int shocks, unsigned int fitness,
                               const healthcare::DecisionEvaluator& eval);
 };
 

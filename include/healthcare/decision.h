@@ -6,13 +6,13 @@
 namespace healthcare {
 
 struct Decision {
-  int fitness_spending = 0;
-  int joy_spending = 0;
-  int insurance_spending = 0;
+  unsigned int fitness_spending = 0;
+  unsigned int joy_spending = 0;
+  unsigned int insurance_spending = 0;
   bool buy_insurance = false;
 };
 
-int TotalSpending(Decision dec);
+unsigned int TotalSpending(Decision dec);
 
 std::ostream& operator<<(std::ostream& out, const Decision& d);
 }  // namespace healthcare

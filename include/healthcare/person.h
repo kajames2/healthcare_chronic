@@ -5,9 +5,9 @@
 
 namespace healthcare {
 struct Person {
-  int age = 0;
-  int shocks = 0;
-  int fitness = 0;
+  unsigned int age = 0;
+  unsigned int shocks = 0;
+  unsigned int fitness = 0;
   int cash = 0;
 };
 

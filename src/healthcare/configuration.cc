@@ -19,12 +19,11 @@ using ::boost::property_tree::ptree;
 
 namespace healthcare {
 
-int CalculateMaxBudget(const Configuration& config);
+unsigned int CalculateMaxBudget(const Configuration& config);
 
-Configuration ReadConfigurationFile(std::string filename) {
+Configuration::Configuration(std::string filename) {
   ptree root;
   read_json(filename, root);
-  Configuration config;
   assert(root.count("max_age"));
   assert(root.count("max_fitness"));
   assert(root.count("max_shocks"));
@@ -32,75 +31,63 @@ Configuration ReadConfigurationFile(std::string filename) {
   assert(root.count("min_savings"));
   assert(root.count("job"));
 
-  config.max_age = root.get<int>("max_age");
-  config.max_fitness = root.get<int>("max_fitness");
-  config.max_shocks = root.get<int>("max_shocks");
-  config.max_savings = root.get<int>("max_savings");
-  config.min_savings = root.get<int>("min_savings");
-  config.min_debt_payment = root.get<float>("min_debt_payment");
-  config.job = configuration::ReadJob(root.get_child("job"), config.max_age,
-                                      config.max_shocks, config.max_fitness);
-  config.fitness =
-      configuration::ReadFitness(root.get_child("fitness"), config.max_age,
-                                 config.max_shocks, config.max_fitness);
-  config.joy = configuration::ReadJoy(root.get_child("joy"), config.max_age,
-                                      config.max_shocks, config.max_fitness);
-  config.shock_prob =
-      configuration::ReadProb(root.get_child("probability"), config.max_age,
-                              config.max_shocks, config.max_fitness);
-  std::cout << config.shock_prob(1, 0, 75) << std::endl;
-  config.shock_income_size = root.get<int>("shock_income_size");
-  config.shock_count_size = root.get<int>("shock_count_size");
-  config.insurance =
-      configuration::ReadInsurance(root.get_child("insurance"), config);
+  max_age = root.get<unsigned int>("max_age");
+  max_fitness = root.get<unsigned int>("max_fitness");
+  max_shocks = root.get<unsigned int>("max_shocks");
+  max_savings = root.get<unsigned int>("max_savings");
+  min_savings = root.get<int>("min_savings");
+  min_debt_payment = root.get<float>("min_debt_payment");
+  job_ = configuration::ReadJob(root.get_child("job"), max_age, max_shocks,
+                                max_fitness);
+  fitness_ = configuration::ReadFitness(root.get_child("fitness"), max_age,
+                                        max_shocks, max_fitness);
+  joy_ = configuration::ReadJoy(root.get_child("joy"), max_age, max_shocks,
+                                max_fitness);
+  shock_prob_ = configuration::ReadProb(root.get_child("probability"), max_age,
+                                        max_shocks, max_fitness);
+  shock_income_size = root.get<unsigned int>("shock_income_size");
+  shock_count_size = root.get<unsigned int>("shock_count_size");
+  insurance = configuration::ReadInsurance(root.get_child("insurance"), *this);
 
-  config.max_budget = CalculateMaxBudget(config);
+  max_budget = CalculateMaxBudget(*this);
 
-  if (root.count("utility") == 0) {
-    config.utility = [](int, int, int, float joy) { return joy; };
-  } else {
-    config.utility =
-        configuration::ReadUtility(root.get_child("utility"), config.max_age,
-                                   config.max_shocks, config.max_fitness);
+  if (root.count("utility") != 0) {
+    utility_ = configuration::ReadUtility(root.get_child("utility"), max_age,
+                                          max_shocks, max_fitness);
   }
 
-  if (root.count("subjective_probability") == 0) {
-    config.subj_prob = [](int, int, int, float prob) { return prob; };
-  } else {
-    config.subj_prob = configuration::ReadSubjectiveProbability(
-        root.get_child("subjective_probability"), config.max_age,
-        config.max_shocks, config.max_fitness);
+  if (root.count("subjective_probability") != 0) {
+    subj_prob_ = configuration::ReadSubjectiveProbability(
+        root.get_child("subjective_probability"), max_age, max_shocks,
+        max_fitness);
   }
 
-  if (root.count("death_prob") == 0) {
-    config.death_prob = [](int, int, int, float) { return 0; };
-  } else {
-    config.death_prob = configuration::ReadSubjectiveProbability(
-        root.get_child("death_probability"), config.max_age, config.max_shocks,
-        config.max_fitness);
+  if (root.count("death_prob") != 0) {
+    death_prob_ = configuration::ReadSubjectiveProbability(
+        root.get_child("death_probability"), max_age, max_shocks, max_fitness);
   }
 
   if (root.count("discount") == 0) {
-    config.discount = 1;
+    discount = 1;
   } else {
-    config.discount = root.get<float>("discount");
+    discount = root.get<float>("discount");
   }
 
   if (root.count("save_pessimal") == 0) {
-    config.save_pessimal = false;
+    save_pessimal = false;
   } else {
-    config.save_pessimal = root.get<bool>("save_pessimal");
+    save_pessimal = root.get<bool>("save_pessimal");
   }
-  return config;
 }
 
-int CalculateMaxBudget(const Configuration& config) {
-  int max_income = -1;
-  for (int age = 0; age <= config.max_age; ++age) {
-    for (int shocks = 0; shocks <= config.max_shocks; ++shocks) {
-      for (int fitness = 0; fitness <= config.max_fitness; ++fitness) {
-        if (config.job(age, shocks, fitness) > max_income) {
-          max_income = config.job(age, shocks, fitness);
+unsigned int CalculateMaxBudget(const Configuration& config) {
+  unsigned int max_income = 0;
+  for (unsigned int age = 0; age <= config.max_age; ++age) {
+    for (unsigned int shocks = 0; shocks <= config.max_shocks; ++shocks) {
+      for (unsigned int fitness = 0; fitness <= config.max_fitness; ++fitness) {
+        if (config.job(age, shocks, fitness) > static_cast<int>(max_income)) {
+          max_income = static_cast<unsigned int>(
+              std::max(0, config.job(age, shocks, fitness)));
         }
       }
     }

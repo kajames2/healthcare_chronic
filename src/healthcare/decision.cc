@@ -4,7 +4,7 @@
 
 namespace healthcare {
 
-int TotalSpending(Decision dec) {
+unsigned int TotalSpending(Decision dec) {
   return dec.joy_spending + dec.fitness_spending + dec.insurance_spending;
 }
 

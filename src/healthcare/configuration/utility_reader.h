@@ -5,13 +5,14 @@
 #include <string>
 
 #include <boost/property_tree/ptree.hpp>
+#include "healthcare/utility_func.h"
 
 namespace healthcare {
 namespace configuration {
 
-std::function<double(int, int, int, float)> ReadUtility(
-    boost::property_tree::ptree util_config, int max_age, int max_shocks,
-    int max_fitness);
+std::unique_ptr<UtilityFunc> ReadUtility(
+    boost::property_tree::ptree util_config, unsigned int max_age,
+    unsigned int max_shocks, unsigned int max_fitness);
 
 }  // namespace configuration
 }  // namespace healthcare

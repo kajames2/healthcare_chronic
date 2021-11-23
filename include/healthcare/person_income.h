@@ -6,7 +6,7 @@
 namespace healthcare {
 
 struct PersonIncome : public Person {
-  int budget;
+  unsigned int budget;
   int income;
 };
 

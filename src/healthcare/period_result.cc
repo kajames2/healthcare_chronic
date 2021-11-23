@@ -11,4 +11,4 @@ std::ostream& operator<<(std::ostream& os, const PeriodResult& pr) {
             << pr.utility;
 }
 
-};  // namespace healthcare
+}  // namespace healthcare

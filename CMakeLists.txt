@@ -8,7 +8,10 @@ set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 set(CMAKE_CURRENT_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(SYSTEM ${PROJECT_SOURCE_DIR}/lib)
 
 set(SOURCES
   ${PROJECT_SOURCE_DIR}/src/healthcare/person.cc
@@ -25,6 +28,12 @@ set(SOURCES
   ${PROJECT_SOURCE_DIR}/src/healthcare/decision.cc
   ${PROJECT_SOURCE_DIR}/src/dp/decision_cache.cc
   ${PROJECT_SOURCE_DIR}/src/dp/storage.cc
+  ${PROJECT_SOURCE_DIR}/src/healthcare/joy_func.cc
+  ${PROJECT_SOURCE_DIR}/src/healthcare/job_func.cc
+  ${PROJECT_SOURCE_DIR}/src/healthcare/prob_func.cc
+  ${PROJECT_SOURCE_DIR}/src/healthcare/fitness_func.cc
+  ${PROJECT_SOURCE_DIR}/src/healthcare/utility_func.cc
+  ${PROJECT_SOURCE_DIR}/src/healthcare/prob_dependent_func.cc
   )
 
 if (MSYS)
@@ -97,5 +106,21 @@ set(TEST_SOURCES
 add_executable(tests_main tests_main.cc ${SOURCES} ${TEST_SOURCES})
 
 target_link_libraries(tests_main gtest_main)
+target_compile_options(tests_main PRIVATE
+  -W
+  -Wall
+  -Wextra
+  -Wshadow
+  -Wnon-virtual-dtor
+  -Wold-style-cast
+  -Wcast-align
+  -Wunused
+  -Woverloaded-virtual
+  -Wpedantic
+  -Wconversion
+  -Wsign-conversion
+  -Wdouble-promotion
+  -Wformat=2
+  -pedantic)
 add_test(NAME    tests_main
          COMMAND tests_main)

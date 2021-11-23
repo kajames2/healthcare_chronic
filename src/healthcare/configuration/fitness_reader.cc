@@ -8,14 +8,19 @@
 #include <boost/property_tree/ptree.hpp>
 #include "exprtk.hpp"
 
+#include "healthcare/fitness_func.h"
+
 namespace healthcare {
 namespace configuration {
 
 using ::boost::property_tree::ptree;
 
-std::function<int(int, int, int, int)> MakeFitnessFunc(
-    std::string func_str, std::unordered_map<std::string, double> fit_consts,
-    int max_age, int max_shocks, int max_fitness) {
+std::function<unsigned int(unsigned int, unsigned int, unsigned int,
+                           unsigned int)>
+MakeFitnessFunc(const std::string& func_str,
+                std::unordered_map<std::string, double> fit_consts,
+                unsigned int max_age, unsigned int max_shocks,
+                unsigned int max_fitness) {
   std::string expression_str = func_str;
   exprtk::symbol_table<double> symbol_table;
   for (const auto& [key, value] : fit_consts) {
@@ -55,27 +60,30 @@ std::function<int(int, int, int, int)> MakeFitnessFunc(
     exit(1);
   }
   return [expression, max_fitness, &age, &shocks, &fitness, &x](
-             int age_in, int shocks_in, int fitness_in, int investment_in) {
+             unsigned int age_in, unsigned int shocks_in,
+             unsigned int fitness_in, unsigned int investment_in) {
     age = static_cast<double>(age_in);
     shocks = static_cast<double>(shocks_in);
     fitness = static_cast<double>(fitness_in);
     x = static_cast<double>(investment_in);
-    return std::clamp(static_cast<int>(expression.value()), 0, max_fitness);
+    return std::clamp(static_cast<int>(expression.value()), 0,
+                      static_cast<int>(max_fitness));
   };
 }
 
-std::function<int(int, int, int, int)> ReadFitness(ptree fit_config,
-                                                   int max_age, int max_shocks,
-                                                   int max_fitness) {
+std::unique_ptr<FitnessFunc> ReadFitness(ptree fit_config, unsigned int max_age,
+                                         unsigned int max_shocks,
+                                         unsigned int max_fitness) {
   std::string func_str = fit_config.get<std::string>("function");
   std::unordered_map<std::string, double> const_map;
   for (auto it : fit_config) {
     boost::optional<float> f = it.second.get_value_optional<float>();
     if (f) {
-      const_map[it.first] = f.value();
+      const_map[it.first] = static_cast<double>(f.value());
     }
   }
-  return MakeFitnessFunc(func_str, const_map, max_age, max_shocks, max_fitness);
+  return std::make_unique<FitnessFunc>(func_str, const_map, max_age, max_shocks,
+                                       max_fitness);
 }
 
 }  // namespace configuration

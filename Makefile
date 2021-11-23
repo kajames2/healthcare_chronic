@@ -621,6 +621,96 @@ src/healthcare/decision_evaluator.cc.s:
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/decision_evaluator.cc.s
 .PHONY : src/healthcare/decision_evaluator.cc.s
 
+src/healthcare/fitness_func.o: src/healthcare/fitness_func.cc.o
+
+.PHONY : src/healthcare/fitness_func.o
+
+# target to build an object file
+src/healthcare/fitness_func.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/fitness_func.cc.o
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness_func.cc.o
+.PHONY : src/healthcare/fitness_func.cc.o
+
+src/healthcare/fitness_func.i: src/healthcare/fitness_func.cc.i
+
+.PHONY : src/healthcare/fitness_func.i
+
+# target to preprocess a source file
+src/healthcare/fitness_func.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/fitness_func.cc.i
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness_func.cc.i
+.PHONY : src/healthcare/fitness_func.cc.i
+
+src/healthcare/fitness_func.s: src/healthcare/fitness_func.cc.s
+
+.PHONY : src/healthcare/fitness_func.s
+
+# target to generate assembly for a file
+src/healthcare/fitness_func.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/fitness_func.cc.s
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/fitness_func.cc.s
+.PHONY : src/healthcare/fitness_func.cc.s
+
+src/healthcare/job_func.o: src/healthcare/job_func.cc.o
+
+.PHONY : src/healthcare/job_func.o
+
+# target to build an object file
+src/healthcare/job_func.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/job_func.cc.o
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/job_func.cc.o
+.PHONY : src/healthcare/job_func.cc.o
+
+src/healthcare/job_func.i: src/healthcare/job_func.cc.i
+
+.PHONY : src/healthcare/job_func.i
+
+# target to preprocess a source file
+src/healthcare/job_func.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/job_func.cc.i
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/job_func.cc.i
+.PHONY : src/healthcare/job_func.cc.i
+
+src/healthcare/job_func.s: src/healthcare/job_func.cc.s
+
+.PHONY : src/healthcare/job_func.s
+
+# target to generate assembly for a file
+src/healthcare/job_func.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/job_func.cc.s
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/job_func.cc.s
+.PHONY : src/healthcare/job_func.cc.s
+
+src/healthcare/joy_func.o: src/healthcare/joy_func.cc.o
+
+.PHONY : src/healthcare/joy_func.o
+
+# target to build an object file
+src/healthcare/joy_func.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/joy_func.cc.o
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/joy_func.cc.o
+.PHONY : src/healthcare/joy_func.cc.o
+
+src/healthcare/joy_func.i: src/healthcare/joy_func.cc.i
+
+.PHONY : src/healthcare/joy_func.i
+
+# target to preprocess a source file
+src/healthcare/joy_func.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/joy_func.cc.i
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/joy_func.cc.i
+.PHONY : src/healthcare/joy_func.cc.i
+
+src/healthcare/joy_func.s: src/healthcare/joy_func.cc.s
+
+.PHONY : src/healthcare/joy_func.s
+
+# target to generate assembly for a file
+src/healthcare/joy_func.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/joy_func.cc.s
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/joy_func.cc.s
+.PHONY : src/healthcare/joy_func.cc.s
+
 src/healthcare/period_result.o: src/healthcare/period_result.cc.o
 
 .PHONY : src/healthcare/period_result.o
@@ -680,6 +770,96 @@ src/healthcare/person.cc.s:
 	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/person.cc.s
 	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/person.cc.s
 .PHONY : src/healthcare/person.cc.s
+
+src/healthcare/prob_dependent_func.o: src/healthcare/prob_dependent_func.cc.o
+
+.PHONY : src/healthcare/prob_dependent_func.o
+
+# target to build an object file
+src/healthcare/prob_dependent_func.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/prob_dependent_func.cc.o
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/prob_dependent_func.cc.o
+.PHONY : src/healthcare/prob_dependent_func.cc.o
+
+src/healthcare/prob_dependent_func.i: src/healthcare/prob_dependent_func.cc.i
+
+.PHONY : src/healthcare/prob_dependent_func.i
+
+# target to preprocess a source file
+src/healthcare/prob_dependent_func.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/prob_dependent_func.cc.i
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/prob_dependent_func.cc.i
+.PHONY : src/healthcare/prob_dependent_func.cc.i
+
+src/healthcare/prob_dependent_func.s: src/healthcare/prob_dependent_func.cc.s
+
+.PHONY : src/healthcare/prob_dependent_func.s
+
+# target to generate assembly for a file
+src/healthcare/prob_dependent_func.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/prob_dependent_func.cc.s
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/prob_dependent_func.cc.s
+.PHONY : src/healthcare/prob_dependent_func.cc.s
+
+src/healthcare/prob_func.o: src/healthcare/prob_func.cc.o
+
+.PHONY : src/healthcare/prob_func.o
+
+# target to build an object file
+src/healthcare/prob_func.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/prob_func.cc.o
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/prob_func.cc.o
+.PHONY : src/healthcare/prob_func.cc.o
+
+src/healthcare/prob_func.i: src/healthcare/prob_func.cc.i
+
+.PHONY : src/healthcare/prob_func.i
+
+# target to preprocess a source file
+src/healthcare/prob_func.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/prob_func.cc.i
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/prob_func.cc.i
+.PHONY : src/healthcare/prob_func.cc.i
+
+src/healthcare/prob_func.s: src/healthcare/prob_func.cc.s
+
+.PHONY : src/healthcare/prob_func.s
+
+# target to generate assembly for a file
+src/healthcare/prob_func.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/prob_func.cc.s
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/prob_func.cc.s
+.PHONY : src/healthcare/prob_func.cc.s
+
+src/healthcare/utility_func.o: src/healthcare/utility_func.cc.o
+
+.PHONY : src/healthcare/utility_func.o
+
+# target to build an object file
+src/healthcare/utility_func.cc.o:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/utility_func.cc.o
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/utility_func.cc.o
+.PHONY : src/healthcare/utility_func.cc.o
+
+src/healthcare/utility_func.i: src/healthcare/utility_func.cc.i
+
+.PHONY : src/healthcare/utility_func.i
+
+# target to preprocess a source file
+src/healthcare/utility_func.cc.i:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/utility_func.cc.i
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/utility_func.cc.i
+.PHONY : src/healthcare/utility_func.cc.i
+
+src/healthcare/utility_func.s: src/healthcare/utility_func.cc.s
+
+.PHONY : src/healthcare/utility_func.s
+
+# target to generate assembly for a file
+src/healthcare/utility_func.cc.s:
+	$(MAKE) -f CMakeFiles/tests_main.dir/build.make CMakeFiles/tests_main.dir/src/healthcare/utility_func.cc.s
+	$(MAKE) -f CMakeFiles/healthdp.dir/build.make CMakeFiles/healthdp.dir/src/healthcare/utility_func.cc.s
+.PHONY : src/healthcare/utility_func.cc.s
 
 test/healthcare/decision_test.o: test/healthcare/decision_test.cc.o
 
@@ -873,12 +1053,30 @@ help:
 	@echo "... src/healthcare/decision_evaluator.o"
 	@echo "... src/healthcare/decision_evaluator.i"
 	@echo "... src/healthcare/decision_evaluator.s"
+	@echo "... src/healthcare/fitness_func.o"
+	@echo "... src/healthcare/fitness_func.i"
+	@echo "... src/healthcare/fitness_func.s"
+	@echo "... src/healthcare/job_func.o"
+	@echo "... src/healthcare/job_func.i"
+	@echo "... src/healthcare/job_func.s"
+	@echo "... src/healthcare/joy_func.o"
+	@echo "... src/healthcare/joy_func.i"
+	@echo "... src/healthcare/joy_func.s"
 	@echo "... src/healthcare/period_result.o"
 	@echo "... src/healthcare/period_result.i"
 	@echo "... src/healthcare/period_result.s"
 	@echo "... src/healthcare/person.o"
 	@echo "... src/healthcare/person.i"
 	@echo "... src/healthcare/person.s"
+	@echo "... src/healthcare/prob_dependent_func.o"
+	@echo "... src/healthcare/prob_dependent_func.i"
+	@echo "... src/healthcare/prob_dependent_func.s"
+	@echo "... src/healthcare/prob_func.o"
+	@echo "... src/healthcare/prob_func.i"
+	@echo "... src/healthcare/prob_func.s"
+	@echo "... src/healthcare/utility_func.o"
+	@echo "... src/healthcare/utility_func.i"
+	@echo "... src/healthcare/utility_func.s"
 	@echo "... test/healthcare/decision_test.o"
 	@echo "... test/healthcare/decision_test.i"
 	@echo "... test/healthcare/decision_test.s"

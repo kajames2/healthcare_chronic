@@ -14,37 +14,36 @@
 namespace dp {
 class Storage {
  public:
-  explicit Storage(const healthcare::Configuration& config);
+  explicit Storage(std::shared_ptr<const healthcare::Configuration> config);
 
   void StoreResult(const healthcare::Person& state,
                    healthcare::DecisionResults res) {
-    results_[state.shocks][state.fitness][state.cash - config_.min_savings] =
-        res;
-    values_[state.shocks][state.fitness][state.cash - config_.min_savings] =
-        res.utility;
+    results_[state.shocks][state.fitness][CashDiff(state.cash)] = res;
+    values_[state.shocks][state.fitness][CashDiff(state.cash)] = res.utility;
   }
 
   inline float GetValue(const healthcare::Person& state) const {
-    return values_[state.shocks][state.fitness]
-                  [state.cash - config_.min_savings];
+    return values_[state.shocks][state.fitness][CashDiff(state.cash)];
   }
 
   inline healthcare::DecisionResults GetResult(
       const healthcare::Person& state) const {
-    return results_[state.shocks][state.fitness]
-                   [state.cash - config_.min_savings];
+    return results_[state.shocks][state.fitness][CashDiff(state.cash)];
+  }
+  inline unsigned int CashDiff(int cash) const {
+    return static_cast<unsigned int>(cash - config_->min_savings);
   }
   bool IsValidState(const healthcare::Person& state) const;
   friend std::ostream& operator<<(std::ostream& out, const Storage& s);
 
  private:
-  int GetIndex(const healthcare::Person& state) const;
+  unsigned int GetIndex(const healthcare::Person& state) const;
 
   std::vector<std::vector<std::vector<healthcare::DecisionResults>>> results_;
   std::vector<std::vector<std::vector<float>>> values_;
 
-  const healthcare::Configuration& config_;
-  const int n_elements_;
+  std::shared_ptr<const healthcare::Configuration> config_;
+  const unsigned int n_elements_;
 };
 
 }  // namespace dp

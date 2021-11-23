@@ -6,6 +6,12 @@
 
 namespace healthcare {
 
+DecisionEvaluator::DecisionEvaluator(
+    std::shared_ptr<const Configuration> config, unsigned int age)
+    : config_(config), age_(age) {
+  Precalculate();
+}
+
 DecisionResults DecisionEvaluator::GetDecisionResults(
     Person state, const Decision& dec) const {
   auto res = ApplyDecision(state, dec);
@@ -13,7 +19,6 @@ DecisionResults DecisionEvaluator::GetDecisionResults(
   auto res_shock = ApplyShock(res, dec);
   return {dec, res_no_shock, res_shock, 0};
 }
-
 PeriodResult DecisionEvaluator::ApplyDecision(Person state,
                                               const Decision& dec) const {
   state.fitness = fitness_[state.shocks][state.fitness][dec.fitness_spending];
@@ -39,7 +44,7 @@ PeriodResult DecisionEvaluator::ApplyDecision(Person state,
 PeriodResult DecisionEvaluator::ApplyNoShock(PeriodResult res) const {
   res.probability = 1 - res.shock_prob;
   res.subj_prob = res.subj_no_shock_prob;
-  res.person.cash -= res.spending;
+  res.person.cash -= static_cast<int>(res.spending);
   return res;
 }
 
@@ -47,18 +52,17 @@ PeriodResult DecisionEvaluator::ApplyShock(PeriodResult res,
                                            const Decision& dec) const {
   res.probability = res.shock_prob;
   res.subj_prob = res.subj_shock_prob;
-  res.person.shocks += config_.shock_count_size;
-  res.person.shocks = std::min(config_.max_shocks, res.person.shocks);
+  res.person.shocks += config_->shock_count_size;
+  res.person.shocks = std::min(config_->max_shocks, res.person.shocks);
   if (!dec.buy_insurance) {
-    res.spending += config_.shock_income_size;
+    res.spending += config_->shock_income_size;
   }
-  res.person.cash -= res.spending;
+  res.person.cash -= static_cast<int>(res.spending);
   return res;
 }
 
 void DecisionEvaluator::Precalculate() {
-  std::cout << config_.shock_prob(1, 0, 75) << std::endl;
-  for (int shocks = 0; shocks <= config_.max_shocks; ++shocks) {
+  for (unsigned int shocks = 0; shocks <= config_->max_shocks; ++shocks) {
     std::vector<std::vector<float>> sub_util;
     std::vector<std::vector<float>> sub_joy;
     std::vector<float> sub_prob;
@@ -66,39 +70,40 @@ void DecisionEvaluator::Precalculate() {
     std::vector<float> sub_prob_noshock_subj;
     std::vector<float> sub_prob_death;
     std::vector<float> sub_prob_no_death_subj;
-    std::vector<std::vector<int>> sub_fit;
-    for (int fitness = 0; fitness <= config_.max_fitness; ++fitness) {
+    std::vector<std::vector<unsigned int>> sub_fit;
+    for (unsigned int fitness = 0; fitness <= config_->max_fitness; ++fitness) {
       std::vector<float> sub_sub_util;
       std::vector<float> sub_sub_joy;
-      for (int joy_spend = 0; joy_spend <= config_.max_budget; ++joy_spend) {
-        float joy = config_.joy(age_, shocks, fitness, joy_spend);
+      for (unsigned int joy_spend = 0;
+           joy_spend <= static_cast<unsigned int>(config_->max_budget);
+           ++joy_spend) {
+        float joy =
+            static_cast<float>(config_->joy(age_, shocks, fitness, joy_spend));
         sub_sub_joy.push_back(joy);
-        sub_sub_util.push_back(config_.utility(age_, shocks, fitness, joy));
+        sub_sub_util.push_back(config_->utility(age_, shocks, fitness, joy));
       }
       sub_joy.push_back(sub_sub_joy);
       sub_util.push_back(sub_sub_util);
-      std::vector<int> sub_sub_fit;
-      for (int fit_spend = 0; fit_spend <= config_.max_budget; ++fit_spend) {
+      std::vector<unsigned int> sub_sub_fit;
+      for (unsigned int fit_spend = 0;
+           fit_spend <= static_cast<unsigned int>(config_->max_budget);
+           ++fit_spend) {
         sub_sub_fit.push_back(
-            config_.fitness(age_, shocks, fitness, fit_spend));
+            config_->fitness(age_, shocks, fitness, fit_spend));
       }
       sub_fit.push_back(sub_sub_fit);
-      float shock_prob = config_.shock_prob(age_, shocks, fitness);
-      if (age_ == 1 && shocks == 0 && fitness == 75) {
-        std::cout << shock_prob << std::endl;
-        std::cout << config_.shock_prob(age_, shocks, fitness) << std::endl;
-        std::cout << config_.shock_prob(1, 0, 75) << std::endl;
-      }
+
+      float shock_prob = config_->shock_prob(age_, shocks, fitness);
       sub_prob.push_back(shock_prob);
       sub_prob_shock_subj.push_back(
-          config_.subj_prob(age_, shocks, fitness, shock_prob));
+          config_->subj_prob(age_, shocks, fitness, shock_prob));
       sub_prob_noshock_subj.push_back(
-          config_.subj_prob(age_, shocks, fitness, 1 - shock_prob));
+          config_->subj_prob(age_, shocks, fitness, 1 - shock_prob));
 
-      float death_prob = config_.death_prob(age_, shocks, fitness, shock_prob);
+      float death_prob = config_->death_prob(age_, shocks, fitness, shock_prob);
       sub_prob_death.push_back(death_prob);
       sub_prob_no_death_subj.push_back(
-          config_.subj_prob(age_, shocks, fitness, 1 - death_prob));
+          config_->subj_prob(age_, shocks, fitness, 1 - death_prob));
     }
     joy_.push_back(sub_joy);
     utility_.push_back(sub_util);

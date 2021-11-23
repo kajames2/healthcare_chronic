@@ -15,19 +15,16 @@ namespace healthcare {
 
 class DecisionEvaluator {
  public:
-  DecisionEvaluator(Configuration config, int age)
-      : config_(config), age_(age) {
-    std::cout << config_.shock_prob(1, 0, 75) << std::endl;
-    Precalculate();
-    std::cout << config_.shock_prob(1, 0, 75) << std::endl;
-  }
+  DecisionEvaluator(std::shared_ptr<const Configuration> config,
+                    unsigned int age);
   DecisionResults GetDecisionResults(Person state, const Decision& dec) const;
 
  private:
   PeriodResult ApplyDecision(Person state, const Decision& dec) const;
   PeriodResult ApplyShock(PeriodResult, const Decision& dec) const;
   PeriodResult ApplyNoShock(PeriodResult) const;
-  void Precalculate();
+  std::shared_ptr<const Configuration> config_;
+  unsigned int age_;
   std::vector<std::vector<std::vector<float>>> utility_;
   std::vector<std::vector<std::vector<float>>> joy_;
   std::vector<std::vector<float>> shock_prob_;
@@ -35,9 +32,8 @@ class DecisionEvaluator {
   std::vector<std::vector<float>> no_shock_prob_subj_;
   std::vector<std::vector<float>> death_prob_;
   std::vector<std::vector<float>> no_death_prob_subj_;
-  std::vector<std::vector<std::vector<int>>> fitness_;
-  Configuration config_;
-  int age_;
+  std::vector<std::vector<std::vector<unsigned int>>> fitness_;
+  void Precalculate();
 };
 
 }  // namespace healthcare
