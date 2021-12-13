@@ -86,7 +86,18 @@ def select_state(fstream, state):
     fstream.seek(offsets[0] + offsets[1] * get_index(state))
     no_shock = process_line(fstream.readline())
     shock = process_line(fstream.readline())
-    return [no_shock, shock]
+    death_shock = shock.copy()
+    death_shock['NextShocks'] = str(max_shocks)
+    death_shock['Probability'] = str(death_shock['SuddenDeathProb'])
+    death_shock['ProbabilitySubj'] = str(1 - float(death_shock['NoSuddenDeathProbSubj']))
+    death_shock['FutureUtility'] = str(0)
+    death_shock['Utility'] = str(death_shock['ImmediateUtility'])
+    no_shock['Probability'] = str(float(no_shock['Probability']) * (1- float(no_shock['SuddenDeathProb'])))
+    shock['Probability'] = str(float(shock['Probability']) * (1- float(shock['SuddenDeathProb'])))
+    no_shock['ProbabilitySubj'] = str(float(no_shock['ProbabilitySubj']) * float(no_shock['NoSuddenDeathProbSubj']))
+    shock['ProbabilitySubj'] = str(float(no_shock['ProbabilitySubj']) * float(shock['NoSuddenDeathProbSubj']))
+
+    return [no_shock, shock, death_shock]
 
 
 def next_state(row):
@@ -110,15 +121,22 @@ def get_life_with_draws(fstream, start_state, draws):
         rand = draws[state[0] - 1]
         row_pair = select_state(fstream, state)
         probs = [float(row["Probability"]) for row in row_pair]
-        if rand <= probs[1]:
+        if rand <= probs[2]:
+            row = row_pair[2]
+            shocked = 1
+            sudden_death = 1
+        elif rand <= probs[1] + probs[2]:
             row = row_pair[1]
             shocked = 1
+            sudden_death = 0
         else:
             row = row_pair[0]
             shocked = 0
+            sudden_death = 0
         out_row = list(row.values())
         out_row.append("{0:8.6f}".format(rand))
         out_row.append("{0:1}".format(shocked))
+        out_row.append("{0:1}".format(sudden_death))
         life.append(out_row)
         state = next_state(row)
     return life
@@ -165,7 +183,7 @@ for filename_base in filenames:
     shock_size = json_config["shock_income_size"]
     init_fitness = json_config.get('initial_fitness', 0)
     fair_draws = json_config.get('fair_draws', False)
-    n_samples = json_config.get('n_samples', 10000)
+    n_samples = json_config.get('n_samples', 1000)
 
     max_age = config["max_age"]
     max_shocks = config["max_shocks"]
@@ -189,7 +207,7 @@ for filename_base in filenames:
     f = open(filename_base + "_rand_lives.csv", "w+")
     f.write(
         ",".join(header)
-        + ",RandDraw,Shocked,TotalJoy,TotalUtility,BuyIns,TotalInsuranceSpending,InsurancePayout,TotalInsurancePayout,NetInsurerProfit,AtMaxShocks,Dies,Life\n"
+        + ",RandDraw,Shocked,SuddenDeath,TotalJoy,TotalUtility,BuyIns,TotalInsuranceSpending,InsurancePayout,TotalInsurancePayout,NetInsurerProfit,AtMaxShocks,Dies,Life\n"
     )
     for life in range(n_lives):
         tot_enjoyment = 0.0

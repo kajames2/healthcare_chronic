@@ -48,12 +48,16 @@
         "function_name" : "Base",
         "function" : "prob"
     },
+    "sudden_death": {
+	    "function_name" : "Base",
+	    "function" : "prob*prob"
+	},
     "max_shocks": 10,
     "shock_income_size": 10,
     "discount": 1.0,
     "insurance": {
         "type": "Fixed",
-        "premium": 100
+        "premium": 200
     },
     "max_savings": 0,
     "min_savings": -10

@@ -1,0 +1,64 @@
+{
+    "max_age": 40,
+    "decision_periods": 40,
+    "max_fitness": 100,
+    "min_debt_payment": 1,
+    "shock_count_size": 1,
+    "initial_fitness": 75,
+    "fair_draws": false,
+    "n_samples": 10000,
+    "job": {
+        "function_name": "Base",
+        "function": "slope * age + intercept",
+        "slope": 0,
+        "intercept": 100
+    },
+    "joy": {
+        "function_name": "Base",
+        "function": "100*(1 - shocks/max_shocks * (1 - max_effect * (fitness / (fitness + k)))) * (jmin + (jmax - jmin) /(1 + exp((x_0 - x) * alpha)))",
+        "jmax": 1,
+        "jmin": 0,
+        "alpha": 0.125,
+        "x_0": 60,
+        "j": 20,
+        "max_effect": 1.8,
+        "k": 100
+    },
+    "probability": {
+        "function_name": "Base",
+        "function": "((exp(age_rate * (s + age))-.7 + exp(shock_rate * shocks)) - 1) * (1 - max_effect * (fitness / (fitness + j)))",
+        "age_rate": 0.01,
+        "shock_rate": 0.05,
+        "max_effect": 1.8,
+        "j": 100,
+        "s": 20
+    },
+    "fitness": {
+        "function_name": "AgeLinear",
+        "function": "(1-p-r*age) * fitness + x / (price * (.33 + age/30))",
+        "p": 0.075,
+        "r": 0.005,
+        "price": 3
+    },
+    "utility": {
+        "function_name": "Base",
+        "function": "joy"
+    },
+    "subjective_probability": {
+        "function_name": "Base",
+        "function": "prob"
+    },
+    "sudden_death": {
+        "function_name": "SqrProb",
+        "function": "prob*prob"
+    },
+    "max_shocks": 10,
+    "shock_income_size": 10,
+    "discount": 1.0,
+    "insurance": {
+        "type": "Fixed",
+        "premium": 100
+    },
+    "max_savings": 0,
+    "min_savings": -10
+}

@@ -82,6 +82,7 @@ def gen_name(sub_keys, val, i):
         'joy': 'joy',
         'utility': 'util',
         'subjective_probability': 'sprob',
+        'sudden_death':'death',
         'probability': 'prob',
         'fitness': 'fit',
         'max_shocks': 'maxs',

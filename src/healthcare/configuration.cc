@@ -62,9 +62,9 @@ Configuration::Configuration(std::string filename) {
         max_fitness);
   }
 
-  if (root.count("death_prob") != 0) {
+  if (root.count("sudden_death") != 0) {
     death_prob_ = configuration::ReadSubjectiveProbability(
-        root.get_child("death_probability"), max_age, max_shocks, max_fitness);
+        root.get_child("sudden_death"), max_age, max_shocks, max_fitness);
   }
 
   if (root.count("discount") == 0) {

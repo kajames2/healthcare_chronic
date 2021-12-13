@@ -7,14 +7,18 @@
     "all_combos" : true,
     "variations" : [
 	      {
-            "utility:function_name": ["Base", "Target10", "Target30", "Target50", "Target70"],
+            "utility:function_name": ["Base", "Target10"],
             "utility:function": [
                 "joy",
-                "joy*exp(-1/(2*5^2)*(fitness - 10)^2)",
-                "joy*exp(-1/(2*5^2)*(fitness - 30)^2)",
-                "joy*exp(-1/(2*5^2)*(fitness - 50)^2)",
-                "joy*exp(-1/(2*5^2)*(fitness - 70)^2)"
+                "joy*exp(-1/(2*5^2)*(fitness - 10)^2)"
             ]
-        }
+        },
+	{
+		"sudden_death:function_name": ["None", "SqrProb"],
+		"sudden_death:function":[
+			"0",
+			"prob*prob"
+		]
+	}
     ]
 }

@@ -94,13 +94,16 @@ void DecisionEvaluator::Precalculate() {
       sub_fit.push_back(sub_sub_fit);
 
       float shock_prob = config_->shock_prob(age_, shocks, fitness);
-      sub_prob.push_back(shock_prob);
-      sub_prob_shock_subj.push_back(
-          config_->subj_prob(age_, shocks, fitness, shock_prob));
-      sub_prob_noshock_subj.push_back(
-          config_->subj_prob(age_, shocks, fitness, 1 - shock_prob));
-
       float death_prob = config_->death_prob(age_, shocks, fitness, shock_prob);
+      float shock_prob_adj =
+          death_prob == 1 ? 0 : (shock_prob - death_prob) / (1 - death_prob);
+
+      sub_prob.push_back(shock_prob_adj);
+      sub_prob_shock_subj.push_back(
+          config_->subj_prob(age_, shocks, fitness, shock_prob_adj));
+      sub_prob_noshock_subj.push_back(
+          config_->subj_prob(age_, shocks, fitness, 1 - shock_prob_adj));
+
       sub_prob_death.push_back(death_prob);
       sub_prob_no_death_subj.push_back(
           config_->subj_prob(age_, shocks, fitness, 1 - death_prob));
